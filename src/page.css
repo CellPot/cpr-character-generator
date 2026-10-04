@@ -1,0 +1,26 @@
+/* The standalone page's own frame: one column, a top bar with the theme toggle, a
+   footer with the disclaimer and credits. Everything inside the wizard is styled by
+   wizard.css, which the host book shares. */
+main{max-width:1060px;margin:0 auto;padding:22px 28px 60px}
+.topbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;
+  margin:0 0 6px;padding:0 0 10px;border-bottom:1px solid var(--line)}
+.topbar .brand{font-family:var(--font-disp);font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;font-size:.95rem;color:var(--red-text)}
+.topbar .brand small{display:block;font-size:.7rem;letter-spacing:.04em;color:var(--steel);
+  text-transform:none;font-weight:600}
+.topbar .themer{margin:0;min-width:260px}
+.masthead{margin:18px 0 10px}
+.masthead h1{font-family:var(--font-disp);font-size:2rem;line-height:1.1;margin:0 0 8px;
+  text-transform:uppercase;letter-spacing:.05em}
+.masthead .lede{color:var(--ink-2);max-width:62em;margin:0}
+.legal{margin:46px 0 0;padding:14px 0 0;border-top:1px solid var(--line);
+  color:var(--steel);font-size:.8rem;line-height:1.5}
+.legal p{margin:0 0 7px}
+@media (max-width:700px){
+  main{padding:16px 16px 50px}
+  .topbar .themer{min-width:0;width:100%}
+}
+@media print{
+  .topbar,.legal{display:none}
+  main{padding:0;max-width:none}
+}

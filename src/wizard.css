@@ -1,0 +1,438 @@
+/* ---- Character Generator -------------------------------------------
+   The wizard's own controls. Two page rules govern everything here:
+   grid/flex must never be the direct parent of body text (the glossary script
+   injects <button> inline and a grid promotes each to its own track), so every
+   grid cell below is a block element with the text inside it; and a .cgpane is
+   plain block flow for the same reason. */
+.cg{margin:14px 0 4px}
+/* the method chooser, above the tabs: it governs steps 2 and 3, so it cannot live
+   inside either of them. Flex is safe — wrap() runs on `main`'s prose, and every
+   cell here holds its own inline text. */
+.cgmethods{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 12px}
+.cgmlab{font:700 .7rem/1 inherit;text-transform:uppercase;letter-spacing:.08em;color:var(--steel)}
+.cgm{
+  display:inline-flex;flex-direction:column;align-items:flex-start;gap:1px;cursor:pointer;
+  padding:6px 12px;background:var(--surface);border:1px solid var(--line);color:var(--ink-2);
+  font:inherit;text-align:left;
+}
+.cgm:hover{border-color:var(--red);color:var(--ink)}
+/* Both secondary lines were 82% white on the active chip, and both measured 2.66
+   against the DARK theme's --red — which is light (255,74,61), so anything dimmer
+   than pure white falls under 3:1. Same trap as the red die-chip on a red thead.
+   The fix is the one .cgtab already uses: a DARK wash behind the small label, and
+   pure white for the rest, with size and weight carrying the hierarchy instead of
+   opacity. Lightening cannot work here; there is nothing lighter than white. */
+.cgm .cgmno{
+  display:inline-block;padding:1px 5px;border-radius:2px;background:var(--sunken);
+  font:700 .62rem/1.35 Consolas,ui-monospace,monospace;letter-spacing:.06em;color:var(--steel);
+}
+.cgm .cgmname{font:800 .85rem/1.2 inherit}
+.cgm .cgmtag{font:400 .7rem/1.2 inherit;color:var(--steel)}
+.cgm.on{background:var(--red);border-color:var(--red);color:var(--on-accent)}
+.cgm.on .cgmno{background:rgba(0,0,0,.28);color:var(--on-accent)}
+.cgm.on .cgmtag{color:var(--on-accent)}
+.cgmwhat{flex:1 1 15rem;min-width:0;font-size:.78rem;line-height:1.45;color:var(--steel)}
+@media (max-width:640px){.cgmwhat{flex-basis:100%}}
+.cgtabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px;border-bottom:1px solid var(--line);padding-bottom:10px}
+.cgtab{
+  display:inline-flex;align-items:center;gap:7px;padding:7px 13px 7px 8px;cursor:pointer;
+  background:var(--surface);border:1px solid var(--line);color:var(--ink-2);
+  font:600 .82rem/1.2 inherit;
+}
+.cgtab .cgnum{
+  display:inline-grid;place-items:center;width:19px;height:19px;flex:none;
+  background:var(--sunken);color:var(--steel);border-radius:2px;
+  font:800 .68rem/1 Consolas,ui-monospace,monospace;
+}
+.cgtab:hover:not(:disabled){border-color:var(--red);color:var(--ink)}
+.cgtab.on{background:var(--red);border-color:var(--red);color:var(--on-accent)}
+.cgtab.on .cgnum{background:rgba(0,0,0,.28);color:var(--on-accent)}
+.cgtab:disabled{opacity:.42;cursor:not-allowed}
+
+.cgpane{display:none}
+.cgpane.on{display:block}
+.cgpane h3{margin:0 0 6px}
+
+.rolegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:10px;margin:14px 0 6px}
+.rolecard{
+  /* display:flex + column, not block: a bare <button display:block> still vertically
+     centers its content as a group in current Chrome (align-content on block containers
+     now applies to form controls' UA default, and it survives display:block). A card
+     shorter than its stretched grid row — one with no .rcue/.rwhy — got its name pushed
+     down instead of starting flush at the top. Flex-column's default justify-content
+     (flex-start) stacks children from the top regardless of leftover height. */
+  display:flex;flex-direction:column;width:100%;text-align:left;cursor:pointer;
+  background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--red);
+  padding:11px 13px 13px;box-shadow:var(--shadow);font:inherit;color:inherit;
+}
+.rolecard:hover{border-color:var(--red)}
+.rolecard.on{background:var(--red-soft);border-color:var(--red)}
+.rolecard .rname{display:block;font-weight:800;font-size:1.02rem;line-height:1.2}
+.rolecard .rabil{display:block;margin:2px 0 6px;font-size:.72rem;color:var(--red-text);font-weight:700;letter-spacing:.02em;text-transform:uppercase}
+.rolecard .rblurb{display:block;font-size:.79rem;line-height:1.45;color:var(--ink-2)}
+
+.cgbtn{
+  display:inline-block;cursor:pointer;padding:7px 14px;font:600 .84rem/1.2 inherit;
+  background:var(--surface);border:1px solid var(--line);color:var(--ink);
+}
+.cgbtn:hover{border-color:var(--red);color:var(--red-text)}
+.cgprim{background:var(--red);border-color:var(--red);color:var(--on-accent)}
+.cgprim:hover{background:var(--red-deep);border-color:var(--red-deep);color:var(--on-accent)}
+.cgmini{padding:3px 9px;font-size:.75rem}
+/* a blocked button must LOOK blocked — .cgtab had this and .cgbtn did not,
+   so "Next" sat there in full primary red while refusing to be clicked */
+.cgbtn:disabled{opacity:.45;cursor:not-allowed}
+.cgbtn:disabled:hover{border-color:var(--line);color:var(--ink)}
+.cgprim:disabled{background:var(--sunken);border-color:var(--line);color:var(--steel)}
+.cgprim:disabled:hover{background:var(--sunken);border-color:var(--line);color:var(--steel)}
+.cgrow{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:12px 0}
+.cgout{font:700 .84rem/1 Consolas,ui-monospace,monospace;color:var(--red-text)}
+.cghint{color:var(--steel);font-size:.85rem;font-style:italic}
+.cgmore{margin:14px 0 4px}
+.cgmore summary{cursor:pointer;font-size:.83rem;color:var(--steel)}
+.cgmore summary:hover{color:var(--red-text)}
+.cgspec{color:var(--steel);font-weight:400}
+.cgpick,.cgname input{
+  padding:3px 7px;font:inherit;font-size:.82rem;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink);min-width:9rem;
+}
+.cgpick:focus,.cgname input:focus{outline:2px solid var(--red);outline-offset:-1px}
+.cgname{font-size:.84rem;font-weight:600}
+.cgname input{margin-left:7px;min-width:15rem}
+/* the picked STAT template row. Scoped to the generator and excluding
+   .cathead, because unscoped row rules have collided with the zebra and
+   frozen-column styles three times in this page. */
+.cg tr.on:not(.cathead) td,.cg tr.on:not(.cathead) th{background:var(--red-soft)}
+
+/* one lifepath roll: label, value, controls. Grid cell -> block child, see above */
+.cglife{
+  display:grid;grid-template-columns:210px minmax(0,1fr) auto;gap:10px;align-items:start;
+  padding:8px 0;border-bottom:1px solid var(--line);
+}
+.cglife .cglabel{font-weight:700;font-size:.85rem}
+.cglife .cgval{font-size:.85rem;line-height:1.5;color:var(--ink-2)}
+.cglife .cgacts{display:flex;gap:6px;align-items:center}
+.cgd{
+  display:inline-grid;place-items:center;min-width:19px;height:19px;padding:0 4px;
+  background:var(--red);color:var(--on-accent);border-radius:2px;
+  font:800 .7rem/1 Consolas,ui-monospace,monospace;vertical-align:1px;
+}
+.cgcol{color:var(--steel);font-size:.78rem}
+.cgsep{color:var(--line)}
+.cgsel{max-width:16rem;font:inherit;font-size:.78rem;padding:2px 5px;background:var(--surface);border:1px solid var(--line);color:var(--ink)}
+.cgselnarrow{max-width:9rem}
+
+/* ---- Method #2 "Edgerunner": the point-buy and the per-STAT roll ---------- */
+.cgbudget{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:12px 0;
+  padding:9px 12px;background:var(--sunken);border-left:3px solid var(--red)}
+.cgbleft{font-size:.9rem}
+.cgbleft b{font:800 1.05rem/1 Consolas,ui-monospace,monospace}
+/* Points still to spend are the one thing on this screen that is not finished, so
+   they are red while any remain and quiet once none do — the resting state of a
+   correct sheet must not shout. */
+.cgbleft.cgbon b{color:var(--red-text)}
+.cgbpre{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto}
+/* An overspent gear/style/start budget used to be this same quiet inline
+   `.cgbleft` — a small red number sitting next to the "+ Add row"
+   button, at the bottom of what can be a long item table. Easy to miss on
+   the way past. Overspend gets its own full-width callout instead, same
+   red-outline treatment `.rule` uses for a rules warning elsewhere in the
+   book, so it reads as "something is wrong here" rather than as one more
+   stat among the row of buttons. */
+/* Body text stays the normal `--ink` (readable on `--red-soft` in every
+   theme, `.rule` already proves it) and only `b` gets `--red` — NOT
+   `--red-ink`, which exists for text sitting on a SOLID `--red` fill
+   (`.die`, `thead th`…). `--red-soft` is a translucent wash, still mostly
+   the theme's own background underneath it, and in cyber-night `--red-ink`
+   is near-black (`#081319`) — dark text on that dark a background nearly
+   disappeared. Same kind of trap as red-on-red elsewhere on the page, just
+   the light/solid axis instead of the light/dark one. */
+.cgover{
+  display:block;margin:10px 0 0;padding:9px 12px;
+  border:1px solid var(--red);background:var(--red-soft);
+}
+.cgover b{color:var(--red-text)}
+/* ---- Method #3 "Complete Package": freeform gear/style rows -------------------------
+   Fixed layout + a colgroup, not the default auto layout: toggling one row's
+   Cyberware checkbox swaps its HL cell between "—" and a number input, and an
+   auto-layout table re-measures every column off whatever is now the widest cell
+   — the whole table visibly jumps sideways for an edit to one row. Fixed layout
+   sizes columns once, from the colgroup, and never again. */
+.cggeartbl{table-layout:fixed}
+.cggeartbl input[type="text"],.cggeartbl input[type="number"]{width:100%;box-sizing:border-box}
+/* ---- the Role's rank-4 payload -------------------------------------------------
+   `.cgfacts` is a label/value table, so its first column is sized to the label and
+   the rest of the width goes to the text. `tbody th` is nowrap page-wide, which
+   is what holds a name column open — here the labels are the book's own column headers
+   ("Group of up to 6 (DV 10)", "What the Family Motor Pool offers") and one of them alone
+   would push the table past the 1004px box. */
+.cgfacts{table-layout:auto}
+.cgfacts tbody th{white-space:normal;width:11rem;vertical-align:top}
+.cgpoolhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:14px 0 0}
+.cgpool tbody th{white-space:normal;width:12rem}
+.cgslots{margin-top:4px}
+.cgslots li{margin-bottom:4px}
+.cgtext{
+  background:var(--surface);border:1px solid var(--line);color:var(--ink);
+  padding:4px 6px;font:inherit;font-size:.9rem;min-width:12rem;
+}
+.cgtext:focus-visible{outline:2px solid var(--red);outline-offset:1px}
+/* The Role's own Lifepath is a second block inside step 4, not more rows in
+   the same list — it needs a heading that separates it without starting a section. */
+.cgpathh{margin:22px 0 2px;font-size:1rem}
+.cgstepn{
+  display:inline-block;min-width:1.3rem;color:var(--steel);
+  font:700 .8rem/1.3 Consolas,ui-monospace,monospace;
+}
+.cgsubroll{margin:10px 0 6px;font-size:.9rem}
+/* A price in prose is two inline boxes, not one word: the glossary turns "eb" into
+   a <button>, and the browser wraps between the number and it. `td.pr` exists for
+   the same reason in tables; this is the prose case. */
+.nb{white-space:nowrap}
+.cgstep{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.cgstep b{min-width:1.1rem;text-align:center;font:800 .95rem/1 Consolas,ui-monospace,monospace}
+.cgpm{
+  cursor:pointer;width:22px;height:22px;flex:none;padding:0;
+  background:var(--surface);border:1px solid var(--line);color:var(--ink);
+  font:700 1rem/1 inherit;
+}
+.cgpm:hover:not(:disabled){border-color:var(--red);color:var(--red-text)}
+.cgpm:disabled{opacity:.32;cursor:not-allowed}
+.cgpm:focus-visible{outline:2px solid var(--red);outline-offset:1px}
+/* A STAT with no die yet is the next thing to do, so it reads as an empty slot
+   rather than as a row that happens to say "—". */
+.cg tr.cgtodo1 th,.cg tr.cgtodo1 td{color:var(--steel)}
+/* Under Method #2 one CELL of the template is in force per column, not a row —
+   highlighting the row would state the opposite of the rule step 2 teaches.
+   **Specificity, not colour, is the hard part** — the fourth time this page has
+   collided with the zebra. Written as `.cg td.cgcell` it scored (0,2,1) against the
+   zebra's `tbody tr:nth-child(even):not(.cathead) td` at (0,2,3), so every selected
+   cell on an EVEN row lost its red and kept its white text: white on light grey,
+   invisible, and only on half the rows. Matching the shape of the `tr.on` rule
+   above takes it to (0,3,3). Test any new cell rule on both parities. */
+.cg tbody tr:not(.cathead) td.cgcell{background:var(--red);color:var(--on-accent);font-weight:800}
+
+.cgsheet{margin-top:16px;border-top:3px solid var(--red);background:var(--surface);padding:16px 18px 20px;box-shadow:var(--shadow)}
+.cgsheet h4{margin:18px 0 6px;font-size:.95rem;color:var(--red-text)}
+.cgsheet h4:first-of-type{margin-top:10px}
+.cghead{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;border-bottom:1px solid var(--line);padding-bottom:9px;margin-bottom:12px}
+.cghead .cgwho{font-size:1.4rem;font-weight:800;line-height:1.1}
+.cghead .cgrole{font-size:.8rem;font-weight:700;color:var(--red-text);text-transform:uppercase;letter-spacing:.03em}
+.cgderived{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
+.cgderived span{background:var(--sunken);border-left:3px solid var(--red);padding:6px 11px;font-size:.85rem}
+ul.cggear{margin:6px 0 4px;padding-left:20px;font-size:.87rem;line-height:1.9}
+/* the gloss under each item: .itsub is the page styles' sub-line, but it is sized for
+   a table cell, so inside a list it needs its own leading and a little air */
+ul.cggear li{margin-bottom:7px;line-height:1.5}
+ul.cggear .itsub{line-height:1.45;margin-top:1px}
+.cggearsel{max-width:28rem;font-size:.85rem}
+.cgor{font-size:.72rem;color:var(--steel);margin-left:6px}
+
+@media (max-width:700px){
+  .cglife{grid-template-columns:1fr;gap:4px}
+  .cgname input{min-width:0;width:100%;margin:4px 0 0}
+  .cgname{display:block}
+  /* Collapsing the grid to one column is not enough on a phone, and the page —
+     not the row — was what overflowed: 53px at 390px (iPhone 14), 83px at 360px.
+     `.cgacts` is a flex container with the default `min-width:auto`, so it cannot
+     shrink below the min-content of the <select> inside it, and a <select> is as
+     wide as its longest <option> — 294px of "1 — Ran the streets with no cash…". That
+     floors the grid track at ~358px and pushes <body> sideways, which is the one
+     thing the page styles never allows. Releasing both floors and letting the control
+     row wrap takes the overflow to 0 from 320px up. */
+  .cglife .cgacts{flex-wrap:wrap;min-width:0}
+  .cglife .cgsel,.cglife .cgselnarrow{max-width:100%;width:100%;min-width:0}
+}
+/* Printing a character sheet is the one export that works everywhere — a
+   sandboxed page cannot hand the viewer a file. So print drops everything
+   except the sheet itself. */
+/* Printing a character sheet is the one export that works everywhere — a sandboxed
+   page cannot hand the viewer a file. But "Print" must print the SHEET, not the
+   book: the first version only hid the wizard's own chrome, so it sent the whole
+   book to the printer.
+   Scoped to body.cgprint, which the Print button sets and afterprint clears, so
+   a plain Ctrl+P still prints the host book the way it intends. */
+@media print{
+  /* main opens with the book's own <header class="masthead">, which is not in
+     any section — hiding sections alone still printed it as page one. */
+  body.cgprint main > :not(section){display:none!important}
+  body.cgprint main section{display:none!important}
+  body.cgprint main section[id$="-master"]{display:block!important}
+  body.cgprint main section[id$="-master"] > :not(.cg){display:none!important}
+  body.cgprint .cg > :not(.cgpane){display:none!important}
+  body.cgprint .cgpane{display:none!important}
+  body.cgprint .cgpane[data-pane="5"]{display:block!important}
+  body.cgprint .cgpane[data-pane="5"] > :not(.cgsheet):not([data-cg="notebox"]){display:none!important}
+  /* the fields ARE the record — a textarea prints the box you see, so it needs a
+     visible edge and no scrollbar, and empty ones are dropped rather than printed
+     as blank boxes */
+  body.cgprint .cgnotes{border:0;border-top:2px solid #000;padding:0;margin:18px 0 0;background:none}
+  body.cgprint .cgnotehint{display:none}
+  body.cgprint .cgnote textarea{border:0;border-bottom:1px solid #999;padding:2px 0;
+    background:none;overflow:hidden;resize:none;color:#000}
+  body.cgprint .cgnote.empty{display:none}
+  /* With every field empty the rules above dropped all five boxes and the hint,
+     and left the heading standing alone over nothing. The block carries `.empty`
+     too now, so "About the character" — and the subordinate's "Who he is" — leave the
+     page entirely when the player wrote nothing. */
+  body.cgprint .cgnotes.empty{display:none}
+  /* On paper a stepper is not a control, it is a number: "−" and "+" are noise on
+     a sheet nobody can click, and the value between them is the whole point. The
+     Fixer's two text boxes print as their contents on a rule, like the notes. */
+  body.cgprint .cgpm{display:none!important}
+  body.cgprint .cgtext{border:0;border-bottom:1px solid #999;background:none;color:#000}
+  /* The page prints the BOOK, where ".tw,section{break-inside:avoid}" keeps a
+     reference table off a page boundary. A character sheet is one section
+     containing one 21-row table, so that rule cannot be satisfied: the table is
+     pushed whole to the next page and leaves the first one two-thirds empty
+     (measured: 340pt of 842 used). Here tables may break and rows may not, and
+     the header repeats on every page it spills onto. */
+  body.cgprint main section,
+  body.cgprint .cg,
+  body.cgprint .cgsheet,
+  body.cgprint .cgnotes,
+  body.cgprint .tw,
+  body.cgprint table{break-inside:auto}
+  body.cgprint tr,
+  body.cgprint .cgderived span,
+  body.cgprint .cgnote{break-inside:avoid}
+  body.cgprint thead{display:table-header-group}
+  /* deterministic margins; paper size is left to the user's dialog */
+  body.cgprint #gloss{display:none!important}
+  body.cgprint h4{break-after:avoid}
+  body.cgprint .cgsheet{border:0;box-shadow:none;padding:0;margin:0}
+  body.cgprint .cgtier{border-color:#999;background:none;color:#000}
+}
+
+/* the prev/next path through the wizard */
+.cgfoot{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:18px 0 2px;
+  padding-top:13px;border-top:1px solid var(--line)}
+.cgnext{margin-left:auto}
+.cgfoot .cghint{font-style:normal}
+@media (max-width:700px){ .cgnext{margin-left:0} }
+
+/* "Clears up to" — the hardest DV tier a total usually clears. Seven tiers, so the
+   ramp is weight and ink, not seven hues nobody can tell apart. */
+
+/* magnitude without a label: the book only puts STATs in roughly 1..8 */
+.cgbar{display:block;height:3px;margin:5px auto 0;width:70%;background:var(--line)}
+.cgbar i{display:block;height:100%;background:var(--red)}
+
+.cglegend{font-size:.79rem;color:var(--steel);line-height:1.5;margin:10px 0 12px;
+  border-left:3px solid var(--line);padding-left:10px}
+
+/* the book's one-line "what it allows", under the skill name */
+.cg .itsub{display:block;margin-top:3px;font-size:.75rem;font-weight:400;
+  line-height:1.4;color:var(--steel);white-space:normal;max-width:34rem}
+.cgability{margin:4px 0 6px;font-size:.88rem;line-height:1.55;color:var(--ink-2);max-width:44rem}
+
+/* "Easier for a beginner" / "+ separate chapter" on the Role chooser */
+.rolecard .rtop{display:block}
+.rcue{display:inline-block;margin:6px 0 0;padding:2px 8px;font-size:.7rem;font-weight:700;
+  letter-spacing:.02em;border:1px solid var(--line);background:var(--sunken);color:var(--steel)}
+.rcue.easy{background:var(--red);border-color:var(--red);color:var(--on-accent)}
+.rwhy{display:block;margin-top:5px;font-size:.73rem;line-height:1.4;color:var(--steel)}
+.rolecard.starter{border-left:3px solid var(--red)}
+
+/* how many fields still want the player's attention */
+.cgtodo{display:inline-grid;place-items:center;min-width:17px;height:17px;margin-left:7px;
+  padding:0 4px;border-radius:9px;background:var(--red);color:var(--on-accent);
+  font:800 .66rem/1 Consolas,ui-monospace,monospace}
+.cgtab.on .cgtodo{background:rgba(0,0,0,.3)}
+.cgtodoin{font-weight:400;color:var(--red-text)}
+
+/* the language the Lifepath grants, chosen inside its own row */
+.cgpickrow{margin-top:7px;font-size:.82rem;display:flex;flex-wrap:wrap;align-items:center;gap:7px}
+
+/* free text: the only place on the sheet the player writes rather than rolls */
+.cgnote{display:block;margin:10px 0 0}
+.cgnotelab{display:block;font-size:.78rem;font-weight:700;margin-bottom:3px}
+.cgnote textarea{width:100%;box-sizing:border-box;padding:6px 9px;font:inherit;font-size:.85rem;
+  background:var(--surface);border:1px solid var(--line);color:var(--ink);resize:vertical}
+.cgnote textarea:focus{outline:2px solid var(--red);outline-offset:-1px}
+
+/* "Usually clears" — a statement, not a control. It was bordered and shaded, so the
+   muted low tiers read as disabled buttons; the ramp is weight and colour now. */
+.cgtier{display:inline-block;padding:0;border:0;background:none;cursor:help;
+  font-size:.82rem;font-weight:700;line-height:1.25;color:var(--steel)}
+.cgtier .cgdv{display:block;font-size:.7rem;font-weight:400;color:var(--steel);
+  white-space:nowrap;margin-top:1px}
+.cgtier.t0{color:var(--steel);font-weight:400;font-style:italic}
+.cgtier.t3,.cgtier.t4{color:var(--ink)}
+.cgtier.t5,.cgtier.t6,.cgtier.t7{color:var(--red-text)}
+
+/* the free-text block */
+.cgnotes{margin:18px 0 4px;border:1px solid var(--line);background:var(--surface);
+  border-left:3px solid var(--red)}
+.cgnotes > summary{cursor:pointer;padding:11px 14px;font-size:.9rem;list-style:none}
+.cgnotes > summary::-webkit-details-marker{display:none}
+.cgnotes > summary::before{content:"▸ ";color:var(--red-text);font-weight:700}
+.cgnotes[open] > summary::before{content:"▾ "}
+.cgnotes > summary:hover{color:var(--red-text)}
+.cgnotes .cgnotehint{display:block;font-size:.74rem;color:var(--steel);margin-top:2px}
+.cgnotes .cgnote{padding:0 14px}
+.cgnotes .cgnote:last-child{padding-bottom:14px}
+
+/* the STAT's own value, so the sum stops looking like it came from nowhere */
+.cgsv{display:inline-block;min-width:1.1em;padding:0 4px;background:var(--sunken);
+  border-radius:2px;font-weight:700;color:var(--ink)}
+
+/* the total is a button: it rolls the check for that row */
+.cgsum{font:inherit;font-weight:800;cursor:pointer;padding:2px 9px;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);border-bottom-width:2px}
+.cgsum:hover{border-color:var(--red);color:var(--red-text)}
+.cgsum:active{transform:translateY(1px)}
+.cgrolled{display:block;margin-top:4px;font-size:.72rem;line-height:1.35;color:var(--steel);
+  white-space:normal}
+.cgrolled.win{color:var(--red-text);font-weight:700}
+
+/* "About the character" is a block, never a collapsed notch */
+.cgnoteh{margin:0 0 2px;font-size:.95rem;color:var(--red-text)}
+
+/* "About the character": one indentation for the heading, the hint and every field. The
+   heading sat at the card's padding while the labels and boxes each had their own,
+   so nothing lined up. */
+.cgnotes{padding:12px 14px 14px}
+.cgnoteh{margin:0 0 2px}
+.cgnotes .cgnotehint{margin:0 0 10px}
+.cgnotes .cgnote{padding:0;margin:0 0 10px}
+.cgnotes .cgnote:last-child{margin-bottom:0}
+.cgnoteprint{display:none;white-space:pre-wrap;font-size:.85rem;line-height:1.5}
+@media print{
+  /* the textarea cannot break across pages; the rendered copy can */
+  body.cgprint .cgnote textarea{display:none}
+  body.cgprint .cgnoteprint{display:block;break-inside:auto}
+  body.cgprint .cgnotelab{font-weight:700}
+}
+
+/* a table the book rolls column by column */
+
+/* a die hiding inside a lifepath sentence */
+.cgdice{font:inherit;font-size:.86rem;cursor:pointer;padding:0 5px;color:var(--red-text);
+  background:var(--red-soft);border:1px solid transparent;border-bottom:1px dashed var(--red)}
+.cgdice:hover{background:var(--red);color:var(--on-accent);border-bottom-color:var(--red)}
+.cgrollme{font-size:.76rem;color:var(--red-text);font-style:italic}
+
+/* every row in step 4 is label | value | controls, on one grid, so the controls
+   line up in a single column instead of stepping across the page */
+.cglife .cgacts{display:flex;gap:6px;align-items:start;justify-content:flex-end}
+.cglife .cgacts .cgbtn{flex:none;width:3.6rem;text-align:center}
+.cglife .cgacts .cgsel{flex:none;width:15rem;max-width:100%}
+.cgsublab{display:block;font-size:.72rem;font-weight:400;color:var(--steel);margin-top:2px}
+.cglife.cont{border-top:0;padding-top:0}
+.cglife.cont .cglabel{padding-left:10px}
+.cglife.first{border-bottom:0;padding-bottom:2px}
+@media (max-width:820px){
+  .cglife .cgacts{justify-content:flex-start}
+  .cglife .cgacts .cgsel{width:auto;flex:1}
+}
+
+/* a lifepath cell on the sheet: one line per column, its label in front */
+.lpl{display:block;margin:0 0 3px}
+.lpl:last-child{margin-bottom:0}
+/* min-width alone leaves no gap once the label is wider than it — padding is
+   what separates "Values most" from its value */
+.lpk{display:inline-block;min-width:8.5em;padding-right:10px;color:var(--steel);font-size:.78rem;vertical-align:top}
+.cgqual{color:var(--steel)}
+/* a page citation where the standalone generator has no chapter to link to — ref() */
+.cgcite{color:var(--steel);font-size:.85em;white-space:nowrap}
