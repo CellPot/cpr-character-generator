@@ -183,8 +183,20 @@
 /* The catalogue search is the main way to add a row and was the narrowest field on
    the pane (its placeholder cut mid-word), while the budget beside it took the
    browser's default text width for a four-digit number. */
-.cgcat{display:flex;flex-wrap:wrap;align-items:center;gap:6px;flex:0 1 36rem;min-width:0}
-.cgcat .cgtext{flex:1 1 14rem;min-width:0;box-sizing:border-box}
+/* The catalogue search is the main control on the gear step, so it is framed and
+   full-size; manual entry is the quiet .cglinkbtn under the table. */
+.cgcatbox{margin:12px 0 14px;padding:10px 12px;border:2px solid var(--red);background:var(--red-soft);max-width:40rem;box-sizing:border-box}
+.cgcat{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;min-width:0}
+.cgcatlab{font-weight:800}
+.cgcat .cgtext{flex:1 1 14rem;min-width:0;box-sizing:border-box;font-size:1rem;padding:7px 9px}
+.cgcathint{display:block;margin-top:6px;font-size:.8rem;color:var(--ink-2)}
+.cgmanual{font-size:.85rem;color:var(--steel)}
+.cglinkbtn{background:none;border:0;padding:0;font:inherit;color:var(--red-text);text-decoration:underline;cursor:pointer}
+.cglinkbtn:hover{text-decoration-thickness:2px}
+.cglinkbtn:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+/* below ~36rem the six columns cannot all fit their headers, so the table keeps
+   its width and its .tw wrapper scrolls instead of cutting "CYBERWARE" to "CYBER" */
+.cggeartbl{min-width:36rem}
 input[data-cg="cashbudget"]{width:7rem}
 /* The Role's own Lifepath is a second block inside step 4, not more rows in
    the same list — it needs a heading that separates it without starting a section. */

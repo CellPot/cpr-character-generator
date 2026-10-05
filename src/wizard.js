@@ -227,8 +227,10 @@ function pendingSkills(){
     if(!role()) return out;
     if(skillsLeft3() > 0) out.push(skillsLeft3() + " нераспределённых очков");
     for(var name in D.hints){
-      if(D.hints.hasOwnProperty(name) && skillLevel3(name) > 0
-         && !(S.picks[name] || "").trim()) out.push(name);
+      if(!D.hints.hasOwnProperty(name)) continue;
+      var cps = copies3(name);
+      for(var ci=0;ci<cps.length;ci++)
+        if(skillLevel3(cps[ci]) > 0 && !(S.picks[cps[ci]] || "").trim()) out.push(name);
     }
     return out;
   }
@@ -1005,7 +1007,7 @@ function paintStatAlloc(){
         + '<th class="n">Значение</th><th></th></tr></thead><tbody>';
   for(var i=0;i<D.stats.length;i++){
     var code = D.stats[i], v = S.statAlloc[code];
-    h += "<tr><th>"+code+' <span class="cgspec">'+esc(D.statFull[code]||"")+"</span></th>"
+    h += "<tr><th>"+code+' <span class="cgspec">'+esc(D.statFull[code]||"")+"</span>"+statWhat(code)+"</th>"
        + '<td class="n">'+v+bar(v)+"</td>"
        + '<td><span class="cgstep">'
        + '<button type="button" class="cgpm" data-cg="statdown" data-code="'+code+'"'
@@ -1015,6 +1017,16 @@ function paintStatAlloc(){
        + "</span></td></tr>";
   }
   box.innerHTML = h + "</tbody></table></div>";
+}
+/* What a STAT is for, as an .itsub line under its name. #2 and #3 each have a
+   table where every STAT is set, and the step used to print the same ten numbers
+   twice more under it — a bare summary row and a "What it is" table. The meaning now
+   rides in the table where the number is decided, and only #1 (which has no such
+   table — one die sets the whole row) keeps a table of its own for it. */
+function statWhat(code){
+  var nfo = D.statNotes[code];
+  return nfo && nfo.what
+    ? '<span class="itsub">'+esc(nfo.group ? nfo.group + " · " + nfo.what : nfo.what)+"</span>" : "";
 }
 function paintStatCalc(){
   if(!isCalc()) return;
@@ -1040,7 +1052,7 @@ function paintStatGrid(){
   for(var i=0;i<D.stats.length;i++){
     var d = sroll(i), code = D.stats[i];
     h += "<tr"+(d?"":' class="cgtodo1"')+"><th>"+code
-       + ' <span class="cgspec">'+esc(D.statFull[code]||"")+"</span></th>"
+       + ' <span class="cgspec">'+esc(D.statFull[code]||"")+"</span>"+statWhat(code)+"</th>"
        + '<td class="d">'+(d ? d : "—")+"</td>"
        + '<td class="n">'+(d ? "<b>"+r.tpl[d-1][i]+"</b>"+bar(r.tpl[d-1][i]) : "—")+"</td>"
        + '<td><button type="button" class="cgbtn cgmini" data-cg="rollstat1" data-i="'+i+'">1d10</button>'
@@ -1069,28 +1081,23 @@ function paintStats(){
                 : isCalc() ? "Раздели весь пул в таблице выше, пока «Осталось» не дойдёт до 0 — тогда здесь появятся СТАТы и производные."
                 : "Брось кубик — или разверни таблицу и выбери строку.") + "</p>"; }
   else {
-    var dv = derived(), h = '<div class="tw"><table class="mx"><thead><tr>';
-    for(var i=0;i<D.stats.length;i++)
-      h += '<th class="n" title="'+esc(D.statFull[D.stats[i]])+'">'+D.stats[i]+'</th>';
-    h += '</tr></thead><tbody><tr>';
+    var dv = derived(), h = "";
     /* the bar says "high or low" without inventing words for it — the book only
-       puts STATs in roughly 1..8, so a scale is honest where a label is not */
-    for(var j=0;j<D.stats.length;j++)
-      h += '<td class="n">'+S.stats[D.stats[j]]+bar(S.stats[D.stats[j]])+'</td>';
-    h += '</tr></tbody></table></div>';
-    h += '<p class="cglegend">Полоска — насколько цифра велика: обычные СТАТы идут '
-       + "от 1 до 8. Ниже — что каждая из них значит.</p>";
-    /* Step 2 used to be ten numbers and a bar, with nothing saying what any of
-       them was for. These lines are the book's own. */
-    h += '<div class="tw"><table class="mx"><thead><tr><th>СТАТ</th><th class="n">У тебя</th>'
-       + "<th>Группа</th><th>Что это</th></tr></thead><tbody>";
-    for(var s2=0;s2<D.stats.length;s2++){
-      var code = D.stats[s2], nfo = D.statNotes[code] || {group:"",what:""};
-      h += "<tr><th>"+code+' <span class="cgspec">'+esc(D.statFull[code]||"")+"</span></th>"
-         + '<td class="n"><b>'+S.stats[code]+"</b></td>"
-         + "<td>"+esc(nfo.group)+"</td><td>"+esc(nfo.what)+"</td></tr>";
+       puts STATs in roughly 1..8, so a scale is honest where a label is not.
+       Only #1 needs this table: #2/#3 already show every STAT, its bar and what it
+       is for in the table above, where it was set (see statWhat). */
+    if(!isEdge() && !isCalc()){
+      h += '<div class="tw"><table class="mx"><thead><tr><th>СТАТ</th><th class="n">У тебя</th>'
+         + "<th>Группа</th><th>Что это</th></tr></thead><tbody>";
+      for(var s2=0;s2<D.stats.length;s2++){
+        var code = D.stats[s2], nfo = D.statNotes[code] || {group:"",what:""};
+        h += "<tr><th>"+code+' <span class="cgspec">'+esc(D.statFull[code]||"")+"</span></th>"
+           + '<td class="n"><b>'+S.stats[code]+"</b>"+bar(S.stats[code])+"</td>"
+           + "<td>"+esc(nfo.group)+"</td><td>"+esc(nfo.what)+"</td></tr>";
+      }
+      h += "</tbody></table></div>";
     }
-    h += "</tbody></table></div>";
+    h += '<p class="cglegend">Полоска — насколько число велико: обычные СТАТы идут от 1 до 8.</p>';
     h += '<div class="tw"><table class="mx"><thead><tr><th>Производное</th><th class="n">Значение</th><th>Откуда</th></tr></thead><tbody>';
     h += '<tr><th>Пункты Здоровья</th><td class="n">'+dv.hp+'</td><td>10 + 5 × (ТЕЛ + ВОЛЯ) ÷ 2, вверх</td></tr>';
     h += '<tr><th>Порог тяжёлого ранения</th><td class="n">'+dv.serious+'</td><td>половина ПЗ, вверх</td></tr>';
@@ -1325,13 +1332,52 @@ root.addEventListener("click", function(ev){
    single SKILL_MIN applied to a fixed list. D.skills is canonical_skills()'s own
    dict (name -> {stat, cat, x2, what}), already in the book's category order —
    nothing new was mined for this. */
+/* Skills with a specialisation (Language, Local Expert, Science, Play Instrument — the ones D.hints names) are bought separately for each one: you must pick a specific language each time you raise this skill
+   (printed 135). So #3 lets a player hold several of them. The first copy is keyed
+   by the plain name, as before, so older saves read unchanged; each further copy
+   is "Language #2", "Language #3"…, keyed the same way in S.skills3 and S.picks. A further
+   copy has no floor, stays on screen at 0 until removed with its own ✕, and
+   everything that prices or prints a skill reads its base name through skillBase(). */
+function skillBase(key){ var i = key.indexOf("#"); return i < 0 ? key : key.slice(0, i); }
+function isExtra3(key){ return key.indexOf("#") >= 0; }
+function multi3(name){ return D.hints.hasOwnProperty(name); }
+function copies3(name){
+  var out = [name];
+  if(!multi3(name)) return out;
+  var extra = [];
+  for(var k in (S.skills3 || {}))
+    if(S.skills3.hasOwnProperty(k) && isExtra3(k) && skillBase(k) === name) extra.push(k);
+  extra.sort(function(a, b){ return (+a.split("#")[1]) - (+b.split("#")[1]); });
+  return out.concat(extra);
+}
+/* Every bought copy of every skill, in the book's order — what the sheet prints. */
+function boughtKeys3(){
+  var out = [], names = Object.keys(D.skills);
+  for(var i=0;i<names.length;i++){
+    var c = copies3(names[i]);
+    for(var j=0;j<c.length;j++) if(skillLevel3(c[j]) > 0) out.push(c[j]);
+  }
+  return out;
+}
+function addCopy3(name){
+  if(!multi3(name)) return;
+  var n = 2;
+  while((S.skills3 || {}).hasOwnProperty(name + "#" + n)) n++;
+  S.skills3[name + "#" + n] = 0;
+  save(); paintAll();
+}
+function removeCopy3(key){
+  if(!isExtra3(key)) return;
+  delete S.skills3[key]; delete S.picks[key];
+  save(); paintAll();
+}
 function skillMin3(name){ return D.baseSkills.indexOf(name) !== -1 ? D.skillMin : 0; }
 function skillLevel3(name){
   var v = (S.skills3 || {})[name];
   return (typeof v === "number") ? v : 0;
 }
 function skillCost3(name){
-  var info = D.skills[name];
+  var info = D.skills[skillBase(name)];
   return skillLevel3(name) * ((info && info.x2) ? 2 : 1);
 }
 function skillsSpent3(){
@@ -1368,12 +1414,12 @@ function ensureSkills3(){
   }
 }
 function bumpSkill3(name, delta){
-  var info = D.skills[name]; if(!info) return;
+  var info = D.skills[skillBase(name)]; if(!info) return;
   ensureSkills3();
   var step = info.x2 ? 2 : 1, next = skillLevel3(name) + delta;
   if(next < skillMin3(name) || next > D.skillMax) return;
   if(delta > 0 && skillsLeft3() < step) return;
-  if(next === 0) delete S.skills3[name]; else S.skills3[name] = next;
+  if(next === 0 && !isExtra3(name)) delete S.skills3[name]; else S.skills3[name] = next;
   save(); paintAll();
   var sel = '[data-cg="' + (delta > 0 ? "sk3up" : "sk3down") + '"][data-skill="' + name + '"]';
   var again = root.querySelector(sel);
@@ -1396,27 +1442,38 @@ function paintSkills3(){
         + '<th class="n">СТАТ</th><th class="n">Всего</th><th>Обычно берёт</th></tr></thead><tbody>';
   var group = null, shown = 0;
   for(var i=0;i<names.length;i++){
-    var name = names[i], info = D.skills[name];
-    if(q3 && name.toLowerCase().indexOf(q3) === -1) continue;
+    var base = names[i], info = D.skills[base];
+    if(q3 && base.toLowerCase().indexOf(q3) === -1) continue;
     shown++;
     if(info.cat !== group){
       group = info.cat;
       h += '<tr class="cathead"><th colspan="6">'+esc(group)+'</th></tr>';
     }
+    var copies = copies3(base);
+    for(var cp=0;cp<copies.length;cp++){
+    var name = copies[cp], extra = isExtra3(name), last = (cp === copies.length-1);
     var level = skillLevel3(name), min3 = skillMin3(name);
-    var nm = esc(name) + (info.x2 ? ' <span class="x2">×2</span>' : "");
-    if(D.hints.hasOwnProperty(name)){
-      var val = S.picks[name] || "", list = D.hints[name] || [];
+    var nm = esc(base) + (info.x2 ? ' <span class="x2">×2</span>' : "");
+    if(multi3(base)){
+      var val = S.picks[name] || "", list = D.hints[base] || [];
       nm += ' <input type="text" class="cgpick" data-cg="pick" data-skill="'+esc(name)+'"'
           + ' value="'+esc(val)+'" placeholder="выбери"'
-          + (list.length ? ' list="cg-'+encodeURIComponent(name)+'"' : "") + '>';
-      if(list.length){
-        nm += '<datalist id="cg-'+encodeURIComponent(name)+'">';
+          + (list.length ? ' list="cg-'+encodeURIComponent(base)+'"' : "") + '>';
+      if(list.length && cp === 0){
+        nm += '<datalist id="cg-'+encodeURIComponent(base)+'">';
         for(var L=0;L<list.length;L++) nm += '<option value="'+esc(list[L])+'">';
         nm += "</datalist>";
       }
+      if(extra)
+        nm += ' <button type="button" class="cgbtn cgmini" data-cg="sk3rm" data-skill="'+esc(name)
+            + '" title="Убрать эту специализацию">✕</button>';
     }
-    if(info.what) nm += '<span class="itsub">'+esc(info.what)+"</span>";
+    if(info.what && !extra) nm += '<span class="itsub">'+esc(info.what)+"</span>";
+    /* The way to a second language sits under the LAST copy, so it is always
+       right under the list it extends. */
+    if(multi3(base) && last)
+      nm += '<span class="itsub"><button type="button" class="cglinkbtn" data-cg="sk3add" data-skill="'
+          + esc(base)+'">+ ещё '+esc(base.toLowerCase())+' — другая специализация, свой уровень</button></span>';
     var step = info.x2 ? 2 : 1;
     var lvCell = '<span class="cgstep">'
       + '<button type="button" class="cgpm" data-cg="sk3down" data-skill="'+esc(name)+'"'
@@ -1433,11 +1490,13 @@ function paintSkills3(){
        + '<td class="n">'+statCell+"</td>"
        + '<td class="n">'
        + (total===null ? "—"
-          : '<button type="button" class="cgsum" data-cg="roll" data-key="'+esc(name)
+          : '<button type="button" class="cgsum" data-cg="roll" data-key="'
+            + esc(base + ((S.picks[name]||"").trim() ? " ("+S.picks[name].trim()+")" : ""))
             + '" data-stat="'+esc(info.stat)+'" data-level="'+level
             + '" data-total="'+total+'" title="Бросить проверку">'+total+"</button>")
        + "</td>"
        + "<td>"+(total===null?"—":tierChip(total))+"</td></tr>";
+    }
   }
   h += "</tbody></table></div>";
   if(!shown) h = '<p class="cghint">Ничего не найдено — попробуй другое слово.</p>';
@@ -1448,6 +1507,8 @@ root.addEventListener("click", function(ev){
   var t = ev.target, a = t.getAttribute && t.getAttribute("data-cg");
   if(a === "sk3up") bumpSkill3(t.getAttribute("data-skill"), 1);
   if(a === "sk3down") bumpSkill3(t.getAttribute("data-skill"), -1);
+  if(a === "sk3add") addCopy3(t.getAttribute("data-skill"));
+  if(a === "sk3rm") removeCopy3(t.getAttribute("data-skill"));
 });
 root.addEventListener("input", function(ev){
   if(ev.target.getAttribute && ev.target.getAttribute("data-cg") === "skillsearch"){
@@ -1628,10 +1689,19 @@ function paintGearList(which, boxId){
      clicking a <datalist> option only guarantees an `input` event, and `change`
      on a text field otherwise waits for blur — so a click added nothing until
      focus left the field. */
-  h += '<p class="cgrow"><label class="cgcat">Добавить из книги <input type="text" class="cgtext" '
+  /* The search is THE way to add a row — it fills price, HL and the page — and it
+     used to be a small grey field while "+ Add row" under the table was a
+     real button: the eye went to the button, and rows got typed by hand off the
+     book's price list. So the search is the big, framed control, and manual entry
+     is a quiet link under the table for what the catalogue does not have. */
+  h += '<div class="cgcatbox"><label class="cgcat"><span class="cgcatlab">Найти в книге</span>'
+     + '<input type="text" class="cgtext" '
      + 'data-cg="catalogpick" data-list="'+which+'" list="'+catalogListId(which)+'" '
-     + 'placeholder="'+(which === "style" ? "начни печатать стиль или предмет одежды…"
-                                            : "начни печатать название…")+'" autocomplete="off"></label></p>';
+     + 'placeholder="'+(which === "style" ? "куртка, ботинки, очки…"
+                                            : "пистолет, патроны, броня, имплант…")+'" autocomplete="off"></label>'
+     + '<span class="cgcathint">Начни печатать и выбери из списка — цена'
+     + (which === "style" ? "" : ", ПЧ")
+     + " и страница подставятся сами.</span></div>";
   /* table-layout:fixed + a <colgroup>, not the default auto layout: without it,
      toggling one row's Cyberware checkbox swaps the HL cell between "—" and a
      number input, and an auto-layout table re-measures every column's width off
@@ -1639,6 +1709,7 @@ function paintGearList(which, boxId){
      an edit to one row. Fixed layout sizes columns once, from the colgroup, and
      never again. Holds just as well for a locked row swapping an <input> for
      plain text. */
+  var tableAt = h.length;
   h += '<div class="tw"><table class="mx cggeartbl"><colgroup>'
      + '<col style="width:36%"><col style="width:9%"><col style="width:16%">'
      + '<col style="width:15%"><col style="width:14%"><col style="width:10%"></colgroup>'
@@ -1683,13 +1754,18 @@ function paintGearList(which, boxId){
        + '" data-i="'+i+'" title="Удалить строку">✕</button></td></tr>';
   }
   h += "</tbody></table></div>";
-  h += '<p class="cgrow"><button type="button" class="cgbtn" data-cg="gearadd" data-list="'+which
-     + '">+ Добавить строку</button>'
+  /* An empty list printed a header row over nothing; it now says where rows
+     come from. */
+  if(!rows.length)
+    h = h.slice(0, tableAt) + '<p class="cghint">Пока ничего не куплено — найди предмет в поле выше.</p>';
+  h += '<p class="cgrow">'
      + (left < 0 ? "" : '<span class="cgbleft">Останется: <b>'+left+"</b>eb"
         + (which === "buy" ? " — идёт в стартовые деньги"
            : which === "style" ? " — сгорает, не переносится"
            : " — остаётся у тебя как деньги на старте")
         + "</span>")
+     + '<span class="cgmanual">Нет в книге? <button type="button" class="cglinkbtn" data-cg="gearadd" data-list="'
+     + which + '">Вписать вручную</button></span>'
      + "</p>";
   /* Its own full-width callout, not folded into the row above — see .cgover.
      The fate note above ("goes into starting cash"…) describes what happens
@@ -2283,9 +2359,11 @@ function sheetText(){
                +gearBudget("buy")+"eb на Снаряжение (Стиль не переносится, он сгорает)");
     else
       out.push("  На старте: "+Math.max(0, gearLeft("start"))+"eb из "+gearBudget("start")
-               +"eb сверх снаряжения — один предмет категории «"+D.cash.tier.name+"» ("
-               +plainText(D.cash.tier.like).replace(/\.$/, "")+") или несколько дешевле, "
-               +"или трать ниже");
+               +"eb сверх снаряжения"
+               +(gearBudget("start") === D.cash.start
+                 ? " — один предмет категории «"+D.cash.tier.name+"» ("
+                   +plainText(D.cash.tier.like).replace(/\.$/, "")+") или несколько дешевле"
+                 : " (бюджет задан ГМом)"));
     out.push("  Между заказами: 1d6 в неделю, "+r.income.low+"–"+r.income.high
              +"eb (колонка Ранг 1–4)");
     if(!isCalc()){
@@ -2305,10 +2383,10 @@ function sheetText(){
     out.push("");
     out.push("НАВЫКИ");
     if(isCalc()){
-      var names4 = Object.keys(D.skills).filter(function(nm){ return skillLevel3(nm) > 0; });
+      var names4 = boughtKeys3();
       for(var s4=0;s4<names4.length;s4++){
-        var nm4 = names4[s4], info4 = D.skills[nm4], lvl4 = skillLevel3(nm4);
-        if(D.hints.hasOwnProperty(nm4)) nm4 += " ("+(S.picks[nm4]||"выбери")+")";
+        var key4 = names4[s4], nm4 = skillBase(key4), info4 = D.skills[nm4], lvl4 = skillLevel3(key4);
+        if(multi3(nm4)) nm4 += " ("+(S.picks[key4]||"выбери")+")";
         out.push("  "+nm4+" "+lvl4
                  +(S.stats?("  ["+info4.stat+"+навык = "+(eff(info4.stat)+lvl4)+"]"):""));
       }
@@ -2519,15 +2597,15 @@ function paintSheet(){
   if(isCalc()){
     /* Only the bought ones: printing all 66 at mostly-zero on a finished sheet
        would bury the ones that matter under the ones that don't. */
-    var names3 = Object.keys(D.skills).filter(function(nm){ return skillLevel3(nm) > 0; });
+    var names3 = boughtKeys3();
     for(var s3=0;s3<names3.length;s3++){
-      var nm3 = names3[s3], info3 = D.skills[nm3];
+      var key3 = names3[s3], nm3 = skillBase(key3), info3 = D.skills[nm3];
       var label3 = esc(nm3) + (info3.x2 ? ' <span class="x2">×2</span>' : "");
-      if(D.hints.hasOwnProperty(nm3))
-        label3 += (S.picks[nm3] || "").trim()
-          ? ' <span class="cgspec">('+esc(S.picks[nm3])+")</span>"
+      if(multi3(nm3))
+        label3 += (S.picks[key3] || "").trim()
+          ? ' <span class="cgspec">('+esc(S.picks[key3])+")</span>"
           : ' <span class="cgtodoin">не выбрано</span>';
-      var lvl3 = skillLevel3(nm3), sv3 = eff(info3.stat), tot3 = (sv3===null) ? null : sv3 + lvl3;
+      var lvl3 = skillLevel3(key3), sv3 = eff(info3.stat), tot3 = (sv3===null) ? null : sv3 + lvl3;
       h += "<tr><th>"+label3+'</th><td class="n">'+lvl3+'</td><td class="n">'
          + (tot3===null ? esc(info3.stat)
                         : esc(info3.stat)+" "+sv3+" + "+lvl3+" = <b>"+tot3+"</b>")
@@ -2764,10 +2842,14 @@ function paintSheet(){
             + (gearBudget("start") !== D.cash.start
                ? "(бюджет задан ГМом; по умолчанию " : "(")
             + "книга даёт "+D.cash.start+"eb сверх снаряжения обоим быстрым методам). "
-            + "По ценовой лестнице "+D.cash.start+"eb — это <b>ровно один</b> предмет "
-            + "категории «" + esc(D.cash.tier.name) + "» ("
-            + esc(D.cash.tier.like.replace(/\.$/, "")) + ") — или несколько дешевле, "
-            + "или можно потратить на шаге «Снаряжение» и оставить сдачу себе. "
+            /* The ladder comparison is a fact about the book's 500eb only: with a
+               GM's own figure it named a category the money no longer matched. */
+            + (gearBudget("start") === D.cash.start
+               ? "По ценовой лестнице "+D.cash.start+"eb — это <b>ровно один</b> предмет "
+                 + "категории «" + esc(D.cash.tier.name) + "» ("
+                 + esc(D.cash.tier.like.replace(/\.$/, "")) + ") — или несколько дешевле, "
+                 + "или можно потратить на шаге «Снаряжение» и оставить сдачу себе. "
+               : "Потратить можно на шаге «Снаряжение», остаток остаётся у тебя. ")
             + pageChip(D.cash.page))
        + "</td></tr>"
        + "<tr><th>Куда потратить</th><td>"
@@ -3291,7 +3373,10 @@ function paintTabs(){
   var nav = q("tabs"); if(!nav) return;
   var order = steps(), h = "";
   for(var i=0;i<order.length;i++){
-    var id = order[i].id, ok = ready(id), todo = todoOf(id);
+    /* A count on a tab that cannot be opened yet is a demand nothing on screen can
+       answer — #3 showed "Skills 3" before a single STAT existed. It appears once
+       the step is reachable. */
+    var id = order[i].id, ok = ready(id), todo = ok ? todoOf(id) : 0;
     h += '<button type="button" class="cgtab'+(id===cur?" on":"")+(ok?"":" off")
        + '" data-cg="tab" data-step="'+id+'"'+(ok?"":" disabled")+">"
        + '<span class="cgnum">'+(i+1)+"</span>"+order[i].name
