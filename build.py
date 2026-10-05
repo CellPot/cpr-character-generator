@@ -30,7 +30,14 @@ def body_markup():
     body = read("data/body.html")
     # Embedded in a book, every id of a chapter is namespaced «c00-…», and the
     # wizard's print rules select on that (section[id$="-master"]); keep the shape.
-    return re.sub(r'id="([^"]+)"', r'id="c00-\1"', body)
+    body = re.sub(r'id="([^"]+)"', r'id="c00-\1"', body)
+    # The game's name may stand in a descriptive subtitle, not in the title itself
+    # (RTG's Homebrew Content Policy) — so it goes right under the h1, as big as that
+    # rule allows, and «unofficial» lives in the footer's disclaimer.
+    h1 = "<h1>%s</h1>" % TITLE
+    if body.count(h1) != 1:
+        sys.exit("build: the body's <h1> is not «%s»" % TITLE)
+    return body.replace(h1, h1 + '\n<p class="for">%s</p>' % SUBTITLE)
 
 
 def legal(sources):
@@ -67,7 +74,7 @@ def render():
 <body>
 <main>
 <div class="topbar">
-  <span class="brand">Неофициальный фанатский инструмент<small>%(subtitle)s · бесплатно, без регистрации, работает офлайн</small></span>
+  <span class="brand">Фанатский инструмент · бесплатно · работает офлайн</span>
   <div class="themer" role="group" aria-label="Оформление"><button type="button" data-th="light">День</button><button type="button" data-th="dark">Ночь</button><button type="button" data-th="cyber-night">Кибер</button><button type="button" data-th="auto">Авто</button></div>
 </div>
 %(body)s

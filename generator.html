@@ -1039,14 +1039,15 @@ ul.cggear .itsub{line-height:1.45;margin-top:1px}
 main{max-width:1060px;margin:0 auto;padding:22px 28px 60px}
 .topbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;
   margin:0 0 6px;padding:0 0 10px;border-bottom:1px solid var(--line)}
-.topbar .brand{font-family:var(--font-disp);font-weight:800;letter-spacing:.06em;
-  text-transform:uppercase;font-size:.95rem;color:var(--red-text)}
-.topbar .brand small{display:block;font-size:.7rem;letter-spacing:.04em;color:var(--steel);
-  text-transform:none;font-weight:600}
+.topbar .brand{font-size:.75rem;letter-spacing:.03em;color:var(--steel);font-weight:600}
 .topbar .themer{margin:0;min-width:260px}
-.masthead{margin:18px 0 10px}
-.masthead h1{font-family:var(--font-disp);font-size:2rem;line-height:1.1;margin:0 0 8px;
+.masthead{margin:22px 0 10px}
+.masthead h1{font-family:var(--font-disp);font-size:2rem;line-height:1.1;margin:0;
   text-transform:uppercase;letter-spacing:.05em}
+/* "for Cyberpunk RED" — the subtitle carries the game's name, so it is the second
+   loudest thing on the page, in the accent colour */
+.masthead .for{font-family:var(--font-disp);font-size:1.45rem;font-weight:800;line-height:1.15;
+  margin:2px 0 12px;text-transform:uppercase;letter-spacing:.05em;color:var(--red-text)}
 .masthead .lede{color:var(--ink-2);max-width:62em;margin:0}
 /* Page citations. In the host book a chip that lands on a chapter is a red link
    and an uncovered one inert grey; here none can land anywhere, and all-grey read as
@@ -1073,11 +1074,12 @@ main{max-width:1060px;margin:0 auto;padding:22px 28px 60px}
 <body>
 <main>
 <div class="topbar">
-  <span class="brand">Неофициальный фанатский инструмент<small>для Cyberpunk RED · бесплатно, без регистрации, работает офлайн</small></span>
+  <span class="brand">Фанатский инструмент · бесплатно · работает офлайн</span>
   <div class="themer" role="group" aria-label="Оформление"><button type="button" data-th="light">День</button><button type="button" data-th="dark">Ночь</button><button type="button" data-th="cyber-night">Кибер</button><button type="button" data-th="auto">Авто</button></div>
 </div>
 <header class="masthead">
 <h1>Генератор персонажа</h1>
+<p class="for">для Cyberpunk RED</p>
 <p class="lede">Роль, броски, навыки, Жизненный путь — и готовый лист по правилам корбука.</p>
 </header>
 
