@@ -434,5 +434,3 @@ ul.cggear .itsub{line-height:1.45;margin-top:1px}
    what separates "Values most" from its value */
 .lpk{display:inline-block;min-width:8.5em;padding-right:10px;color:var(--steel);font-size:.78rem;vertical-align:top}
 .cgqual{color:var(--steel)}
-/* a page citation where the standalone generator has no chapter to link to — ref() */
-.cgcite{color:var(--steel);font-size:.85em;white-space:nowrap}

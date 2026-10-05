@@ -416,19 +416,19 @@ function gearItem(item, i){ return item.options[gearPick(i)] || item.options[0];
 function gearText(item, i){ return gearItem(item, i).text; }
 /* Every pointer out of the wizard goes through ref(). Inside the host book a target
    is an in-page anchor ("#section-id") and becomes a link. The standalone generator
-   ships without the book, so its data carries a page citation instead ("CRB 144") and the same sentence ends in that citation. Empty means nothing to point
+   ships without the book, so its data carries a page citation instead ("CRB 144")
+   and the same sentence ends in that citation chip. Empty means nothing to point
    at. `text` is markup, already escaped by the caller. */
 function ref(href, text){
   if(!href) return text;
   if(href.charAt(0) === "#") return '<a href="' + href + '">' + text + "</a>";
-  return text + ' <span class="cgcite">(' + esc(href) + ")</span>";
+  return text + ' <span class="cgcite">' + esc(href) + "</span>";
 }
 function link(key, text){ return ref(D.links[key], text); }
 /* A corebook page the wizard cites at runtime: the host book's "CRB 104" chip, or —
-   on the standalone page, whose data says `pageCite` — the same citation form as
-   ref() writes. */
+   on the standalone page, whose data says `pageCite` — the same chip ref() writes. */
 function pageChip(n){
-  return D.pageCite ? ' <span class="cgcite">(' + esc(D.pageCite + n) + ")</span>"
+  return D.pageCite ? '<span class="cgcite">' + esc(D.pageCite + n) + "</span>"
                     : '<span class="p">СТР ' + n + "</span>";
 }
 

@@ -13,6 +13,14 @@ main{max-width:1060px;margin:0 auto;padding:22px 28px 60px}
 .masthead h1{font-family:var(--font-disp);font-size:2rem;line-height:1.1;margin:0 0 8px;
   text-transform:uppercase;letter-spacing:.05em}
 .masthead .lede{color:var(--ink-2);max-width:62em;margin:0}
+/* Page citations. In the host book a chip that lands on a chapter is a red link
+   and an uncovered one inert grey; here none can land anywhere, and all-grey read as
+   "missing". Every chip — ref()'s .cgcite and the catalogue's own .p — takes the
+   linked look, without the hover that would promise a jump. */
+.cgcite{display:inline-block;font-family:Consolas,ui-monospace,monospace;font-size:.66rem;
+  padding:1px 5px;border:1px solid var(--line);border-radius:2px;background:var(--surface);
+  white-space:nowrap;vertical-align:.08em;letter-spacing:.02em}
+.cgcite,main .p{border-color:color-mix(in srgb,var(--red) 45%,transparent);color:var(--red-text)}
 .legal{margin:46px 0 0;padding:14px 0 0;border-top:1px solid var(--line);
   color:var(--steel);font-size:.8rem;line-height:1.5}
 .legal p{margin:0 0 7px}

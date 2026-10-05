@@ -38,15 +38,10 @@ def legal(sources):
     return """<footer class="legal">
 <p>%(title)s is unofficial content provided under the Homebrew Content Policy of
 R. Talsorian Games and is not approved or endorsed by RTG.</p>
-<p>Неофициальный бесплатный фанатский инструмент. Cyberpunk — зарегистрированный
-товарный знак CD PROJEKT S.A.; Cyberpunk RED, его правила и игровые материалы —
-R. Talsorian Games. Здесь — только механика, названия и краткий пересказ своими словами: полный
-текст правил — в книгах, страницы указаны рядом с каждым правилом.</p>
-<p>Русские термины — по переводу проекта <b>rustablerpg.ru</b> для группы
-<b>vk.com/cyberpunk_red_rus</b>.</p>
-<p>Обозначения источников: %(keys)s.</p>
-<p>Персонаж хранится только в этом браузере; страница ничего не отправляет и работает
-без интернета.</p>
+<p>Cyberpunk — товарный знак CD PROJEKT S.A.; Cyberpunk RED и его правила —
+R. Talsorian Games. Полный текст правил — в книгах; чип вроде <b>КБ 146</b> — страница.
+Термины — по переводу <b>rustablerpg.ru</b> / <b>vk.com/cyberpunk_red_rus</b>.</p>
+<p>Источники: %(keys)s.</p>
 </footer>""" % {"title": TITLE, "keys": keys}
 
 
