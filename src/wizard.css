@@ -79,6 +79,9 @@
 .cgprim{background:var(--red);border-color:var(--red);color:var(--on-accent)}
 .cgprim:hover{background:var(--red-deep);border-color:var(--red-deep);color:var(--on-accent)}
 .cgmini{padding:3px 9px;font-size:.75rem}
+/* the chosen STAT pool preset (Method #3) — the JS set .on and nothing styled it,
+   so all five presets looked equally unselected */
+.cgbtn.on{background:var(--red-soft);border-color:var(--red);color:var(--red-text)}
 /* a blocked button must LOOK blocked — .cgtab had this and .cgbtn did not,
    so "Next" sat there in full primary red while refusing to be clicked */
 .cgbtn:disabled{opacity:.45;cursor:not-allowed}
@@ -177,6 +180,12 @@
   padding:4px 6px;font:inherit;font-size:.9rem;min-width:12rem;
 }
 .cgtext:focus-visible{outline:2px solid var(--red);outline-offset:1px}
+/* The catalogue search is the main way to add a row and was the narrowest field on
+   the pane (its placeholder cut mid-word), while the budget beside it took the
+   browser's default text width for a four-digit number. */
+.cgcat{display:flex;flex-wrap:wrap;align-items:center;gap:6px;flex:0 1 36rem;min-width:0}
+.cgcat .cgtext{flex:1 1 14rem;min-width:0;box-sizing:border-box}
+input[data-cg="cashbudget"]{width:7rem}
 /* The Role's own Lifepath is a second block inside step 4, not more rows in
    the same list — it needs a heading that separates it without starting a section. */
 .cgpathh{margin:22px 0 2px;font-size:1rem}

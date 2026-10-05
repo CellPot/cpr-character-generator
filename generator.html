@@ -677,6 +677,9 @@ a.up:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .cgprim{background:var(--red);border-color:var(--red);color:var(--on-accent)}
 .cgprim:hover{background:var(--red-deep);border-color:var(--red-deep);color:var(--on-accent)}
 .cgmini{padding:3px 9px;font-size:.75rem}
+/* the chosen STAT pool preset (Method #3) — the JS set .on and nothing styled it,
+   so all five presets looked equally unselected */
+.cgbtn.on{background:var(--red-soft);border-color:var(--red);color:var(--red-text)}
 /* a blocked button must LOOK blocked — .cgtab had this and .cgbtn did not,
    so "Next" sat there in full primary red while refusing to be clicked */
 .cgbtn:disabled{opacity:.45;cursor:not-allowed}
@@ -775,6 +778,12 @@ a.up:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
   padding:4px 6px;font:inherit;font-size:.9rem;min-width:12rem;
 }
 .cgtext:focus-visible{outline:2px solid var(--red);outline-offset:1px}
+/* The catalogue search is the main way to add a row and was the narrowest field on
+   the pane (its placeholder cut mid-word), while the budget beside it took the
+   browser's default text width for a four-digit number. */
+.cgcat{display:flex;flex-wrap:wrap;align-items:center;gap:6px;flex:0 1 36rem;min-width:0}
+.cgcat .cgtext{flex:1 1 14rem;min-width:0;box-sizing:border-box}
+input[data-cg="cashbudget"]{width:7rem}
 /* The Role's own Lifepath is a second block inside step 4, not more rows in
    the same list — it needs a heading that separates it without starting a section. */
 .cgpathh{margin:22px 0 2px;font-size:1rem}
@@ -1136,7 +1145,7 @@ main{max-width:1060px;margin:0 auto;padding:22px 28px 60px}
   </div>
   <div data-mth="calc">
    <p>ГМ выдаёт пул очков на все десять СТАТов сразу — по умолчанию <b>62</b>
-   («Стандартный персонаж»); книга советует GM'ам держаться этого ранга, но
+   («Стандартный»); книга советует ГМам держаться этого ранга, но
    допускает и другие. Каждый СТАТ — от <b>2</b> до <b>8</b>.
    <span class="cgcite">КБ 78</span></p>
    <div data-cg="statpoolpick"></div>
@@ -2444,7 +2453,7 @@ function paintStats(){
 
   if(!S.stats){ box.innerHTML = '<p class="cghint">'
     + (isEdge() ? "Каждому СТАТу нужен свой бросок — брось все десять или по одному."
-                : isCalc() ? "Раздели весь пул между СТАТами — ниже, «Осталось» дойдёт до 0."
+                : isCalc() ? "Раздели весь пул в таблице выше, пока «Осталось» не дойдёт до 0 — тогда здесь появятся СТАТы и производные."
                 : "Брось кубик — или разверни таблицу и выбери строку.") + "</p>"; }
   else {
     var dv = derived(), h = '<div class="tw"><table class="mx"><thead><tr>';
@@ -2476,9 +2485,13 @@ function paintStats(){
     /* The Role's starting implants are already paid for here, so the "source"
        column has to say so — "EMP × 10" beside a number that is not EMP × 10 is
        the kind of line a reader checks once and stops trusting. */
+    /* Where the implants are listed differs by method: #1/#2's fixed package is
+       printed on the Sheet, #3's are its own rows on the Gear step. Naming a
+       step by number here was wrong for both — the strip renumbers itself. */
     h += '<tr><th>Человечность</th><td class="n">'+dv.hum+"</td><td>"
        + (dv.hl ? dv.empBase + " × 10 = " + dv.humBase + ", минус " + dv.hl
-                  + " ПЧ за стартовые импланты (шаг 5)"
+                  + (isCalc() ? " ПЧ за импланты, купленные на шаге «Снаряжение»"
+                              : " ПЧ за стартовые импланты (список — на Листе)")
                 : "ЭМП × 10")
        + "</td></tr>";
     if(dv.hl)
@@ -2717,11 +2730,28 @@ function skillsLeft3(){ return D.budget - skillsSpent3(); }
 /* The 13 mandatory skills start at their floor the first time this step is
    painted, the same "legal spread from the start" idea as #1's package being a
    legal #2 point-buy — an empty screen of zeroes answers nobody's question. */
+/* Two of the 13 come with their specialisation already fixed — every Role
+   package prints "Language (Street slang)" and "Local Expert (Your home)". #3
+   left both as "not chosen", a blank on every #3 sheet that #1/#2 never had. The
+   default is read off the packages (all ten agree), not typed here, and only
+   fills an EMPTY field — a player who typed something keeps it. */
+function basePick(name){
+  for(var i=0;i<D.roles.length;i++){
+    var sk = D.roles[i].skills;
+    for(var j=0;j<sk.length;j++)
+      if(sk[j].core && sk[j].skill === name && sk[j].pick) return sk[j].pick;
+  }
+  return "";
+}
 function ensureSkills3(){
   if(!S.skills3) S.skills3 = {};
   for(var i=0;i<D.baseSkills.length;i++){
     var name = D.baseSkills[i];
     if(typeof S.skills3[name] !== "number") S.skills3[name] = D.skillMin;
+    if(D.hints.hasOwnProperty(name) && !(S.picks[name] || "").trim()){
+      var bp = basePick(name);
+      if(bp) S.picks[name] = bp;
+    }
   }
 }
 function bumpSkill3(name, delta){
@@ -2985,7 +3015,7 @@ function paintGearList(which, boxId){
      clicking a <datalist> option only guarantees an `input` event, and `change`
      on a text field otherwise waits for blur — so a click added nothing until
      focus left the field. */
-  h += '<p class="cgrow"><label>Добавить из книги <input type="text" class="cgtext" '
+  h += '<p class="cgrow"><label class="cgcat">Добавить из книги <input type="text" class="cgtext" '
      + 'data-cg="catalogpick" data-list="'+which+'" list="'+catalogListId(which)+'" '
      + 'placeholder="'+(which === "style" ? "начни печатать стиль или предмет одежды…"
                                             : "начни печатать название…")+'" autocomplete="off"></label></p>';
@@ -3837,11 +3867,22 @@ function paintSheet(){
     /* Two of these numbers are not what the template rolled, and a sheet that does
        not say so reads as an arithmetic error — "Humanity 40" under "EMP 6"
        looks simply wrong. The chapter's own rule: show the arithmetic. */
-    if(dv.hl)
+    /* "starting cyberware" is only the whole story for #1/#2 with nothing bought
+       on top: #3 has no starting package, and extra chrome off the 500eb is in the
+       same total. The breakdown sits under "Cyberware" for #1/#2 and in a note
+       under Gear/Style for #3. */
+    if(dv.hl){
+      var cyx = cyber();
       h += '<p class="note">ЭМП <b>'+dv.empBase+" → "+dv.emp+"</b> и Человечность <b>"
-         + dv.humBase+" → "+dv.hum+"</b> — это стартовые импланты: они стоят "
-         + dv.hl+" ПЧ, и книга велит вычесть их сразу. Разбор по имплантам — "
-         + "в «Киберимплантах» ниже. " + link("chrome", "Стартовый хром по Ролям") + ".</p>";
+         + dv.humBase+" → "+dv.hum+"</b> — это "
+         + (isCalc() ? "купленные импланты"
+                     : (cyx && cyx.extraHl ? "стартовые импланты и купленные сверх них"
+                                           : "стартовые импланты"))
+         + ": они стоят " + dv.hl + " ПЧ, и книга велит вычесть их сразу. Разбор — "
+         + (isCalc() ? "под Снаряжением и Стилем ниже. "
+                     : "в «Киберимплантах» ниже. " + link("chrome", "Стартовый хром по Ролям") + ". ")
+         + "</p>";
+    }
     h += '<p class="note">Откуда эти числа — ' + link("derived_stats", "Производные характеристики")
        + ". Что происходит, когда ПЗ кончаются — " + link("wounds", "Урон и раны")
        + " и " + link("trauma_team", "Trauma Team") + ".</p>";
@@ -4589,7 +4630,7 @@ function ready(n){
    one says what is missing instead of just being dead. */
 var BLOCKED = {2:"Сначала выбери Роль", 3:"Сначала брось СТАТы",
                4:"Сначала брось СТАТы", 5:"Сначала брось СТАТы",
-               6:"Сначала брось СТАТы", 7:"Сначала получи СТАТы"};
+               6:"Сначала брось СТАТы", 7:"Сначала брось СТАТы"};
 /* The outstanding-field count belongs to the step that OWNS the field: "pick 1"
    to Skills, the culture language to Lifepath, the Role's own points and its
    Role path to the step each is painted on. One shared total on every tab sent
@@ -4621,7 +4662,11 @@ function paintFeet(){
       var nxt = order[i+1], can = ready(nxt.id);
       h += '<button type="button" class="cgbtn cgprim cgnext" data-cg="tab" data-step="'+nxt.id+'"'
          + (can ? "" : " disabled") + ">Дальше: " + nxt.name + " →</button>";
-      if(!can) h += '<span class="cghint">'+BLOCKED[nxt.id]+"</span>";
+      /* Method #3 does not roll its STATs, it spends a pool — "roll" sent the
+         reader looking for a die that is not on the screen. */
+      if(!can) h += '<span class="cghint">'
+                  + (nxt.id >= 3 && isCalc() ? "Сначала распредели пул СТАТов" : BLOCKED[nxt.id])
+                  + "</span>";
     } else {
       h += '<span class="cghint">Готово — лист выше можно распечатать.</span>';
     }
