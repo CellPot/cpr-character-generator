@@ -197,6 +197,10 @@
 /* below ~36rem the six columns cannot all fit their headers, so the table keeps
    its width and its .tw wrapper scrolls instead of cutting "CYBERWARE" to "CYBER" */
 .cggeartbl{min-width:36rem}
+/* #1/#2's starting kit on the Gear step — set apart from the purchases
+   under it, since nothing in it is bought */
+.cgkit{margin:14px 0 6px;padding:2px 14px 6px;border-left:3px solid var(--line);background:var(--surface)}
+.cgkit h4{margin-top:10px}
 input[data-cg="cashbudget"]{width:7rem}
 /* The Role's own Lifepath is a second block inside step 4, not more rows in
    the same list — it needs a heading that separates it without starting a section. */

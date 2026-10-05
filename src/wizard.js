@@ -1795,13 +1795,30 @@ function paintGearList(which, boxId){
    ever repainted the box empty. Each branch below explicitly empties the OTHER
    method's box for exactly this reason — `paintGearList` already no-ops safely
    if its own box is missing. */
+/* What #1/#2 already have, above what they can buy — the same lists the sheet
+   prints (kitGearList/kitCyberList), choosers included. */
+function paintStartKit(){
+  var box = q("startkit"); if(!box) return;
+  var r = role();
+  if(!r){ box.innerHTML = ""; return; }
+  var h = '<div class="cgkit"><h4>Уже есть — стартовый набор Роли</h4>'
+        + '<p class="cglegend">Это книга выдаёт бесплатно; ниже — только то, что '
+        + "покупаешь сверх. Где предложен выбор, выбери здесь или на Листе — это одно и то же.</p>"
+        + kitGearList(r);
+  var cy = cyber();
+  if(cy && cy.items && cy.items.length)
+    h += '<h4>Импланты — уже установлены</h4>' + kitCyberList(cy);
+  box.innerHTML = h + "</div><h4>Докупить сверх набора</h4>";
+}
 function paintGearPane(){
   if(isCalc()){
     paintSponsor();
     paintGearList("buy", "buybox");
     paintGearList("style", "stylebox");
     var sb = q("startbuybox"); if(sb) sb.innerHTML = "";
+    var kb = q("startkit"); if(kb) kb.innerHTML = "";
   } else {
+    paintStartKit();
     paintGearList("start", "startbuybox");
     var bb = q("buybox"), tb = q("stylebox");
     if(bb) bb.innerHTML = ""; if(tb) tb.innerHTML = "";
@@ -2254,12 +2271,12 @@ root.addEventListener("change", function(ev){
   if(t.getAttribute && t.getAttribute("data-cg")==="gear"){
     if(!S.gear) S.gear = {};
     S.gear[t.getAttribute("data-item")] = +t.value;
-    save(); paintSheet();
+    save(); paintSheet(); paintGearPane();   // the kit is drawn on both
   }
   if(t.getAttribute && t.getAttribute("data-cg")==="cyber"){
     if(!S.cyber) S.cyber = {};
     S.cyber[t.getAttribute("data-item")] = +t.value;
-    save(); paintSheet();
+    save(); paintSheet(); paintGearPane();
   }
   /* The Nomad's Motor Pool. `drive` names a vehicle by its own name rather than
      by slot index, because the slot it came from can be re-decided underneath it —
@@ -2540,6 +2557,60 @@ function sheetText(){
   return out.join("\n");
 }
 
+/* The fixed starting kit of #1/#2 — gear and implants, each with its chooser
+   where the book offers "one of". Drawn in TWO places by the same code: on the
+   sheet, and at the top of the Gear step, where the 500eb is spent — without
+   it there a player bought a second pistol not knowing the Role had handed him one. */
+function kitGearList(r){
+  var h = "<ul class=\"cggear\">";
+  for(var g=0;g<r.gear.length;g++){
+    var item = r.gear[g], chosen = gearItem(item, g);
+    if(item.options.length > 1){
+      h += '<li><select class="cgsel cggearsel" data-cg="gear" data-item="'+g+'">';
+      for(var o=0;o<item.options.length;o++){
+        var op = item.options[o];
+        h += '<option value="'+o+'"'+(gearPick(g)===o?" selected":"")+">"+esc(op.text)
+           + (op.short ? esc(" — " + op.short) : "") + "</option>";
+      }
+      h += '</select> <span class="cgor">выбери одно из '+item.options.length+"</span>";
+    } else {
+      h += "<li>"+esc(chosen.text);
+    }
+    h += '<span class="itsub">'+esc(chosen.note)
+       + " " + ref(chosen.href, "подробнее") + "</span></li>";
+  }
+  h += "</ul>";
+  return h;
+}
+function kitCyberList(cy){
+  var h = "<ul class=\"cggear cgcyber\">";
+  for(var ci=0;ci<cy.items.length;ci++){
+    var cit = cy.items[ci], cch = cyberItem(cit, ci);
+    if(cit.options.length > 1){
+      /* "Sandevistan or Wolverine Claws" — the book: where a choice of two is offered,
+         only one is taken. Both cost the same HL, so the choice
+         moves no number; it is still the player's — and it is unmakeable without
+         knowing what either does, which is why the gloss follows the selection. */
+      h += '<li><select class="cgsel cggearsel" data-cg="cyber" data-item="'+ci+'">';
+      for(var co=0;co<cit.options.length;co++)
+        h += '<option value="'+co+'"'+(cyberPick(ci)===co?" selected":"")+">"
+           + esc(cit.options[co].text)+"</option>";
+      h += '</select> <span class="cgor">выбери одно из '+cit.options.length+"</span>";
+    } else {
+      h += "<li>"+esc(cch.text);
+    }
+    /* Each implant prints its OWN HL. Without it the total was a bare assertion —
+       "Total 14 HL" with nothing on the page to add up to it — which is the same
+       defect as a tier chip naming a difficulty without printing the DV: the
+       reader cannot check it, so they stop trusting it. */
+    h += ' <span class="x2">'+cit.hl+" ПЧ</span>";
+    h += '<span class="itsub">'+esc(cch.note)
+       + " " + ref(cch.href, "подробнее") + "</span></li>";
+  }
+  h += "</ul>";
+  return h;
+}
+
 function paintSheet(){
   var box = q("sheet"); if(!box) return;
   var r = role(), dv = derived();
@@ -2684,24 +2755,7 @@ function paintSheet(){
     h += gearSheetHtml("buy", "Снаряжение", " — идёт в стартовые деньги.");
     h += gearSheetHtml("style", "Стиль", " — сгорает.");
   } else {
-  h += "<h4>Стартовое снаряжение</h4><ul class=\"cggear\">";
-  for(var g=0;g<r.gear.length;g++){
-    var item = r.gear[g], chosen = gearItem(item, g);
-    if(item.options.length > 1){
-      h += '<li><select class="cgsel cggearsel" data-cg="gear" data-item="'+g+'">';
-      for(var o=0;o<item.options.length;o++){
-        var op = item.options[o];
-        h += '<option value="'+o+'"'+(gearPick(g)===o?" selected":"")+">"+esc(op.text)
-           + (op.short ? esc(" — " + op.short) : "") + "</option>";
-      }
-      h += '</select> <span class="cgor">выбери одно из '+item.options.length+"</span>";
-    } else {
-      h += "<li>"+esc(chosen.text);
-    }
-    h += '<span class="itsub">'+esc(chosen.note)
-       + " " + ref(chosen.href, "подробнее") + "</span></li>";
-  }
-  h += "</ul>";
+  h += "<h4>Стартовое снаряжение</h4>" + kitGearList(r);
   /* Each line now links itself, so this note carries only what the per-item links
      do not: where to buy the rest, and the cyberware a starting character has.
      Repeating "Ranged · Melee · Armor" underneath seven "details"
@@ -2732,30 +2786,7 @@ function paintSheet(){
     /* Its own list class, not .cggear: the two lists look alike but their checks
        are different — a gear line carries a generated stats gloss, an implant line
        carries the catalogue's "what it gives". */
-    h += "<h4>Киберимпланты</h4><ul class=\"cggear cgcyber\">";
-    for(var ci=0;ci<cy.items.length;ci++){
-      var cit = cy.items[ci], cch = cyberItem(cit, ci);
-      if(cit.options.length > 1){
-        /* "Sandevistan or Wolverine Claws" — the book: where a choice of two is offered, only one is taken. Both cost the same HL, so the choice
-           moves no number; it is still the player's — and it is unmakeable without
-           knowing what either does, which is why the gloss follows the selection. */
-        h += '<li><select class="cgsel cggearsel" data-cg="cyber" data-item="'+ci+'">';
-        for(var co=0;co<cit.options.length;co++)
-          h += '<option value="'+co+'"'+(cyberPick(ci)===co?" selected":"")+">"
-             + esc(cit.options[co].text)+"</option>";
-        h += '</select> <span class="cgor">выбери одно из '+cit.options.length+"</span>";
-      } else {
-        h += "<li>"+esc(cch.text);
-      }
-      /* Each implant prints its OWN HL. Without it the total was a bare assertion —
-         "Total 14 HL" with nothing on the page to add up to it — which is the same
-         defect as a tier chip naming a difficulty without printing the DV: the
-         reader cannot check it, so they stop trusting it. */
-      h += ' <span class="x2">'+cit.hl+" ПЧ</span>";
-      h += '<span class="itsub">'+esc(cch.note)
-         + " " + ref(cch.href, "подробнее") + "</span></li>";
-    }
-    h += "</ul>";
+    h += "<h4>Киберимпланты</h4>" + kitCyberList(cy);
     /* …and the whole chain, one step per line, each starting from the number above
        it: the sum, then Humanity, then EMP. "Why exactly 26" has to be
        answerable without opening the book. */

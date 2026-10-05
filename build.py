@@ -14,7 +14,7 @@ Inputs, all in this repository:
 
 Deterministic: the same inputs give the same bytes. Standard library only.
 """
-import io, json, os, re, sys
+import datetime, io, json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "generator.html")
@@ -56,6 +56,20 @@ def esc(t):
     return t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
+# The files the page is made of. Their newest change is the page's date.
+INPUTS = ("src/base.css", "src/wizard.css", "src/page.css", "src/standalone.js",
+          "src/wizard.js", "data/body.html", "data/payload.json", "build.py")
+
+
+def last_updated():
+    """Newest mtime among the inputs — the reference's rule (its _build_book.py):
+    not today's date, so a rebuild that changes nothing does not move it, or
+    «обновлено» would stop meaning anything."""
+    newest = max(os.path.getmtime(os.path.join(HERE, f)) for f in INPUTS)
+    d = datetime.date.fromtimestamp(newest)
+    return "%02d.%02d.%d" % (d.day, d.month, d.year)
+
+
 def render():
     """The page as text — build() writes it, the export's checks compare it."""
     payload = json.loads(read("data/payload.json"))
@@ -74,7 +88,7 @@ def render():
 <body>
 <main>
 <div class="topbar">
-  <span class="brand">Фанатский инструмент · бесплатно · работает офлайн</span>
+  <span class="brand">Фанатский инструмент · бесплатно · работает офлайн · обновлено %(updated)s</span>
   <div class="themer" role="group" aria-label="Оформление"><button type="button" data-th="light">День</button><button type="button" data-th="dark">Ночь</button><button type="button" data-th="cyber-night">Кибер</button><button type="button" data-th="auto">Авто</button></div>
 </div>
 %(body)s
@@ -86,7 +100,7 @@ def render():
 </body>
 </html>
 """ % {"title": TITLE, "subtitle": SUBTITLE, "style": style, "body": body_markup(),
-       "legal": legal(payload["sources"]), "script": script}
+       "legal": legal(payload["sources"]), "script": script, "updated": last_updated()}
     bad = [c for c in page if ord(c) < 0x20 and c not in "\n\t"]
     if bad:
         sys.exit("control characters in the page: %r" % bad[:5])
