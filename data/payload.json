@@ -1119,6 +1119,7 @@
    "label": "Адоносец Магнум Опус — 1000eb — GNM 3"
   },
   {
+   "alt": "AquaForm®",
    "name": "АкваФорма®",
    "price": 4500,
    "cyber": true,
@@ -1128,7 +1129,7 @@
    "tier": "О. дорогое",
    "href": "",
    "kind": "gear",
-   "label": "АкваФорма® — 4500eb — EX45 3–8"
+   "label": "АкваФорма® (AquaForm®) — 4500eb — EX45 3–8"
   },
   {
    "name": "Активные наушники",
@@ -1552,6 +1553,7 @@
    "label": "Боевая Куртка Кортик — 500eb — BC 28"
   },
   {
+   "alt": "Combat Jaw",
    "name": "Боевая Челюсть",
    "price": 500,
    "cyber": true,
@@ -1561,7 +1563,7 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Боевая Челюсть — 500eb — EX45 8–9"
+   "label": "Боевая Челюсть (Combat Jaw) — 500eb — EX45 8–9"
   },
   {
    "name": "Боевая перчатка",
@@ -1602,6 +1604,7 @@
    "label": "Боевой Самописец (Combat Recorder) — 500eb — MWU 5–6"
   },
   {
+   "alt": "Combat Tail",
    "name": "Боевой Хвост",
    "price": 1000,
    "cyber": true,
@@ -1611,7 +1614,7 @@
    "tier": "О. дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Боевой Хвост — 1000eb — EX45 8–9"
+   "label": "Боевой Хвост (Combat Tail) — 1000eb — EX45 8–9"
   },
   {
    "name": "Боевые Челюсти",
@@ -1652,6 +1655,7 @@
    "label": "Больше САИИ (Big SAAI) — 100eb — AAA 7–9"
   },
   {
+   "alt": "BigKatt®",
    "name": "БольшеКот®",
    "price": 7000,
    "cyber": true,
@@ -1661,7 +1665,7 @@
    "tier": "Роскошь",
    "href": "",
    "kind": "gear",
-   "label": "БольшеКот® — 7000eb — EX45 3–8"
+   "label": "БольшеКот® (BigKatt®) — 7000eb — EX45 3–8"
   },
   {
    "name": "Большие костяшки",
@@ -3067,6 +3071,7 @@
    "label": "Дарра Политехник «Бинарник» (Darra Polytechnic Binary) — 1000eb — TT 20–25"
   },
   {
+   "alt": "Dwarvish FantaForm™",
    "name": "Дворф",
    "price": 2100,
    "cyber": true,
@@ -3076,7 +3081,7 @@
    "tier": "О. дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Дворф — 2100eb — EX45 3–8"
+   "label": "Дворф (Dwarvish FantaForm™) — 2100eb — EX45 3–8"
   },
   {
    "name": "Двузарядный Пистолет Лиса",
@@ -3117,6 +3122,7 @@
    "label": "Делириум (Deliriant) — 50eb — SF 22–25"
   },
   {
+   "alt": "Demonique™",
    "name": "Демон™",
    "price": 2100,
    "cyber": true,
@@ -3126,7 +3132,7 @@
    "tier": "О. дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Демон™ — 2100eb — EX45 3–8"
+   "label": "Демон™ (Demonique™) — 2100eb — EX45 3–8"
   },
   {
    "name": "Демпфер",
@@ -3255,6 +3261,7 @@
    "label": "Дотронуться до Роскоши — 500eb — CC 7"
   },
   {
+   "alt": "Draconic FantaForm™",
    "name": "Дракон",
    "price": 11000,
    "cyber": true,
@@ -3264,7 +3271,7 @@
    "tier": "Супер Роскошь",
    "href": "",
    "kind": "gear",
-   "label": "Дракон — 11000eb — EX45 3–8"
+   "label": "Дракон (Draconic FantaForm™) — 11000eb — EX45 3–8"
   },
   {
    "name": "Дробилка Милитех",
@@ -3442,6 +3449,7 @@
    "label": "Жирафа «Борис» (Zhirafa Boris) — 46900eb — SF 34–38"
   },
   {
+   "alt": "Bughouse®",
    "name": "ЖучийДом®",
    "price": 6600,
    "cyber": true,
@@ -3451,9 +3459,10 @@
    "tier": "Роскошь",
    "href": "",
    "kind": "gear",
-   "label": "ЖучийДом® — 6600eb — EX45 3–8"
+   "label": "ЖучийДом® (Bughouse®) — 6600eb — EX45 3–8"
   },
   {
+   "alt": "LagoForm®",
    "name": "ЗайцеФорма®",
    "price": 2100,
    "cyber": true,
@@ -3463,7 +3472,7 @@
    "tier": "О. дорогое",
    "href": "",
    "kind": "gear",
-   "label": "ЗайцеФорма® — 2100eb — EX45 3–8"
+   "label": "ЗайцеФорма® (LagoForm®) — 2100eb — EX45 3–8"
   },
   {
    "name": "Закалённое экранирование",
@@ -4943,6 +4952,7 @@
    "label": "Костюм РХБЗ от Esporma — 5000eb — GRM 2"
   },
   {
+   "alt": "KatNip®",
    "name": "КотийКусь®",
    "price": 2200,
    "cyber": true,
@@ -4952,7 +4962,7 @@
    "tier": "О. дорогое",
    "href": "",
    "kind": "gear",
-   "label": "КотийКусь® — 2200eb — EX45 3–8"
+   "label": "КотийКусь® (KatNip®) — 2200eb — EX45 3–8"
   },
   {
    "name": "Кофф Поппер от Континентал Брендс",
@@ -5535,6 +5545,7 @@
    "label": "Мастер Напитков 3000 — 1000eb — BC 42"
   },
   {
+   "alt": "UrsaForm®",
    "name": "МедведоФорма®",
    "price": 8200,
    "cyber": true,
@@ -5544,7 +5555,7 @@
    "tier": "Роскошь",
    "href": "",
    "kind": "gear",
-   "label": "МедведоФорма® — 8200eb — EX45 3–8"
+   "label": "МедведоФорма® (UrsaForm®) — 8200eb — EX45 3–8"
   },
   {
    "name": "Медсканер",
@@ -5573,6 +5584,7 @@
    "label": "Медсканер (Medscanner) — 500eb — СТР 108"
   },
   {
+   "alt": "Merish FantaForm™",
    "name": "Мериш",
    "price": 3600,
    "cyber": true,
@@ -5582,7 +5594,7 @@
    "tier": "О. дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Мериш — 3600eb — EX45 3–8"
+   "label": "Мериш (Merish FantaForm™) — 3600eb — EX45 3–8"
   },
   {
    "alt": "MetaCorp Hela Smart Launcher",
@@ -6499,6 +6511,7 @@
    "label": "Ногти Lead Включи-Удиви-Отключи — 100eb — DG 146"
   },
   {
+   "alt": "NeuHuman™",
    "name": "НювыйЧеловек™",
    "price": 4000,
    "cyber": true,
@@ -6508,9 +6521,10 @@
    "tier": "О. дорогое",
    "href": "",
    "kind": "gear",
-   "label": "НювыйЧеловек™ — 4000eb — EX45 3–8"
+   "label": "НювыйЧеловек™ (NeuHuman™) — 4000eb — EX45 3–8"
   },
   {
+   "alt": "NeuTongue",
    "name": "НювыйЯзык",
    "price": 100,
    "cyber": true,
@@ -6520,7 +6534,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "НювыйЯзык — 100eb — EX45 8–9"
+   "label": "НювыйЯзык (NeuTongue) — 100eb — EX45 8–9"
   },
   {
    "name": "Обновленная Интегрированная Кибердека",
@@ -6706,6 +6720,7 @@
    "label": "Обувь — Urban Flash — 100eb — СТР 356"
   },
   {
+   "alt": "Embrace Rodentia®",
    "name": "Объятия Родентии®",
    "price": 2100,
    "cyber": true,
@@ -6715,7 +6730,7 @@
    "tier": "О. дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Объятия Родентии® — 2100eb — EX45 3–8"
+   "label": "Объятия Родентии® (Embrace Rodentia®) — 2100eb — EX45 3–8"
   },
   {
    "name": "Оверлорд Ручная пушка",
@@ -6767,6 +6782,7 @@
    "label": "Огнемёт Дракон Кендачи — 1000eb — GNM 3"
   },
   {
+   "alt": "Firebreather",
    "name": "ОгненноеДыхание",
    "price": 1000,
    "cyber": true,
@@ -6776,7 +6792,7 @@
    "tier": "О. дорогое",
    "href": "",
    "kind": "gear",
-   "label": "ОгненноеДыхание — 1000eb — EX45 8–9"
+   "label": "ОгненноеДыхание (Firebreather) — 1000eb — EX45 8–9"
   },
   {
    "name": "Огнеупорный Сейф",
@@ -6803,6 +6819,7 @@
    "label": "Огонь Арасаки — 100eb — BC 91"
   },
   {
+   "alt": "Ogrish FantaForm™",
    "name": "Огр",
    "price": 4000,
    "cyber": true,
@@ -6812,7 +6829,7 @@
    "tier": "О. дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Огр — 4000eb — EX45 3–8"
+   "label": "Огр (Ogrish FantaForm™) — 4000eb — EX45 3–8"
   },
   {
    "name": "Однозарядный Киберпалец",
@@ -6840,6 +6857,7 @@
    "label": "Одноразовый телефон (Disposable Cell Phone) — 50eb — СТР 351"
   },
   {
+   "alt": "Orcish FantaForm™",
    "name": "Орк",
    "price": 2500,
    "cyber": true,
@@ -6849,7 +6867,7 @@
    "tier": "О. дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Орк — 2500eb — EX45 3–8"
+   "label": "Орк (Orcish FantaForm™) — 2500eb — EX45 3–8"
   },
   {
    "name": "Осмотический Состав",
@@ -8680,6 +8698,7 @@
    "label": "Пуленепробиваемый щит (Bulletproof Shield) — 100eb — СТР 183"
   },
   {
+   "alt": "LupaForm®",
    "name": "ПёсьяФорма®",
    "price": 2200,
    "cyber": true,
@@ -8689,7 +8708,7 @@
    "tier": "О. дорогое",
    "href": "",
    "kind": "gear",
-   "label": "ПёсьяФорма® — 2200eb — EX45 3–8"
+   "label": "ПёсьяФорма® (LupaForm®) — 2200eb — EX45 3–8"
   },
   {
    "name": "Радар / Сонар",
@@ -8904,6 +8923,7 @@
    "label": "Рация (Radio Communicator) — 100eb — СТР 351"
   },
   {
+   "alt": "Appetite Controller",
    "name": "Регулятор Аппетита",
    "price": 500,
    "cyber": true,
@@ -8913,7 +8933,7 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Регулятор Аппетита — 500eb — EX45 8–9"
+   "label": "Регулятор Аппетита (Appetite Controller) — 500eb — EX45 8–9"
   },
   {
    "name": "Регулятор Голода",
@@ -9310,6 +9330,7 @@
    "label": "Сдвиг цвета (Color Shift) — 100eb — СТР 108"
   },
   {
+   "alt": "Serpentize Yourself®",
    "name": "Серпентизируй Себя®",
    "price": 2100,
    "cyber": true,
@@ -9319,7 +9340,7 @@
    "tier": "О. дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Серпентизируй Себя® — 2100eb — EX45 3–8"
+   "label": "Серпентизируй Себя® (Serpentize Yourself®) — 2100eb — EX45 3–8"
   },
   {
    "name": "Сетевой Костюм Лотос",
@@ -11976,6 +11997,7 @@
    "label": "Электроштык — 100eb — RDM 3"
   },
   {
+   "alt": "Elvish FantaForm™",
    "name": "Эльф",
    "price": 2100,
    "cyber": true,
@@ -11985,7 +12007,7 @@
    "tier": "О. дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Эльф — 2100eb — EX45 3–8"
+   "label": "Эльф (Elvish FantaForm™) — 2100eb — EX45 3–8"
   },
   {
    "alt": "Elflines Online Elftracker",
