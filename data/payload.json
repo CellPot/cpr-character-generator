@@ -76,7 +76,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "4Тифай — 100eb — BC 13"
+   "alt": "4Tify",
+   "label": "4Тифай (4Tify) — 100eb — BC 13"
   },
   {
    "name": "Big Dreem",
@@ -176,7 +177,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "E-TACK Народный Защитник — 500eb — BC 115"
+   "alt": "E-TACK Public Defender",
+   "label": "E-TACK Народный Защитник (E-TACK Public Defender) — 500eb — BC 115"
   },
   {
    "alt": "EBM PiR2",
@@ -588,7 +590,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "NCPD База Преступлений — 500eb — BC 13"
+   "alt": "NCPD Crime Database",
+   "label": "NCPD База Преступлений (NCPD Crime Database) — 500eb — BC 13"
   },
   {
    "name": "Nova Model 757 Cityhunter",
@@ -939,7 +942,8 @@
    "tier": "Обычное",
    "href": "",
    "kind": "gear",
-   "label": "Trauma Team МедСкан — 20eb — BC 14"
+   "alt": "Trauma Team MedScan",
+   "label": "Trauma Team МедСкан (Trauma Team MedScan) — 20eb — BC 14"
   },
   {
    "name": "Triti-Fizz",
@@ -1361,7 +1365,8 @@
    "tier": "С. Роскошь",
    "href": "",
    "kind": "gear",
-   "label": "Арасака Прототип Изменяемой Штурмовой Винтовки — 15000eb — BC 102"
+   "alt": "Arasaka Prototype Variable AR",
+   "label": "Арасака Прототип Изменяемой Штурмовой Винтовки (Arasaka Prototype Variable AR) — 15000eb — BC 102"
   },
   {
    "name": "Архимед",
@@ -1475,7 +1480,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Белый шершень Танто — 500eb — BC 93"
+   "alt": "White Hornet Tanto",
+   "label": "Белый шершень Танто (White Hornet Tanto) — 500eb — BC 93"
   },
   {
    "alt": "Berserker",
@@ -1552,7 +1558,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Боевая Куртка Кортик — 500eb — BC 28"
+   "alt": "The Dirk Combat Jacket",
+   "label": "Боевая Куртка Кортик (The Dirk Combat Jacket) — 500eb — BC 28"
   },
   {
    "alt": "Combat Jaw",
@@ -1590,7 +1597,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Боевой Бумеранг Рейнджер — 1000eb — BC 100"
+   "alt": "Ranger Combat Boomerang",
+   "label": "Боевой Бумеранг Рейнджер (Ranger Combat Boomerang) — 1000eb — BC 100"
   },
   {
    "alt": "Combat Recorder",
@@ -1692,7 +1700,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Борг: Укрепленное Экранирование — 1000eb — BC 17"
+   "alt": "Borgware Hardened Shielding",
+   "label": "Борг: Укрепленное Экранирование (Borgware Hardened Shielding) — 1000eb — BC 17"
   },
   {
    "name": "Брендовый комбинезон: высокая охрана",
@@ -1766,7 +1775,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Броня Директора — 1000eb — BC 34"
+   "alt": "Executive Armor",
+   "label": "Броня Директора (Executive Armor) — 1000eb — BC 34"
   },
   {
    "alt": "Dragoon Plating",
@@ -1804,7 +1814,8 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "Броня Мародёра — 50eb — BC+ 4"
+   "alt": "Scavenged Armor",
+   "label": "Броня Мародёра (Scavenged Armor) — 50eb — BC+ 4"
   },
   {
    "name": "Броня Мародёра",
@@ -1840,7 +1851,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Бункерное снаряжение — 1000eb — BC 29"
+   "alt": "Fire Brand Bunker Gear",
+   "label": "Бункерное снаряжение (Fire Brand Bunker Gear) — 1000eb — BC 29"
   },
   {
    "name": "Буст",
@@ -1929,7 +1941,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Бюджетный Разъем для Щепок — 100eb — BC 17"
+   "alt": "Budget Chipware Socket",
+   "label": "Бюджетный Разъем для Щепок (Budget Chipware Socket) — 100eb — BC 17"
   },
   {
    "alt": "BabelChat",
@@ -2138,7 +2151,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Вествуд — 500eb — BC 121"
+   "alt": "Westwood",
+   "label": "Вествуд (Westwood) — 500eb — BC 121"
   },
   {
    "alt": "Breacher",
@@ -2163,7 +2177,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Взрывной АДаптер — 100eb — BC 89"
+   "alt": "OUTLet Explosive",
+   "label": "Взрывной АДаптер (OUTLet Explosive) — 100eb — BC 89"
   },
   {
    "name": "Взрывозащищённая броня",
@@ -2304,7 +2319,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Водительский Ошейник — 500eb — BC 22"
+   "alt": "RacerBracer",
+   "label": "Водительский Ошейник (RacerBracer) — 500eb — BC 22"
   },
   {
    "name": "Водородный Микро-Компрессор",
@@ -2316,7 +2332,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Водородный Микро-Компрессор — 500eb — BC 88"
+   "alt": "Micro Hydrogen Combuster",
+   "label": "Водородный Микро-Компрессор (Micro Hydrogen Combuster) — 500eb — BC 88"
   },
   {
    "name": "Воздушка",
@@ -2352,7 +2369,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Воздушный Колодец 50 — 100eb — BC 48"
+   "alt": "Everest VentureWare AirWell 50",
+   "label": "Воздушный Колодец 50 (Everest VentureWare AirWell 50) — 100eb — BC 48"
   },
   {
    "name": "Воздушный Наездник",
@@ -2364,7 +2382,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Воздушный Наездник — 100eb — BC 33"
+   "alt": "Masetto AirRider",
+   "label": "Воздушный Наездник (Masetto AirRider) — 100eb — BC 33"
   },
   {
    "name": "Волк Соло и Бот Моно-Катана",
@@ -2376,7 +2395,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Волк Соло и Бот Моно-Катана — 100eb — BC 92"
+   "alt": "Solo Wolf and Bot Mono-Katana",
+   "label": "Волк Соло и Бот Моно-Катана (Solo Wolf and Bot Mono-Katana) — 100eb — BC 92"
   },
   {
    "name": "ВорлдСат АэроСфера",
@@ -2388,7 +2408,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "ВорлдСат АэроСфера — 1000eb — BC 50"
+   "alt": "WorldSat Aerial Sphere",
+   "label": "ВорлдСат АэроСфера (WorldSat Aerial Sphere) — 1000eb — BC 50"
   },
   {
    "name": "Встроенный персональный шредер",
@@ -2438,7 +2459,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Выкидной Дробовик — 1000eb — BC 21"
+   "alt": "Popup Shotgun",
+   "label": "Выкидной Дробовик (Popup Shotgun) — 1000eb — BC 21"
   },
   {
    "name": "Выкидной Сеткомет",
@@ -2450,7 +2472,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Выкидной Сеткомет — 500eb — BC 20"
+   "alt": "Popup Net Launcher",
+   "label": "Выкидной Сеткомет (Popup Net Launcher) — 500eb — BC 20"
   },
   {
    "name": "Выкидной гранатомёт",
@@ -2500,7 +2523,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Вышибала — 500eb — BC 97"
+   "alt": "The Pursuit Security Bouncer",
+   "label": "Вышибала (The Pursuit Security Bouncer) — 500eb — BC 97"
   },
   {
    "alt": "Airburst Ammunition",
@@ -2642,7 +2666,8 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "ГанМарт Дверной Взломщик — 50eb — BC 87"
+   "alt": "GunMart Door Cracker",
+   "label": "ГанМарт Дверной Взломщик (GunMart Door Cracker) — 50eb — BC 87"
   },
   {
    "name": "ГанМарт Спешл",
@@ -2654,7 +2679,8 @@
    "tier": "Обычное",
    "href": "",
    "kind": "gear",
-   "label": "ГанМарт Спешл — 20eb — BC 108"
+   "alt": "GunMart Special",
+   "label": "ГанМарт Спешл (GunMart Special) — 20eb — BC 108"
   },
   {
    "name": "ГанМарт Умный Спешл",
@@ -2666,7 +2692,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "ГанМарт Умный Спешл — 100eb — BC 108"
+   "alt": "GunMart Smart Special",
+   "label": "ГанМарт Умный Спешл (GunMart Smart Special) — 100eb — BC 108"
   },
   {
    "alt": "Zetatech Tank Commander Headset",
@@ -2728,7 +2755,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Гильзы с адаптером для Слага — 100eb — BC+ 3"
+   "alt": "Bullet to Slug Adapter Casings",
+   "label": "Гильзы с адаптером для Слага (Bullet to Slug Adapter Casings) — 100eb — BC+ 3"
   },
   {
    "alt": "Arrowhypo Ammunition",
@@ -2790,7 +2818,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Голо-Одежда — 1000eb — BC 35"
+   "alt": "Masetto Holo-Wear",
+   "label": "Голо-Одежда (Masetto Holo-Wear) — 1000eb — BC 35"
   },
   {
    "alt": "Hangry Hangry Dragon",
@@ -2827,7 +2856,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Городская База Данных — 100eb — BC 14"
+   "alt": "Ziggurat City Database",
+   "label": "Городская База Данных (Ziggurat City Database) — 100eb — BC 14"
   },
   {
    "name": "Граната Арахнид",
@@ -2839,7 +2869,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Граната Арахнид — 100eb — BC 86"
+   "alt": "Arachnid Grenade",
+   "label": "Граната Арахнид (Arachnid Grenade) — 100eb — BC 86"
   },
   {
    "name": "Граната Торнадо Сюрикенов",
@@ -2851,7 +2882,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Граната Торнадо Сюрикенов — 100eb — BC 87"
+   "alt": "Shuriken Tornado Grenade",
+   "label": "Граната Торнадо Сюрикенов (Shuriken Tornado Grenade) — 100eb — BC 87"
   },
   {
    "alt": "CO2 Grenade",
@@ -3049,7 +3081,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Дакимакура Solo of Fortune — 100eb — BC+ 5"
+   "alt": "Solo of Fortune Bodypillow",
+   "label": "Дакимакура Solo of Fortune (Solo of Fortune Bodypillow) — 100eb — BC+ 5"
   },
   {
    "name": "Дальномер Optitech MagViewer",
@@ -3099,7 +3132,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Двузарядный Пистолет Лиса — 1000eb — BC 113"
+   "alt": "Militech Fox Dual Ammo Pistol",
+   "label": "Двузарядный Пистолет Лиса (Militech Fox Dual Ammo Pistol) — 1000eb — BC 113"
   },
   {
    "alt": "Binary Compound",
@@ -3317,7 +3351,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Дробовик Зверь — 1000eb — BC 111"
+   "alt": "Midnight Arms Beast Shotgun",
+   "label": "Дробовик Зверь (Midnight Arms Beast Shotgun) — 1000eb — BC 111"
   },
   {
    "name": "Дротикомёт",
@@ -3381,7 +3416,8 @@
    "tier": "Дешевка",
    "href": "",
    "kind": "gear",
-   "label": "Душ•В•Банке — 10eb — BC 38"
+   "alt": "Shower•in•a•Can",
+   "label": "Душ•В•Банке (Shower•in•a•Can) — 10eb — BC 38"
   },
   {
    "name": "Ездовой Костюм “Уличная Гадюка”",
@@ -3393,7 +3429,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Ездовой Костюм “Уличная Гадюка” — 100eb — BC 36"
+   "alt": "Street Viper Riding Suit",
+   "label": "Ездовой Костюм “Уличная Гадюка” (Street Viper Riding Suit) — 100eb — BC 36"
   },
   {
    "name": "Жабры",
@@ -3431,7 +3468,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Живым или Мёртвым — 500eb — BC 104"
+   "alt": "Faisal’s Dead or Alive",
+   "label": "Живым или Мёртвым (Faisal’s Dead or Alive) — 500eb — BC 104"
   },
   {
    "name": "Жилище в одно касание",
@@ -3443,7 +3481,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Жилище в одно касание — 100eb — BC 48"
+   "alt": "Everest VentureWare One Touch Habitat",
+   "label": "Жилище в одно касание (Everest VentureWare One Touch Habitat) — 100eb — BC 48"
   },
   {
    "alt": "Zhirafa Boris",
@@ -3705,7 +3744,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Зетатех Порта-Принтер — 1000eb — BC 43"
+   "alt": "Zetatech Porta-Printer",
+   "label": "Зетатех Порта-Принтер (Zetatech Porta-Printer) — 1000eb — BC 43"
   },
   {
    "alt": "Snaketrap",
@@ -3834,7 +3874,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Иглтех Выживальщик — 500eb — BC 103"
+   "alt": "Eagletech Survivalist",
+   "label": "Иглтех Выживальщик (Eagletech Survivalist) — 500eb — BC 103"
   },
   {
    "name": "Идеальная киберстопа",
@@ -4025,7 +4066,8 @@
    "tier": "Роскошь",
    "href": "",
    "kind": "gear",
-   "label": "КТех Доберман 500 — 5000eb — BC 45"
+   "alt": "KTech Doberman 500",
+   "label": "КТех Доберман 500 (KTech Doberman 500) — 5000eb — BC 45"
   },
   {
    "name": "КТех Доберман 500 Маркирующий Запах",
@@ -4037,7 +4079,8 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "КТех Доберман 500 Маркирующий Запах — 50eb — BC 44"
+   "alt": "KTech Doberman 500 Marking Scent",
+   "label": "КТех Доберман 500 Маркирующий Запах (KTech Doberman 500 Marking Scent) — 50eb — BC 44"
   },
   {
    "name": "КТех Охранная граната",
@@ -4049,7 +4092,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "КТех Охранная граната — 100eb — BC 89"
+   "alt": "KTech Security Grenade",
+   "label": "КТех Охранная граната (KTech Security Grenade) — 100eb — BC 89"
   },
   {
    "name": "Камнемёт Кочевников",
@@ -4061,7 +4105,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Камнемёт Кочевников — 100eb — BC 115"
+   "alt": "Nomad Rocker",
+   "label": "Камнемёт Кочевников (Nomad Rocker) — 100eb — BC 115"
   },
   {
    "name": "Карманная ракетница",
@@ -4098,7 +4143,8 @@
    "tier": "Роскошь",
    "href": "",
    "kind": "gear",
-   "label": "Катана Плачущий Разбойник — 5000eb — BC 91"
+   "alt": "Arasaka Weeping Reaver Katana",
+   "label": "Катана Плачущий Разбойник (Arasaka Weeping Reaver Katana) — 5000eb — BC 91"
   },
   {
    "name": "Кевлар®",
@@ -4123,7 +4169,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "КейТех ТехноМолот — 1000eb — BC 110"
+   "alt": "KTech TechHammer",
+   "label": "КейТех ТехноМолот (KTech TechHammer) — 1000eb — BC 110"
   },
   {
    "alt": "Kendachi PressureTech Shower Head",
@@ -4148,7 +4195,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Кендаши Моно-Вакидзаси — 1000eb — BC 93"
+   "alt": "Kendachi Mono-Wakizashi",
+   "label": "Кендаши Моно-Вакидзаси (Kendachi Mono-Wakizashi) — 1000eb — BC 93"
   },
   {
    "name": "Кендаши Моно-Защита",
@@ -4160,7 +4208,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Кендаши Моно-Защита — 1000eb — BC 96"
+   "alt": "Kendachi Mono-Guard",
+   "label": "Кендаши Моно-Защита (Kendachi Mono-Guard) — 1000eb — BC 96"
   },
   {
    "name": "Кендаши Моно-Звезда",
@@ -4172,7 +4221,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Кендаши Моно-Звезда — 500eb — BC 101"
+   "alt": "Kendachi Mono-Star",
+   "label": "Кендаши Моно-Звезда (Kendachi Mono-Star) — 500eb — BC 101"
   },
   {
    "name": "Кендаши Моно-Катана",
@@ -4184,7 +4234,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Кендаши Моно-Катана — 1000eb — BC 92"
+   "alt": "Kendachi Mono-Katana",
+   "label": "Кендаши Моно-Катана (Kendachi Mono-Katana) — 1000eb — BC 92"
   },
   {
    "name": "Кендаши Моно-Три",
@@ -4374,7 +4425,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Киберпалец-Аэрогиппо — 100eb — BC 24"
+   "alt": "Airhypo Cyberfinger",
+   "label": "Киберпалец-Аэрогиппо (Airhypo Cyberfinger) — 100eb — BC 24"
   },
   {
    "name": "Киберпалец-Дартган",
@@ -4386,7 +4438,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Киберпалец-Дартган — 500eb — BC 24"
+   "alt": "Dartgun Cyberfinger",
+   "label": "Киберпалец-Дартган (Dartgun Cyberfinger) — 500eb — BC 24"
   },
   {
    "name": "Киберпалец-Зажигалка",
@@ -4398,7 +4451,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Киберпалец-Зажигалка — 100eb — BC 25"
+   "alt": "Lighter Cyberfinger",
+   "label": "Киберпалец-Зажигалка (Lighter Cyberfinger) — 100eb — BC 25"
   },
   {
    "name": "Киберпалец-Лазерная Указка",
@@ -4410,7 +4464,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Киберпалец-Лазерная Указка — 100eb — BC 25"
+   "alt": "Laser Pointer Cyberfinger",
+   "label": "Киберпалец-Лазерная Указка (Laser Pointer Cyberfinger) — 100eb — BC 25"
   },
   {
    "name": "Киберпалец-Микрофон",
@@ -4422,7 +4477,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Киберпалец-Микрофон — 100eb — BC 25"
+   "alt": "Microphone Cyberfinger",
+   "label": "Киберпалец-Микрофон (Microphone Cyberfinger) — 100eb — BC 25"
   },
   {
    "name": "Киберпалец-Отмычка",
@@ -4434,7 +4490,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Киберпалец-Отмычка — 100eb — BC 25"
+   "alt": "Lockpick Cyberfinger",
+   "label": "Киберпалец-Отмычка (Lockpick Cyberfinger) — 100eb — BC 25"
   },
   {
    "name": "Киберпалец-Пулевое хранилище",
@@ -4446,7 +4503,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Киберпалец-Пулевое хранилище — 100eb — BC 24"
+   "alt": "Bullet Storage Cyberfinger",
+   "label": "Киберпалец-Пулевое хранилище (Bullet Storage Cyberfinger) — 100eb — BC 24"
   },
   {
    "name": "Киберпалец-Распылитель",
@@ -4458,7 +4516,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Киберпалец-Распылитель — 100eb — BC 26"
+   "alt": "Squirt Cyberfinger",
+   "label": "Киберпалец-Распылитель (Squirt Cyberfinger) — 100eb — BC 26"
   },
   {
    "name": "Киберпалец-Трекер",
@@ -4470,7 +4529,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Киберпалец-Трекер — 500eb — BC 25"
+   "alt": "Homing Tracer Cyberfinger",
+   "label": "Киберпалец-Трекер (Homing Tracer Cyberfinger) — 500eb — BC 25"
   },
   {
    "name": "Киберпалец-Фонарик",
@@ -4482,7 +4542,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Киберпалец-Фонарик — 100eb — BC 24"
+   "alt": "Flashlight Cyberfinger",
+   "label": "Киберпалец-Фонарик (Flashlight Cyberfinger) — 100eb — BC 24"
   },
   {
    "name": "Киберпальцы-Кусачки/Ножницы",
@@ -4494,7 +4555,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Киберпальцы-Кусачки/Ножницы — 100eb — BC 26"
+   "alt": "Wirecutter/Scissor Cyberfingers",
+   "label": "Киберпальцы-Кусачки/Ножницы (Wirecutter/Scissor Cyberfingers) — 100eb — BC 26"
   },
   {
    "name": "Киберподушка",
@@ -4567,7 +4629,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Киберрука Энтузиаста с Модульными пальцами — 500eb — BC 18"
+   "alt": "Dynalar Modular Finger Enthusiast Cyberhand",
+   "label": "Киберрука Энтузиаста с Модульными пальцами (Dynalar Modular Finger Enthusiast Cyberhand) — 500eb — BC 18"
   },
   {
    "name": "Киберрука с Модульными Пальцами",
@@ -4579,7 +4642,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Киберрука с Модульными Пальцами — 100eb — BC 20"
+   "alt": "Modular Finger Cyberhand",
+   "label": "Киберрука с Модульными Пальцами (Modular Finger Cyberhand) — 100eb — BC 20"
   },
   {
    "name": "Киберсканер",
@@ -4628,7 +4692,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "КиллСтром Микрофон Банши — 1000eb — BC 40"
+   "alt": "KillStrom Banshee Microphone",
+   "label": "КиллСтром Микрофон Банши (KillStrom Banshee Microphone) — 1000eb — BC 40"
   },
   {
    "alt": "BangMe!",
@@ -4677,7 +4742,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Кислота Арасаки — 100eb — BC 91"
+   "alt": "Arasaka Acid",
+   "label": "Кислота Арасаки (Arasaka Acid) — 100eb — BC 91"
   },
   {
    "name": "Клыкастый Кулак",
@@ -4689,7 +4755,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Клыкастый Кулак — 1000eb — BC 98"
+   "alt": "SlamDance FangFist",
+   "label": "Клыкастый Кулак (SlamDance FangFist) — 1000eb — BC 98"
   },
   {
    "name": "Коготь",
@@ -4740,7 +4807,8 @@
    "tier": "Обычное",
    "href": "",
    "kind": "gear",
-   "label": "Коктейль Молотова — 20eb — BC+ 4"
+   "alt": "Molotov Cocktail",
+   "label": "Коктейль Молотова (Molotov Cocktail) — 20eb — BC+ 4"
   },
   {
    "name": "Коктейль Молотова",
@@ -4764,7 +4832,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Колонка “Тифоид” — 500eb — BC 41"
+   "alt": "KillStrom Typhoid Speaker",
+   "label": "Колонка “Тифоид” (KillStrom Typhoid Speaker) — 500eb — BC 41"
   },
   {
    "name": "Колонки MiniMag",
@@ -4839,7 +4908,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Комплект Кибераудио по скидке — 100eb — BC 17"
+   "alt": "Discount Cyberaudio Suite",
+   "label": "Комплект Кибераудио по скидке (Discount Cyberaudio Suite) — 100eb — BC 17"
   },
   {
    "name": "Комплект Мимиковской Одежды",
@@ -4851,7 +4921,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Комплект Мимиковской Одежды — 100eb — BC 33"
+   "alt": "Mimic Clothing Kit",
+   "label": "Комплект Мимиковской Одежды (Mimic Clothing Kit) — 100eb — BC 33"
   },
   {
    "name": "Компьютер",
@@ -4941,7 +5012,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Корпоративный Остров — 500eb — BC 35"
+   "alt": "Corporate Island",
+   "label": "Корпоративный Остров (Corporate Island) — 500eb — BC 35"
   },
   {
    "alt": "Enclosure",
@@ -5030,7 +5102,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Красящий Киберпалец — 100eb — BC 26"
+   "alt": "Spray Paint Cyberfinger",
+   "label": "Красящий Киберпалец (Spray Paint Cyberfinger) — 100eb — BC 26"
   },
   {
    "name": "Крепление для Хотсвапа Лицевой Панели",
@@ -5106,7 +5179,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Кулак Носорога — 1000eb — BC 95"
+   "alt": "Zhirafa Rhinocefist",
+   "label": "Кулак Носорога (Zhirafa Rhinocefist) — 1000eb — BC 95"
   },
   {
    "name": "Куртка — Asia Pop",
@@ -5238,7 +5312,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Лазерный Свет Электрогитара — 1000eb — BC 41"
+   "alt": "Laser Light Electric Guitar",
+   "label": "Лазерный Свет Электрогитара (Laser Light Electric Guitar) — 1000eb — BC 41"
   },
   {
    "alt": "Laser Microphone",
@@ -5263,7 +5338,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Лампа-вспышка — 500eb — BC 18"
+   "alt": "Flashbulb",
+   "label": "Лампа-вспышка (Flashbulb) — 500eb — BC 18"
   },
   {
    "name": "Ласты",
@@ -5408,7 +5484,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Линия Изменяющейся Одежды Монтаж — 500eb — BC 32"
+   "alt": "Montage Variable Clothing Line",
+   "label": "Линия Изменяющейся Одежды Монтаж (Montage Variable Clothing Line) — 500eb — BC 32"
   },
   {
    "name": "Личный порт",
@@ -5497,7 +5574,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Магна-Кастет Фейсала — 1000eb — BC 96"
+   "alt": "Faisal’s Magna Knuckles",
+   "label": "Магна-Кастет Фейсала (Faisal’s Magna Knuckles) — 1000eb — BC 96"
   },
   {
    "name": "Малориан Армс 3516",
@@ -5561,7 +5639,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Мастер Напитков 3000 — 1000eb — BC 42"
+   "alt": "The Drink Master 3000",
+   "label": "Мастер Напитков 3000 (The Drink Master 3000) — 1000eb — BC 42"
   },
   {
    "alt": "UrsaForm®",
@@ -5651,7 +5730,8 @@
    "tier": "Роскошь",
    "href": "",
    "kind": "gear",
-   "label": "МехаМэн Мотоциклетный Шлем — 5000eb — BC 37"
+   "alt": "MechaMan Motorcycle Helmet",
+   "label": "МехаМэн Мотоциклетный Шлем (MechaMan Motorcycle Helmet) — 5000eb — BC 37"
   },
   {
    "name": "МехаМэн Умная Перчатка",
@@ -5663,7 +5743,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "МехаМэн Умная Перчатка — 500eb — BC 37"
+   "alt": "MechaMan Smart Glove",
+   "label": "МехаМэн Умная Перчатка (MechaMan Smart Glove) — 500eb — BC 37"
   },
   {
    "name": "Микро-Бомба Убивающая Щепка 100",
@@ -5675,7 +5756,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Микро-Бомба Убивающая Щепка 100 — 100eb — BC 88"
+   "alt": "KillChip 100 Micro-Bomb",
+   "label": "Микро-Бомба Убивающая Щепка 100 (KillChip 100 Micro-Bomb) — 100eb — BC 88"
   },
   {
    "name": "МикроВидео",
@@ -6024,7 +6106,8 @@
    "tier": "Роскошь",
    "href": "",
    "kind": "gear",
-   "label": "Милитех Персей — 5000eb — BC 112"
+   "alt": "Militech Perseus",
+   "label": "Милитех Персей (Militech Perseus) — 5000eb — BC 112"
   },
   {
    "name": "Мини-воздухопровод",
@@ -6036,7 +6119,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Мини-воздухопровод — 500eb — BC 26"
+   "alt": "Mini Air Supply Cyberfinger",
+   "label": "Мини-воздухопровод (Mini Air Supply Cyberfinger) — 500eb — BC 26"
   },
   {
    "alt": "Mini C9 Charge",
@@ -6061,7 +6145,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Мистер Бисквит Мультипищевой комбайн — 500eb — BC 49"
+   "alt": "Mr. Biscuit Multi-Food Processor",
+   "label": "Мистер Бисквит Мультипищевой комбайн (Mr. Biscuit Multi-Food Processor) — 500eb — BC 49"
   },
   {
    "name": "Многоцелевой штурмовой дробовик Аид",
@@ -6073,7 +6158,8 @@
    "tier": "Роскошь",
    "href": "",
    "kind": "gear",
-   "label": "Многоцелевой штурмовой дробовик Аид — 5000eb — BC 109"
+   "alt": "Hades Multipurpose Assault Shotgun",
+   "label": "Многоцелевой штурмовой дробовик Аид (Hades Multipurpose Assault Shotgun) — 5000eb — BC 109"
   },
   {
    "name": "МодФайр 10X",
@@ -6085,7 +6171,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "МодФайр 10X — 1000eb — BC 114"
+   "alt": "ModFire 10X",
+   "label": "МодФайр 10X (ModFire 10X) — 1000eb — BC 114"
   },
   {
    "alt": "Internal Hydraulics Upgrade",
@@ -6354,7 +6441,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Наноматрица Травматической Реакции — 1000eb — BC 22"
+   "alt": "Trauma Response Nanomatrix",
+   "label": "Наноматрица Травматической Реакции (Trauma Response Nanomatrix) — 1000eb — BC 22"
   },
   {
    "name": "Наружный видеоэкран",
@@ -6443,7 +6531,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Нео-Советская Киберрука — 100eb — BC 20"
+   "alt": "Neo-Soviet Cyberarm",
+   "label": "Нео-Советская Киберрука (Neo-Soviet Cyberarm) — 100eb — BC 20"
   },
   {
    "name": "НеоЯзык",
@@ -6568,7 +6657,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Обновленная Интегрированная Кибердека — 500eb — BC 19"
+   "alt": "Integrated Cyberdeck Upgrade",
+   "label": "Обновленная Интегрированная Кибердека (Integrated Cyberdeck Upgrade) — 500eb — BC 19"
   },
   {
    "name": "Обновленная Усиленная Киберконечность",
@@ -6580,7 +6670,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Обновленная Усиленная Киберконечность — 1000eb — BC 21"
+   "alt": "Reinforced Cyberlimb Upgrade",
+   "label": "Обновленная Усиленная Киберконечность (Reinforced Cyberlimb Upgrade) — 1000eb — BC 21"
   },
   {
    "alt": "Integrated Cyberdeck Upgrade",
@@ -6764,7 +6855,8 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "Оверлорд Ручная пушка — 50eb — BC 106"
+   "alt": "Overlord Handcannon",
+   "label": "Оверлорд Ручная пушка (Overlord Handcannon) — 50eb — BC 106"
   },
   {
    "name": "Огнемёт",
@@ -6839,7 +6931,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Огонь Арасаки — 100eb — BC 91"
+   "alt": "Arasaka Fire",
+   "label": "Огонь Арасаки (Arasaka Fire) — 100eb — BC 91"
   },
   {
    "alt": "Ogrish FantaForm™",
@@ -6864,7 +6957,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Однозарядный Киберпалец — 100eb — BC 26"
+   "alt": "One Shot Special Cyberfinger",
+   "label": "Однозарядный Киберпалец (One Shot Special Cyberfinger) — 100eb — BC 26"
   },
   {
    "name": "Одноразовый телефон",
@@ -7139,7 +7233,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "ПП Мастиф — 500eb — BC 113"
+   "alt": "Militech Mastiff SMG",
+   "label": "ПП Мастиф (Militech Mastiff SMG) — 500eb — BC 113"
   },
   {
    "name": "Палатка и набор для кемпинга",
@@ -7421,7 +7516,7 @@
    "label": "Патроны гиперэкспансивные (Hyper Expansive) — тяжёлый пистолет и тяжёлый ПП (10 шт.) — 100eb — SF 16–17"
   },
   {
-   "name": "Патроны для мелкой дичи — винтовка (100 шт.)",
+   "name": "Патроны для мелкой дичи (Small Game Ammo) — винтовка (100 шт.)",
    "price": 10,
    "cyber": false,
    "hl": 0,
@@ -7430,10 +7525,10 @@
    "tier": "Дешевка",
    "href": "",
    "kind": "gear",
-   "label": "Патроны для мелкой дичи — винтовка (100 шт.) — 10eb — BC+ 3"
+   "label": "Патроны для мелкой дичи (Small Game Ammo) — винтовка (100 шт.) — 10eb — BC+ 3"
   },
   {
-   "name": "Патроны для мелкой дичи — очень тяжёлый пистолет (100 шт.)",
+   "name": "Патроны для мелкой дичи (Small Game Ammo) — очень тяжёлый пистолет (100 шт.)",
    "price": 10,
    "cyber": false,
    "hl": 0,
@@ -7442,10 +7537,10 @@
    "tier": "Дешевка",
    "href": "",
    "kind": "gear",
-   "label": "Патроны для мелкой дичи — очень тяжёлый пистолет (100 шт.) — 10eb — BC+ 3"
+   "label": "Патроны для мелкой дичи (Small Game Ammo) — очень тяжёлый пистолет (100 шт.) — 10eb — BC+ 3"
   },
   {
-   "name": "Патроны для мелкой дичи — пистолет и ПП (100 шт.)",
+   "name": "Патроны для мелкой дичи (Small Game Ammo) — пистолет и ПП (100 шт.)",
    "price": 10,
    "cyber": false,
    "hl": 0,
@@ -7454,10 +7549,10 @@
    "tier": "Дешевка",
    "href": "",
    "kind": "gear",
-   "label": "Патроны для мелкой дичи — пистолет и ПП (100 шт.) — 10eb — BC+ 3"
+   "label": "Патроны для мелкой дичи (Small Game Ammo) — пистолет и ПП (100 шт.) — 10eb — BC+ 3"
   },
   {
-   "name": "Патроны для мелкой дичи — тяжёлый пистолет и тяжёлый ПП (100 шт.)",
+   "name": "Патроны для мелкой дичи (Small Game Ammo) — тяжёлый пистолет и тяжёлый ПП (100 шт.)",
    "price": 10,
    "cyber": false,
    "hl": 0,
@@ -7466,7 +7561,7 @@
    "tier": "Дешевка",
    "href": "",
    "kind": "gear",
-   "label": "Патроны для мелкой дичи — тяжёлый пистолет и тяжёлый ПП (100 шт.) — 10eb — BC+ 3"
+   "label": "Патроны для мелкой дичи (Small Game Ammo) — тяжёлый пистолет и тяжёлый ПП (100 шт.) — 10eb — BC+ 3"
   },
   {
    "price": 100,
@@ -7541,7 +7636,7 @@
    "label": "Патроны зажигательные (Incendiary) — тяжёлый пистолет и тяжёлый ПП (10 шт.) — 100eb — СТР 345"
   },
   {
-   "name": "Патроны мусорные — винтовка (50 шт.)",
+   "name": "Патроны мусорные (Junk Ammo) — винтовка (50 шт.)",
    "price": 10,
    "cyber": false,
    "hl": 0,
@@ -7550,7 +7645,55 @@
    "tier": "Дешевка",
    "href": "",
    "kind": "gear",
-   "label": "Патроны мусорные — винтовка (50 шт.) — 10eb — BC+ 3"
+   "label": "Патроны мусорные (Junk Ammo) — винтовка (50 шт.) — 10eb — BC+ 3"
+  },
+  {
+   "name": "Патроны мусорные (Junk Ammo) — дробовик, жакан (50 шт.)",
+   "price": 10,
+   "cyber": false,
+   "hl": 0,
+   "src": "BC",
+   "chip": "BC+ 3",
+   "tier": "Дешевка",
+   "href": "",
+   "kind": "gear",
+   "label": "Патроны мусорные (Junk Ammo) — дробовик, жакан (50 шт.) — 10eb — BC+ 3"
+  },
+  {
+   "name": "Патроны мусорные (Junk Ammo) — очень тяжёлый пистолет (50 шт.)",
+   "price": 10,
+   "cyber": false,
+   "hl": 0,
+   "src": "BC",
+   "chip": "BC+ 3",
+   "tier": "Дешевка",
+   "href": "",
+   "kind": "gear",
+   "label": "Патроны мусорные (Junk Ammo) — очень тяжёлый пистолет (50 шт.) — 10eb — BC+ 3"
+  },
+  {
+   "name": "Патроны мусорные (Junk Ammo) — пистолет и ПП (50 шт.)",
+   "price": 10,
+   "cyber": false,
+   "hl": 0,
+   "src": "BC",
+   "chip": "BC+ 3",
+   "tier": "Дешевка",
+   "href": "",
+   "kind": "gear",
+   "label": "Патроны мусорные (Junk Ammo) — пистолет и ПП (50 шт.) — 10eb — BC+ 3"
+  },
+  {
+   "name": "Патроны мусорные (Junk Ammo) — тяжёлый пистолет и тяжёлый ПП (50 шт.)",
+   "price": 10,
+   "cyber": false,
+   "hl": 0,
+   "src": "BC",
+   "chip": "BC+ 3",
+   "tier": "Дешевка",
+   "href": "",
+   "kind": "gear",
+   "label": "Патроны мусорные (Junk Ammo) — тяжёлый пистолет и тяжёлый ПП (50 шт.) — 10eb — BC+ 3"
   },
   {
    "name": "Патроны мусорные — винтовка (50 шт.)",
@@ -7569,36 +7712,12 @@
    "price": 10,
    "cyber": false,
    "hl": 0,
-   "src": "BC",
-   "chip": "BC+ 3",
-   "tier": "Дешевка",
-   "href": "",
-   "kind": "gear",
-   "label": "Патроны мусорные — дробовик, жакан (50 шт.) — 10eb — BC+ 3"
-  },
-  {
-   "name": "Патроны мусорные — дробовик, жакан (50 шт.)",
-   "price": 10,
-   "cyber": false,
-   "hl": 0,
    "src": "DG",
    "chip": "DG 147",
    "tier": "Дешевка",
    "href": "",
    "kind": "gear",
    "label": "Патроны мусорные — дробовик, жакан (50 шт.) — 10eb — DG 147"
-  },
-  {
-   "name": "Патроны мусорные — очень тяжёлый пистолет (50 шт.)",
-   "price": 10,
-   "cyber": false,
-   "hl": 0,
-   "src": "BC",
-   "chip": "BC+ 3",
-   "tier": "Дешевка",
-   "href": "",
-   "kind": "gear",
-   "label": "Патроны мусорные — очень тяжёлый пистолет (50 шт.) — 10eb — BC+ 3"
   },
   {
    "name": "Патроны мусорные — очень тяжёлый пистолет (50 шт.)",
@@ -7617,36 +7736,12 @@
    "price": 10,
    "cyber": false,
    "hl": 0,
-   "src": "BC",
-   "chip": "BC+ 3",
-   "tier": "Дешевка",
-   "href": "",
-   "kind": "gear",
-   "label": "Патроны мусорные — пистолет и ПП (50 шт.) — 10eb — BC+ 3"
-  },
-  {
-   "name": "Патроны мусорные — пистолет и ПП (50 шт.)",
-   "price": 10,
-   "cyber": false,
-   "hl": 0,
    "src": "DG",
    "chip": "DG 147",
    "tier": "Дешевка",
    "href": "",
    "kind": "gear",
    "label": "Патроны мусорные — пистолет и ПП (50 шт.) — 10eb — DG 147"
-  },
-  {
-   "name": "Патроны мусорные — тяжёлый пистолет и тяжёлый ПП (50 шт.)",
-   "price": 10,
-   "cyber": false,
-   "hl": 0,
-   "src": "BC",
-   "chip": "BC+ 3",
-   "tier": "Дешевка",
-   "href": "",
-   "kind": "gear",
-   "label": "Патроны мусорные — тяжёлый пистолет и тяжёлый ПП (50 шт.) — 10eb — BC+ 3"
   },
   {
    "name": "Патроны мусорные — тяжёлый пистолет и тяжёлый ПП (50 шт.)",
@@ -8175,7 +8270,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Перечница — 500eb — BC 105"
+   "alt": "Federated Arms Pepper Shaker",
+   "label": "Перечница (Federated Arms Pepper Shaker) — 500eb — BC 105"
   },
   {
    "alt": "Handprint Glove",
@@ -8200,7 +8296,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Петрохем Нитро Ультра9 — 100eb — BC 49"
+   "alt": "Petrochem Nitro Ultra9",
+   "label": "Петрохем Нитро Ультра9 (Petrochem Nitro Ultra9) — 100eb — BC 49"
   },
   {
    "name": "Пистолет-Флешеттомёт Малориан Армс",
@@ -8828,7 +8925,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Разгонятель Толп — 2000eb — BC 116"
+   "alt": "Pursuit Security Inc. Crowd Buster",
+   "label": "Разгонятель Толп (Pursuit Security Inc. Crowd Buster) — 2000eb — BC 116"
   },
   {
    "name": "Разлагающаяся пусковая установка",
@@ -8889,7 +8987,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Ракетная Установка Красотка — 100eb — BC 107"
+   "alt": "GunMart Engage Rocket Launcher",
+   "label": "Ракетная Установка Красотка (GunMart Engage Rocket Launcher) — 100eb — BC 107"
   },
   {
    "name": "Ракетная установка",
@@ -9131,7 +9230,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Ростович «Кливер» — 1000eb — BC 94"
+   "alt": "Rostović Kleaver",
+   "label": "Ростович «Кливер» (Rostović Kleaver) — 1000eb — BC 94"
   },
   {
    "name": "Ростович «Разрушитель улиц»",
@@ -9143,7 +9243,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Ростович «Разрушитель улиц» — 1000eb — BC 117"
+   "alt": "Rostović Ulični Uništitelj",
+   "label": "Ростович «Разрушитель улиц» (Rostović Ulični Uništitelj) — 1000eb — BC 117"
   },
   {
    "name": "Рука мультитул",
@@ -9283,7 +9384,8 @@
    "tier": "Обычное",
    "href": "",
    "kind": "gear",
-   "label": "Сваха — 20eb — BC 105"
+   "alt": "Georgia Arms Matchmaker",
+   "label": "Сваха (Georgia Arms Matchmaker) — 20eb — BC 105"
   },
   {
    "name": "Светящаяся краска",
@@ -9334,7 +9436,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "СвобоДоступные Ножны — 500eb — BC 47"
+   "alt": "RapiDeploy Sheath",
+   "label": "СвобоДоступные Ножны (RapiDeploy Sheath) — 500eb — BC 47"
   },
   {
    "name": "Связывание токсинов",
@@ -9385,7 +9488,8 @@
    "tier": "Роскошь",
    "href": "",
    "kind": "gear",
-   "label": "Сетевой Костюм Лотос — 5000eb — BC 31"
+   "alt": "Lotos Netsuit",
+   "label": "Сетевой Костюм Лотос (Lotos Netsuit) — 5000eb — BC 31"
   },
   {
    "name": "Сигнальная ракета",
@@ -9499,7 +9603,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "СкидРоу Тренч — 100eb — BC 33"
+   "alt": "SkidRow Trench",
+   "label": "СкидРоу Тренч (SkidRow Trench) — 100eb — BC 33"
   },
   {
    "name": "Складная кровать и спальный мешок",
@@ -9601,7 +9706,8 @@
    "tier": "Роскошь",
    "href": "",
    "kind": "gear",
-   "label": "СлэмДэнс Тасманский Кôгôть — 5000eb — BC 99"
+   "alt": "SlamDance Tasmanskiy Klô",
+   "label": "СлэмДэнс Тасманский Кôгôть (SlamDance Tasmanskiy Klô) — 5000eb — BC 99"
   },
   {
    "name": "Смарт-палочки DPI",
@@ -9676,7 +9782,8 @@
    "tier": "Дешевка",
    "href": "",
    "kind": "gear",
-   "label": "Смэш Пираний — 10eb — BC+ 4"
+   "alt": "Piranha Smash",
+   "label": "Смэш Пираний (Piranha Smash) — 10eb — BC+ 4"
   },
   {
    "name": "Смэш Пираний",
@@ -9751,7 +9858,8 @@
    "tier": "Дешевка",
    "href": "",
    "kind": "gear",
-   "label": "СовОил Лубрикант — 10eb — BC 56"
+   "alt": "SovOil Lubricants",
+   "label": "СовОил Лубрикант (SovOil Lubricants) — 10eb — BC 56"
   },
   {
    "name": "Соль на Рану Арасаки",
@@ -9763,7 +9871,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Соль на Рану Арасаки — 100eb — BC 91"
+   "alt": "Arasaka Wound Salt",
+   "label": "Соль на Рану Арасаки (Arasaka Wound Salt) — 100eb — BC 91"
   },
   {
    "name": "Сопроцессор Рефлексов",
@@ -9775,7 +9884,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Сопроцессор Рефлексов — 500eb — BC 21"
+   "alt": "Reflex Co-Processor",
+   "label": "Сопроцессор Рефлексов (Reflex Co-Processor) — 500eb — BC 21"
   },
   {
    "name": "Спонсируемый Киберглаз",
@@ -9787,7 +9897,8 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "Спонсируемый Киберглаз — 50eb — BC 22"
+   "alt": "Sponsored Cybereye",
+   "label": "Спонсируемый Киберглаз (Sponsored Cybereye) — 50eb — BC 22"
   },
   {
    "alt": "Ask Alex Anything",
@@ -9877,7 +9988,8 @@
    "tier": "Обычное",
    "href": "",
    "kind": "gear",
-   "label": "Стандартный Киберпалец — 20eb — BC 26"
+   "alt": "Standard Cyberfinger",
+   "label": "Стандартный Киберпалец (Standard Cyberfinger) — 20eb — BC 26"
   },
   {
    "alt": "Kirama Entry Deck",
@@ -9979,7 +10091,7 @@
    "label": "Стрелы зазубренные (Serrated Arrow / Hollow Point) — лук и арбалет (10 шт.) — 30eb — SF 16–17"
   },
   {
-   "name": "Стрелы мусорные — лук и арбалет (50 шт.)",
+   "name": "Стрелы мусорные (Junk Ammo) — лук и арбалет (50 шт.)",
    "price": 10,
    "cyber": false,
    "hl": 0,
@@ -9988,7 +10100,7 @@
    "tier": "Дешевка",
    "href": "",
    "kind": "gear",
-   "label": "Стрелы мусорные — лук и арбалет (50 шт.) — 10eb — BC+ 3"
+   "label": "Стрелы мусорные (Junk Ammo) — лук и арбалет (50 шт.) — 10eb — BC+ 3"
   },
   {
    "name": "Стрелы мусорные — лук и арбалет (50 шт.)",
@@ -10120,7 +10232,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Стукач Томми — 1000eb — BC 123"
+   "alt": "Tommyknocker",
+   "label": "Стукач Томми (Tommyknocker) — 1000eb — BC 123"
   },
   {
    "alt": "Suzumebachi Assassin Drone",
@@ -10184,7 +10297,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Суперхром® Гламурная винтовка — 1000eb — BC 120"
+   "alt": "Superchrome® Glam Rifle",
+   "label": "Суперхром® Гламурная винтовка (Superchrome® Glam Rifle) — 1000eb — BC 120"
   },
   {
    "name": "Суперхром® Джевелин",
@@ -10196,7 +10310,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Суперхром® Джевелин — 1000eb — BC 120"
+   "alt": "Superchrome® Javelin",
+   "label": "Суперхром® Джевелин (Superchrome® Javelin) — 1000eb — BC 120"
   },
   {
    "name": "Суперхром® Запасное Оружие",
@@ -10208,7 +10323,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Суперхром® Запасное Оружие — 1000eb — BC 121"
+   "alt": "Superchrome® Sidearm",
+   "label": "Суперхром® Запасное Оружие (Superchrome® Sidearm) — 1000eb — BC 121"
   },
   {
    "name": "ТР-4 Детонационная Жидкость",
@@ -10220,7 +10336,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "ТР-4 Детонационная Жидкость — 500eb — BC 90"
+   "alt": "TR-4 Detonator Fluid",
+   "label": "ТР-4 Детонационная Жидкость (TR-4 Detonator Fluid) — 500eb — BC 90"
   },
   {
    "name": "Тазер",
@@ -10271,7 +10388,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Тактическая Умная Броня — 1000eb — BC 30"
+   "alt": "Tactical Smart Armor",
+   "label": "Тактическая Умная Броня (Tactical Smart Armor) — 1000eb — BC 30"
   },
   {
    "name": "Тактический Зонт Militech",
@@ -10398,7 +10516,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Техтроника Россия BMG-500 — 1000eb — BC 122"
+   "alt": "Techtronika Russia BMG-500",
+   "label": "Техтроника Россия BMG-500 (Techtronika Russia BMG-500) — 1000eb — BC 122"
   },
   {
    "alt": "Techtronika Russia BMG-500 (Silver Edition)",
@@ -10448,7 +10567,8 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "Трах Бабах — 50eb — BC 106"
+   "alt": "GunMart Bubba Buster",
+   "label": "Трах Бабах (GunMart Bubba Buster) — 50eb — BC 106"
   },
   {
    "name": "Трекер (маячок)",
@@ -10761,7 +10881,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Укрепленный Корпус Киберглаза — 500eb — BC 19"
+   "alt": "Hardened Cybereye Casing",
+   "label": "Укрепленный Корпус Киберглаза (Hardened Cybereye Casing) — 500eb — BC 19"
   },
   {
    "name": "Уличная Куртка Лазерный Свет",
@@ -10773,7 +10894,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Уличная Куртка Лазерный Свет — 500eb — BC 31"
+   "alt": "Laser Light Street Jacket",
+   "label": "Уличная Куртка Лазерный Свет (Laser Light Street Jacket) — 500eb — BC 31"
   },
   {
    "name": "Уличный Кейс",
@@ -10785,7 +10907,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Уличный Кейс — 500eb — BC 47"
+   "alt": "Streetcase by SecSystems",
+   "label": "Уличный Кейс (Streetcase by SecSystems) — 500eb — BC 47"
   },
   {
    "name": "Умная Перчатка CyberDude",
@@ -10859,7 +10982,8 @@
    "tier": "Роскошь",
    "href": "",
    "kind": "gear",
-   "label": "Универсальный Акваланг — 5000eb — BC 42"
+   "alt": "Hydrosubsidium Universal Aqualung",
+   "label": "Универсальный Акваланг (Hydrosubsidium Universal Aqualung) — 5000eb — BC 42"
   },
   {
    "name": "Упаковка Киббла",
@@ -10949,7 +11073,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Усилитель Звукового Удара — 1000eb — BC 40"
+   "alt": "KillStrom Sonic Boom Amp",
+   "label": "Усилитель Звукового Удара (KillStrom Sonic Boom Amp) — 1000eb — BC 40"
   },
   {
    "name": "Усилитель картинки",
@@ -11013,7 +11138,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Утилитарный Томагавк — 100eb — BC 101"
+   "alt": "Utility Tomahawk",
+   "label": "Утилитарный Томагавк (Utility Tomahawk) — 100eb — BC 101"
   },
   {
    "alt": "Federated Arms X-9mm",
@@ -11103,7 +11229,8 @@
    "tier": "Роскошь",
    "href": "",
    "kind": "gear",
-   "label": "Хелоу Кьюти «Ультра-К8», штурмовой пистолет — 5000eb — BC 118"
+   "alt": "Sanroo Hello Cutie Ultra-K8 Assault Pistol",
+   "label": "Хелоу Кьюти «Ультра-К8», штурмовой пистолет (Sanroo Hello Cutie Ultra-K8 Assault Pistol) — 5000eb — BC 118"
   },
   {
    "name": "Хим. анализатор",
@@ -11266,7 +11393,8 @@
    "tier": "Обычное",
    "href": "",
    "kind": "gear",
-   "label": "Цифровой Гладиатор — 20eb — BC 12"
+   "alt": "Digital Gladiator",
+   "label": "Цифровой Гладиатор (Digital Gladiator) — 20eb — BC 12"
   },
   {
    "alt": "Tsunami Arms Magus",
@@ -11369,7 +11497,8 @@
    "tier": "О. Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Чехол для Одежды “Корпорат Дживс” — 1000eb — BC 43"
+   "alt": "Jeeves Executive Garment Bag",
+   "label": "Чехол для Одежды “Корпорат Дживс” (Jeeves Executive Garment Bag) — 1000eb — BC 43"
   },
   {
    "alt": "Translation Chip",
@@ -11407,7 +11536,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Шариковый Киберпалец — 100eb — BC 24"
+   "alt": "Ballpoint Cyberfinger",
+   "label": "Шариковый Киберпалец (Ballpoint Cyberfinger) — 100eb — BC 24"
   },
   {
    "alt": "Roach Race",
@@ -11591,7 +11721,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Шоковая Броня — 500eb — BC 29"
+   "alt": "Shock Armor",
+   "label": "Шоковая Броня (Shock Armor) — 500eb — BC 29"
   },
   {
    "name": "Штаны — Asia Pop",
@@ -11723,7 +11854,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Штейнмейер M-04 Изменяемая Штурмовка — 500eb — BC 119"
+   "alt": "Sternmeyer M-04 Variable Assault",
+   "label": "Штейнмейер M-04 Изменяемая Штурмовка (Sternmeyer M-04 Variable Assault) — 500eb — BC 119"
   },
   {
    "alt": "Sternmeyer M-95A4 Assault Weapon",
@@ -11875,7 +12007,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "ЩепкоХранилище — 100eb — BC 44"
+   "alt": "ChipVault by SecSystems",
+   "label": "ЩепкоХранилище (ChipVault by SecSystems) — 100eb — BC 44"
   },
   {
    "name": "ЭМИ-нить",
@@ -11952,7 +12085,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Эвристический Отслеживатель Здоровья — 500eb — BC 19"
+   "alt": "Heuristic Health Monitor",
+   "label": "Эвристический Отслеживатель Здоровья (Heuristic Health Monitor) — 500eb — BC 19"
   },
   {
    "name": "Эгида",
@@ -11989,7 +12123,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Эксплицитный Стимулятор Памяти — 100eb — BC 18"
+   "alt": "Explicit Memory Stimulator",
+   "label": "Эксплицитный Стимулятор Памяти (Explicit Memory Stimulator) — 100eb — BC 18"
   },
   {
    "name": "Экстра-Крепление Киберконечности",
@@ -12001,7 +12136,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Экстра-Крепление Киберконечности — 500eb — BC 18"
+   "alt": "Extra-Jointed Cyberlimb Upgrade",
+   "label": "Экстра-Крепление Киберконечности (Extra-Jointed Cyberlimb Upgrade) — 500eb — BC 18"
   },
   {
    "name": "Электрогитара или другой инструмент",
