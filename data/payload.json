@@ -1856,6 +1856,7 @@
    "label": "Буст (Boost) — 50eb — СТР 357"
   },
   {
+   "alt": "Second-hand Special",
    "name": "Бывший в Употреблении",
    "price": 50,
    "cyber": false,
@@ -1865,7 +1866,7 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "Бывший в Употреблении — 50eb — CC 7"
+   "label": "Бывший в Употреблении (Second-hand Special) — 50eb — CC 7"
   },
   {
    "alt": "Swifty Clean",
@@ -2215,6 +2216,7 @@
    "label": "Визгун (Shrieker) — 500eb — СТР 346"
   },
   {
+   "alt": "Virtual Barbeque by Segotari",
    "name": "Виртуальное барбекю от Сеготари",
    "price": 500,
    "cyber": false,
@@ -2224,7 +2226,7 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Виртуальное барбекю от Сеготари — 500eb — CC 7"
+   "label": "Виртуальное барбекю от Сеготари (Virtual Barbeque by Segotari) — 500eb — CC 7"
   },
   {
    "name": "Виртуальное зрение",
@@ -3253,6 +3255,7 @@
    "label": "Длинноствольный Пистолет Нэт — 500eb — RDM 3"
   },
   {
+   "alt": "A Touch of Luxury",
    "name": "Дотронуться до Роскоши",
    "price": 500,
    "cyber": false,
@@ -3262,7 +3265,7 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Дотронуться до Роскоши — 500eb — CC 7"
+   "label": "Дотронуться до Роскоши (A Touch of Luxury) — 500eb — CC 7"
   },
   {
    "alt": "Draconic FantaForm™",
@@ -3404,6 +3407,7 @@
    "label": "Жабры (Gills) — 1000eb — СТР 108"
   },
   {
+   "alt": "Desirous Decoration",
    "name": "Желаемый декор",
    "price": 1000,
    "cyber": false,
@@ -3413,7 +3417,7 @@
    "tier": "Очень дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Желаемый декор — 1000eb — CC 7"
+   "label": "Желаемый декор (Desirous Decoration) — 1000eb — CC 7"
   },
   {
    "name": "Живым или Мёртвым",
@@ -3997,6 +4001,7 @@
    "label": "Искусственные мышцы и усиленные кости (Grafted Muscle and Bone Lace) — 1000eb — СТР 108"
   },
   {
+   "alt": "K-Tech All-Purpose Soundproofing Solution",
    "name": "К-тех Универсальная звукоизоляция",
    "price": 1000,
    "cyber": false,
@@ -4006,7 +4011,7 @@
    "tier": "Очень дорогое",
    "href": "",
    "kind": "gear",
-   "label": "К-тех Универсальная звукоизоляция — 1000eb — CC 7"
+   "label": "К-тех Универсальная звукоизоляция (K-Tech All-Purpose Soundproofing Solution) — 1000eb — CC 7"
   },
   {
    "name": "КТех Доберман 500",
@@ -4119,6 +4124,7 @@
    "label": "КейТех ТехноМолот — 1000eb — BC 110"
   },
   {
+   "alt": "Kendachi PressureTech Shower Head",
    "name": "Кендаши Душевая лейка НапорТех",
    "price": 500,
    "cyber": false,
@@ -4128,7 +4134,7 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Кендаши Душевая лейка НапорТех — 500eb — CC 7"
+   "label": "Кендаши Душевая лейка НапорТех (Kendachi PressureTech Shower Head) — 500eb — CC 7"
   },
   {
    "name": "Кендаши Моно-Вакидзаси",
@@ -4884,6 +4890,7 @@
    "label": "Конститьюшн Армс «Ураган» (Constitution Arms Hurricane Assault Weapon) — 5000eb — СТР 346"
   },
   {
+   "alt": "Continental Brands SmartOven",
    "name": "Континентал Брендс УмнаяМикроволновка",
    "price": 1000,
    "cyber": false,
@@ -4893,7 +4900,7 @@
    "tier": "Очень дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Континентал Брендс УмнаяМикроволновка — 1000eb — CC 7"
+   "label": "Континентал Брендс УмнаяМикроволновка (Continental Brands SmartOven) — 1000eb — CC 7"
   },
   {
    "name": "Контрабандный отсек",
@@ -4970,6 +4977,7 @@
    "label": "КотийКусь® (KatNip®) — 2200eb — EX45 3–8"
   },
   {
+   "alt": "Continental Brands Koff Popper",
    "name": "Кофф Поппер от Континентал Брендс",
    "price": 50,
    "cyber": false,
@@ -4979,7 +4987,7 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "Кофф Поппер от Континентал Брендс — 50eb — CC 7"
+   "label": "Кофф Поппер от Континентал Брендс (Continental Brands Koff Popper) — 50eb — CC 7"
   },
   {
    "alt": "Feline Instinct",
@@ -6368,6 +6376,7 @@
    "label": "Наручники (Handcuffs) — 50eb — СТР 351"
   },
   {
+   "alt": "Wall Art",
    "name": "Настенное Искусство",
    "price": 20,
    "cyber": false,
@@ -6377,9 +6386,10 @@
    "tier": "Обычное",
    "href": "",
    "kind": "gear",
-   "label": "Настенное Искусство — 20eb — CC 7"
+   "label": "Настенное Искусство (Wall Art) — 20eb — CC 7"
   },
   {
+   "alt": "Continental Brands Real Instant Coffee™",
    "name": "Настоящий кофе™ Континентал Брендс",
    "price": 100,
    "cyber": false,
@@ -6389,7 +6399,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Настоящий кофе™ Континентал Брендс — 100eb — CC 7"
+   "label": "Настоящий кофе™ Континентал Брендс (Continental Brands Real Instant Coffee™) — 100eb — CC 7"
   },
   {
    "name": "Независимая подача воздуха",
@@ -6800,6 +6810,7 @@
    "label": "ОгненноеДыхание (Firebreather) — 1000eb — EX45 8–9"
   },
   {
+   "alt": "Fire Safe",
    "name": "Огнеупорный Сейф",
    "price": 100,
    "cyber": false,
@@ -6809,7 +6820,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Огнеупорный Сейф — 100eb — CC 7"
+   "label": "Огнеупорный Сейф (Fire Safe) — 100eb — CC 7"
   },
   {
    "name": "Огонь Арасаки",
@@ -8490,6 +8501,7 @@
    "label": "Порт авторизации (Authorization Handshake Port) — 100eb — SF 17–19"
   },
   {
+   "alt": "Hidden Compartment",
    "name": "Потайной Ящик",
    "price": 100,
    "cyber": false,
@@ -8499,7 +8511,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Потайной Ящик — 100eb — CC 7"
+   "label": "Потайной Ящик (Hidden Compartment) — 100eb — CC 7"
   },
   {
    "name": "Потрошители",
@@ -8540,6 +8552,7 @@
    "label": "Прицеп — 50eb — SYW 3–5"
   },
   {
+   "alt": "Apartment Affability",
    "name": "Приятные апартаменты",
    "price": 500,
    "cyber": false,
@@ -8549,7 +8562,7 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Приятные апартаменты — 500eb — CC 7"
+   "label": "Приятные апартаменты (Apartment Affability) — 500eb — CC 7"
   },
   {
    "alt": "Kirama Advanced Deck",
@@ -9865,6 +9878,7 @@
    "label": "Стартовая дека Кирама (Kirama Entry Deck) — 100eb — MWU 3–4"
   },
   {
+   "alt": "Cargo Container Chic",
    "name": "Стиль Грузового Контейнера",
    "price": 100,
    "cyber": false,
@@ -9874,7 +9888,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Стиль Грузового Контейнера — 100eb — CC 7"
+   "label": "Стиль Грузового Контейнера (Cargo Container Chic) — 100eb — CC 7"
   },
   {
    "alt": "Prehensile Cyberfoot",
@@ -10270,6 +10284,7 @@
    "label": "Тактический прицел (Targeting Scope) — 500eb — СТР 108"
   },
   {
+   "alt": "Creative Couture",
    "name": "Творческий порыв",
    "price": 100,
    "cyber": false,
@@ -10279,7 +10294,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Творческий порыв — 100eb — CC 7"
+   "label": "Творческий порыв (Creative Couture) — 100eb — CC 7"
   },
   {
    "name": "ТелеОптика",
@@ -10806,6 +10821,7 @@
    "label": "Умные очки (Smart Glasses) — 500eb — СТР 351"
   },
   {
+   "alt": "Smart Vanity",
    "name": "Умный Туалетный Столик",
    "price": 500,
    "cyber": false,
@@ -10815,7 +10831,7 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Умный Туалетный Столик — 500eb — CC 7"
+   "label": "Умный Туалетный Столик (Smart Vanity) — 500eb — CC 7"
   },
   {
    "name": "Универсальный Акваланг",
