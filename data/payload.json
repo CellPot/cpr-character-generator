@@ -1983,6 +1983,7 @@
    "label": "Велосипед — 100eb — DG 146"
   },
   {
+   "alt": "Cycle Armor",
    "name": "Велосипедная броня",
    "price": 100,
    "cyber": false,
@@ -1992,7 +1993,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Велосипедная броня — 100eb — SYW 3–5"
+   "label": "Велосипедная броня (Cycle Armor) — 100eb — SYW 3–5"
   },
   {
    "name": "Верхняя — Asia Pop",
@@ -3205,6 +3206,7 @@
    "label": "Диктофон (Audio Recorder) — 100eb — СТР 351"
   },
   {
+   "alt": "Bottle Dynamo",
    "name": "Динамомашинка в бутылке",
    "price": 20,
    "cyber": false,
@@ -3214,7 +3216,7 @@
    "tier": "Обычное",
    "href": "",
    "kind": "gear",
-   "label": "Динамомашинка в бутылке — 20eb — SYW 3–5"
+   "label": "Динамомашинка в бутылке (Bottle Dynamo) — 20eb — SYW 3–5"
   },
   {
    "alt": "Distilling Compound",
@@ -4903,6 +4905,7 @@
    "label": "Континентал Брендс УмнаяМикроволновка (Continental Brands SmartOven) — 1000eb — CC 7"
   },
   {
+   "alt": "Smuggling Compartment",
    "name": "Контрабандный отсек",
    "price": 50,
    "cyber": false,
@@ -4912,7 +4915,7 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "Контрабандный отсек — 50eb — SYW 3–5"
+   "label": "Контрабандный отсек (Smuggling Compartment) — 50eb — SYW 3–5"
   },
   {
    "name": "Контрацептив",
@@ -4940,6 +4943,7 @@
    "label": "Корпоративный Остров — 500eb — BC 35"
   },
   {
+   "alt": "Enclosure",
    "name": "Корпус",
    "price": 100,
    "cyber": false,
@@ -4949,7 +4953,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Корпус — 100eb — SYW 3–5"
+   "label": "Корпус (Enclosure) — 100eb — SYW 3–5"
   },
   {
    "name": "Костюм РХБЗ от Esporma",
@@ -5040,6 +5044,7 @@
    "label": "Крепление для Хотсвапа Лицевой Панели — 1000eb — RDM 3"
   },
   {
+   "alt": "Gun Mount",
    "name": "Крепление для оружия",
    "price": 100,
    "cyber": false,
@@ -5049,7 +5054,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Крепление для оружия — 100eb — SYW 3–5"
+   "label": "Крепление для оружия (Gun Mount) — 100eb — SYW 3–5"
   },
   {
    "name": "Криокамера",
@@ -6452,6 +6457,7 @@
    "label": "НеоЯзык — 100eb — IR 69"
   },
   {
+   "alt": "Neon Lighting",
    "name": "Неоновая подсветка",
    "price": 20,
    "cyber": false,
@@ -6461,7 +6467,7 @@
    "tier": "Обычное",
    "href": "",
    "kind": "gear",
-   "label": "Неоновая подсветка — 20eb — SYW 3–5"
+   "label": "Неоновая подсветка (Neon Lighting) — 20eb — SYW 3–5"
   },
   {
    "alt": "Nova Cityhunter X",
@@ -8540,6 +8546,7 @@
    "label": "Прайм Тайм (Prime Time) — 50eb — HPH 2–3"
   },
   {
+   "alt": "Trailer",
    "name": "Прицеп",
    "price": 50,
    "cyber": false,
@@ -8549,7 +8556,7 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "Прицеп — 50eb — SYW 3–5"
+   "label": "Прицеп (Trailer) — 50eb — SYW 3–5"
   },
   {
    "alt": "Apartment Affability",
@@ -8694,6 +8701,7 @@
    "label": "Псайберстафф УотчМэн — 100eb — CBM 3"
   },
   {
+   "alt": "Bulletproof Glass",
    "name": "Пуленепробиваемое стекло",
    "price": 50,
    "cyber": false,
@@ -8703,7 +8711,7 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "Пуленепробиваемое стекло — 50eb — SYW 3–5"
+   "label": "Пуленепробиваемое стекло (Bulletproof Glass) — 50eb — SYW 3–5"
   },
   {
    "name": "Пуленепробиваемый щит",
@@ -8919,6 +8927,7 @@
    "label": "Ракеты умные (Smart) — ракетная установка (1 шт.) — 500eb — СТР 345"
   },
   {
+   "alt": "Stunt Frame",
    "name": "Рама для трюков",
    "price": 100,
    "cyber": false,
@@ -8928,7 +8937,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Рама для трюков — 100eb — SYW 3–5"
+   "label": "Рама для трюков (Stunt Frame) — 100eb — SYW 3–5"
   },
   {
    "name": "Рация",
@@ -9098,6 +9107,7 @@
    "label": "Ролики — 50eb — DG 147"
   },
   {
+   "alt": "Inline Skates",
    "name": "Роликовые коньки",
    "price": 50,
    "cyber": false,
@@ -9107,7 +9117,7 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "Роликовые коньки — 50eb — SYW 5"
+   "label": "Роликовые коньки (Inline Skates) — 50eb — SYW 5"
   },
   {
    "name": "Ростович «Кливер»",
@@ -9427,6 +9437,7 @@
    "label": "Синтококс (Synthcoke) — 20eb — СТР 357"
   },
   {
+   "alt": "Security System",
    "name": "Система безопасности",
    "price": 500,
    "cyber": false,
@@ -9436,7 +9447,7 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Система безопасности — 500eb — SYW 3–5"
+   "label": "Система безопасности (Security System) — 500eb — SYW 3–5"
   },
   {
    "name": "Скайдайверы Rocklin Augmentics",
@@ -9464,6 +9475,7 @@
    "label": "Сканер отпечатков ладони (Handprint Scanner) — 20eb — GQ 5–7"
   },
   {
+   "alt": "Skateboard",
    "name": "Скейтборд",
    "price": 50,
    "cyber": false,
@@ -9473,7 +9485,7 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "Скейтборд — 50eb — SYW 5"
+   "label": "Скейтборд (Skateboard) — 50eb — SYW 5"
   },
   {
    "name": "СкидРоу Тренч",
@@ -9501,6 +9513,7 @@
    "label": "Складная кровать и спальный мешок (Inflatable Bed & Sleep-bag) — 20eb — СТР 351"
   },
   {
+   "alt": "Folding Frame",
    "name": "Складная рама",
    "price": 100,
    "cyber": false,
@@ -9510,7 +9523,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Складная рама — 100eb — SYW 3–5"
+   "label": "Складная рама (Folding Frame) — 100eb — SYW 3–5"
   },
   {
    "name": "Скрытая кобура",
@@ -10578,6 +10591,7 @@
    "label": "Увеличенный магазин (Extended Magazine) — 100eb — СТР 343"
   },
   {
+   "alt": "Extended Seat",
    "name": "Удлинённое сиденье",
    "price": 20,
    "cyber": false,
@@ -10587,7 +10601,7 @@
    "tier": "Обычное",
    "href": "",
    "kind": "gear",
-   "label": "Удлинённое сиденье — 20eb — SYW 3–5"
+   "label": "Удлинённое сиденье (Extended Seat) — 20eb — SYW 3–5"
   },
   {
    "alt": "Terrifier",
@@ -10859,6 +10873,7 @@
    "label": "Упаковка Киббла (Kibble Pack) — 10eb — СТР 351"
   },
   {
+   "alt": "Reinforced Frame",
    "name": "Усиленная рама",
    "price": 100,
    "cyber": false,
@@ -10868,7 +10883,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Усиленная рама — 100eb — SYW 3–5"
+   "label": "Усиленная рама (Reinforced Frame) — 100eb — SYW 3–5"
   },
   {
    "alt": "Reinforced String",
@@ -11999,6 +12014,7 @@
    "label": "Электрогитара или другой инструмент (Electric Guitar or another Instrument) — 500eb — СТР 351"
   },
   {
+   "alt": "Electric Pedal Assist",
    "name": "Электропривод педалей",
    "price": 100,
    "cyber": false,
@@ -12008,7 +12024,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Электропривод педалей — 100eb — SYW 3–5"
+   "label": "Электропривод педалей (Electric Pedal Assist) — 100eb — SYW 3–5"
   },
   {
    "name": "Электроштык",
