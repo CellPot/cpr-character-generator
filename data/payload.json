@@ -1632,6 +1632,7 @@
    "label": "Боевой Хвост (Combat Tail) — 1000eb — EX45 8–9"
   },
   {
+   "alt": "Combat Jaw",
    "name": "Боевые Челюсти",
    "price": 500,
    "cyber": true,
@@ -1641,7 +1642,7 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Боевые Челюсти — 500eb — DG 145"
+   "label": "Боевые Челюсти (Combat Jaw) — 500eb — DG 145"
   },
   {
    "alt": "Swamp Mist",
@@ -1823,6 +1824,7 @@
    "label": "Броня Мародёра (Scavenged Armor) — 50eb — BC+ 4"
   },
   {
+   "alt": "Scavenged Armor",
    "name": "Броня Мародёра",
    "price": 50,
    "cyber": false,
@@ -1832,9 +1834,10 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "Броня Мародёра — 50eb — DG 148"
+   "label": "Броня Мародёра (Scavenged Armor) — 50eb — DG 148"
   },
   {
+   "alt": "Arasaka WAA Bullpup Assault Weapon",
    "name": "Буллпап Arasaka WAA",
    "price": 1000,
    "cyber": false,
@@ -1844,7 +1847,7 @@
    "tier": "Очень Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Буллпап Arasaka WAA — 1000eb — DG 144"
+   "label": "Буллпап Arasaka WAA (Arasaka WAA Bullpup Assault Weapon) — 1000eb — DG 144"
   },
   {
    "name": "Бункерное снаряжение",
@@ -1989,6 +1992,7 @@
    "label": "Вдохновитель (Brainwasher) — 50eb — AAA 7–9"
   },
   {
+   "alt": "Bicycle",
    "name": "Велосипед",
    "price": 100,
    "cyber": false,
@@ -1998,7 +2002,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Велосипед — 100eb — DG 146"
+   "label": "Велосипед (Bicycle) — 100eb — DG 146"
   },
   {
    "alt": "Cycle Armor",
@@ -2367,6 +2371,7 @@
    "label": "Воздушка (Nomad Air Cannon) — 1000eb — IR 56"
   },
   {
+   "alt": "Nomad Air Cannon",
    "name": "Воздушка Кочевников",
    "price": 1000,
    "cyber": false,
@@ -2376,7 +2381,7 @@
    "tier": "Очень Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Воздушка Кочевников — 1000eb — DG 145"
+   "label": "Воздушка Кочевников (Nomad Air Cannon) — 1000eb — DG 145"
   },
   {
    "name": "Воздушный Колодец 50",
@@ -2729,6 +2734,7 @@
    "label": "Гарнитура Зетатех Tank Commander (Zetatech Tank Commander Headset) — 100eb — GQ 5–7"
   },
   {
+   "alt": "Nomad Pneumatic Bolt Gun",
    "name": "Гвоздомёт Кочевников",
    "price": 500,
    "cyber": false,
@@ -2738,7 +2744,7 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Гвоздомёт Кочевников — 500eb — DG 145"
+   "label": "Гвоздомёт Кочевников (Nomad Pneumatic Bolt Gun) — 500eb — DG 145"
   },
   {
    "alt": "Hybrid Metalgear®",
@@ -4696,6 +4702,7 @@
    "label": "Киберсканер — 1000eb — GRM 2"
   },
   {
+   "alt": "PerfectFit Cyberfoot",
    "name": "Киберстопа Perfect Fit",
    "price": 100,
    "cyber": true,
@@ -4705,7 +4712,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Киберстопа Perfect Fit — 100eb — DG 146"
+   "label": "Киберстопа Perfect Fit (PerfectFit Cyberfoot) — 100eb — DG 146"
   },
   {
    "alt": "Cyberskull",
@@ -4849,6 +4856,7 @@
    "label": "Коктейль Молотова (Molotov Cocktail) — 20eb — BC+ 4"
   },
   {
+   "alt": "Molotov Cocktail",
    "name": "Коктейль Молотова",
    "price": 20,
    "cyber": false,
@@ -4858,7 +4866,7 @@
    "tier": "Обычное",
    "href": "",
    "kind": "gear",
-   "label": "Коктейль Молотова — 20eb — DG 145"
+   "label": "Коктейль Молотова (Molotov Cocktail) — 20eb — DG 145"
   },
   {
    "name": "Колонка “Тифоид”",
@@ -5824,6 +5832,7 @@
    "label": "МикроОптика (MicroOptics) — 100eb — СТР 108"
   },
   {
+   "alt": "Raven Microcybernetics MicroWaldo",
    "name": "Микровальдо Raven Microcybernetics",
    "price": 1000,
    "cyber": true,
@@ -5833,7 +5842,7 @@
    "tier": "Очень Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Микровальдо Raven Microcybernetics — 1000eb — DG 146"
+   "label": "Микровальдо Raven Microcybernetics (Raven Microcybernetics MicroWaldo) — 1000eb — DG 146"
   },
   {
    "name": "Микроволновка",
@@ -6317,6 +6326,7 @@
    "label": "Мультигипо (Multihypo) — 500eb — SF 22–25"
   },
   {
+   "alt": "Constitutional Arms Multiple Ammo Pistol",
    "name": "Мультизарядный Пистолет Constitutional Arms",
    "price": 500,
    "cyber": false,
@@ -6326,7 +6336,7 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Мультизарядный Пистолет Constitutional Arms — 500eb — DG 144"
+   "label": "Мультизарядный Пистолет Constitutional Arms (Constitutional Arms Multiple Ammo Pistol) — 500eb — DG 144"
   },
   {
    "name": "Мультизарядный пистолет Конститьюшинал Армс",
@@ -6651,6 +6661,7 @@
    "label": "Ноготочки «Вкл-Выкл» (Lead’s Turn-On-Show-Off Nails) — 100eb — IR 69"
   },
   {
+   "alt": "Lead’s Turn-On-Show-Off Nails",
    "name": "Ногти Lead Включи-Удиви-Отключи",
    "price": 100,
    "cyber": true,
@@ -6660,7 +6671,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Ногти Lead Включи-Удиви-Отключи — 100eb — DG 146"
+   "label": "Ногти Lead Включи-Удиви-Отключи (Lead’s Turn-On-Show-Off Nails) — 100eb — DG 146"
   },
   {
    "alt": "NeuHuman™",
@@ -6913,6 +6924,7 @@
    "label": "Огнемёт (Flamethrower) — 500eb — СТР 346"
   },
   {
+   "alt": "Kendachi Dragon Flamethrower",
    "name": "Огнемёт Kendashi Dragon",
    "price": 1000,
    "cyber": false,
@@ -6922,7 +6934,7 @@
    "tier": "Очень Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Огнемёт Kendashi Dragon — 1000eb — DG 144"
+   "label": "Огнемёт Kendashi Dragon (Kendachi Dragon Flamethrower) — 1000eb — DG 144"
   },
   {
    "name": "Огнемёт Дракон Кендачи",
@@ -7750,7 +7762,7 @@
    "label": "Патроны мусорные (Junk Ammo) — тяжёлый пистолет и тяжёлый ПП (50 шт.) — 10eb — BC+ 3"
   },
   {
-   "name": "Патроны мусорные — винтовка (50 шт.)",
+   "name": "Патроны мусорные (Junk Ammunition) — винтовка (50 шт.)",
    "price": 10,
    "cyber": false,
    "hl": 0,
@@ -7759,10 +7771,10 @@
    "tier": "Дешевка",
    "href": "",
    "kind": "gear",
-   "label": "Патроны мусорные — винтовка (50 шт.) — 10eb — DG 147"
+   "label": "Патроны мусорные (Junk Ammunition) — винтовка (50 шт.) — 10eb — DG 147"
   },
   {
-   "name": "Патроны мусорные — дробовик, жакан (50 шт.)",
+   "name": "Патроны мусорные (Junk Ammunition) — дробовик, жакан (50 шт.)",
    "price": 10,
    "cyber": false,
    "hl": 0,
@@ -7771,10 +7783,10 @@
    "tier": "Дешевка",
    "href": "",
    "kind": "gear",
-   "label": "Патроны мусорные — дробовик, жакан (50 шт.) — 10eb — DG 147"
+   "label": "Патроны мусорные (Junk Ammunition) — дробовик, жакан (50 шт.) — 10eb — DG 147"
   },
   {
-   "name": "Патроны мусорные — очень тяжёлый пистолет (50 шт.)",
+   "name": "Патроны мусорные (Junk Ammunition) — очень тяжёлый пистолет (50 шт.)",
    "price": 10,
    "cyber": false,
    "hl": 0,
@@ -7783,10 +7795,10 @@
    "tier": "Дешевка",
    "href": "",
    "kind": "gear",
-   "label": "Патроны мусорные — очень тяжёлый пистолет (50 шт.) — 10eb — DG 147"
+   "label": "Патроны мусорные (Junk Ammunition) — очень тяжёлый пистолет (50 шт.) — 10eb — DG 147"
   },
   {
-   "name": "Патроны мусорные — пистолет и ПП (50 шт.)",
+   "name": "Патроны мусорные (Junk Ammunition) — пистолет и ПП (50 шт.)",
    "price": 10,
    "cyber": false,
    "hl": 0,
@@ -7795,10 +7807,10 @@
    "tier": "Дешевка",
    "href": "",
    "kind": "gear",
-   "label": "Патроны мусорные — пистолет и ПП (50 шт.) — 10eb — DG 147"
+   "label": "Патроны мусорные (Junk Ammunition) — пистолет и ПП (50 шт.) — 10eb — DG 147"
   },
   {
-   "name": "Патроны мусорные — тяжёлый пистолет и тяжёлый ПП (50 шт.)",
+   "name": "Патроны мусорные (Junk Ammunition) — тяжёлый пистолет и тяжёлый ПП (50 шт.)",
    "price": 10,
    "cyber": false,
    "hl": 0,
@@ -7807,7 +7819,7 @@
    "tier": "Дешевка",
    "href": "",
    "kind": "gear",
-   "label": "Патроны мусорные — тяжёлый пистолет и тяжёлый ПП (50 шт.) — 10eb — DG 147"
+   "label": "Патроны мусорные (Junk Ammunition) — тяжёлый пистолет и тяжёлый ПП (50 шт.) — 10eb — DG 147"
   },
   {
    "price": 40,
@@ -9255,6 +9267,7 @@
    "label": "Ретинальный сканер (Retina Scanner) — 50eb — GQ 5–7"
   },
   {
+   "alt": "Inline Skates",
    "name": "Ролики",
    "price": 50,
    "cyber": false,
@@ -9264,7 +9277,7 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "Ролики — 50eb — DG 147"
+   "label": "Ролики (Inline Skates) — 50eb — DG 147"
   },
   {
    "alt": "Inline Skates",
@@ -9847,6 +9860,7 @@
    "label": "Смэш Пираний (Piranha Smash) — 10eb — BC+ 4"
   },
   {
+   "alt": "Piranha Smash",
    "name": "Смэш Пираний",
    "price": 10,
    "cyber": false,
@@ -9856,7 +9870,7 @@
    "tier": "Дешевка",
    "href": "",
    "kind": "gear",
-   "label": "Смэш Пираний — 10eb — DG 148"
+   "label": "Смэш Пираний (Piranha Smash) — 10eb — DG 148"
   },
   {
    "name": "Снайперская винтовка",
@@ -9885,6 +9899,7 @@
    "label": "Снайперский прицел (Sniping Scope) — 100eb — СТР 343"
   },
   {
+   "alt": "Reflex Co-Processor",
    "name": "Со-процессор Рефлексов",
    "price": 500,
    "cyber": true,
@@ -9894,7 +9909,7 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Со-процессор Рефлексов — 500eb — DG 146"
+   "label": "Со-процессор Рефлексов (Reflex Co-Processor) — 500eb — DG 146"
   },
   {
    "alt": "SovOil Bombardier",
@@ -10164,7 +10179,7 @@
    "label": "Стрелы мусорные (Junk Ammo) — лук и арбалет (50 шт.) — 10eb — BC+ 3"
   },
   {
-   "name": "Стрелы мусорные — лук и арбалет (50 шт.)",
+   "name": "Стрелы мусорные (Junk Ammunition) — лук и арбалет (50 шт.)",
    "price": 10,
    "cyber": false,
    "hl": 0,
@@ -10173,7 +10188,7 @@
    "tier": "Дешевка",
    "href": "",
    "kind": "gear",
-   "label": "Стрелы мусорные — лук и арбалет (50 шт.) — 10eb — DG 147"
+   "label": "Стрелы мусорные (Junk Ammunition) — лук и арбалет (50 шт.) — 10eb — DG 147"
   },
   {
    "price": 40,
@@ -10453,6 +10468,7 @@
    "label": "Тактическая Умная Броня (Tactical Smart Armor) — 1000eb — BC 30"
   },
   {
+   "alt": "Militech Tactical Umbrella",
    "name": "Тактический Зонт Militech",
    "price": 1000,
    "cyber": false,
@@ -10462,7 +10478,7 @@
    "tier": "Очень Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Тактический Зонт Militech — 1000eb — DG 144"
+   "label": "Тактический Зонт Militech (Militech Tactical Umbrella) — 1000eb — DG 144"
   },
   {
    "alt": "Militech Tactical Umbrella",
@@ -11011,6 +11027,7 @@
    "label": "Умная Перчатка CyberDude — 750eb — RDM 3"
   },
   {
+   "alt": "Smart Lens",
    "name": "Умные Линзы",
    "price": 500,
    "cyber": false,
@@ -11020,7 +11037,7 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Умные Линзы — 500eb — DG 148"
+   "label": "Умные Линзы (Smart Lens) — 500eb — DG 148"
   },
   {
    "name": "Умные Уши",
