@@ -767,7 +767,8 @@
    "tier": "Очень дорогое",
    "href": "",
    "kind": "gear",
-   "label": "SDF-45 — 1000eb — IR 55"
+   "alt": "Midnight Arms SDF-45",
+   "label": "SDF-45 (Midnight Arms SDF-45) — 1000eb — IR 55"
   },
   {
    "alt": "SGI Technologies Kerberos",
@@ -1057,7 +1058,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "«Тройное Удовольствие» — 500eb — IR 55"
+   "alt": "BudgetArms Triple Threat",
+   "label": "«Тройное Удовольствие» (BudgetArms Triple Threat) — 500eb — IR 55"
   },
   {
    "alt": "C9 Kill Switch",
@@ -1378,7 +1380,8 @@
    "tier": "Роскошь",
    "href": "",
    "kind": "gear",
-   "label": "Архимед — 5000eb — IR 56"
+   "alt": "Militech Archimedes",
+   "label": "Архимед (Militech Archimedes) — 5000eb — IR 56"
   },
   {
    "name": "АудиоВокс",
@@ -1429,7 +1432,8 @@
    "tier": "Очень дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Баллистический гарпун — 1000eb — IR 57"
+   "alt": "SlamDance Ballistic Harpoon",
+   "label": "Баллистический гарпун (SlamDance Ballistic Harpoon) — 1000eb — IR 57"
   },
   {
    "name": "Барабан-синтезатор",
@@ -2345,7 +2349,8 @@
    "tier": "Очень дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Воздушка — 1000eb — IR 56"
+   "alt": "Nomad Air Cannon",
+   "label": "Воздушка (Nomad Air Cannon) — 1000eb — IR 56"
   },
   {
    "name": "Воздушка Кочевников",
@@ -2421,7 +2426,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Встроенный персональный шредер — 100eb — IR 70"
+   "alt": "Pursuit Security Incorporated Personal Shredder",
+   "label": "Встроенный персональный шредер (Pursuit Security Incorporated Personal Shredder) — 100eb — IR 70"
   },
   {
    "name": "Выкидное ОББ",
@@ -2781,7 +2787,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Глаза Настроения — 100eb — IR 69"
+   "alt": "Mood Eye",
+   "label": "Глаза Настроения (Mood Eye) — 100eb — IR 69"
   },
   {
    "name": "Глоустик",
@@ -2844,7 +2851,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Голопроектор Палм — 100eb — IR 69"
+   "alt": "Holo Projector Palm",
+   "label": "Голопроектор Палм (Holo Projector Palm) — 100eb — IR 69"
   },
   {
    "name": "Городская База Данных",
@@ -3887,7 +3895,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Идеальная киберстопа — 100eb — IR 70"
+   "alt": "PerfectFit Cyberfoot",
+   "label": "Идеальная киберстопа (PerfectFit Cyberfoot) — 100eb — IR 70"
   },
   {
    "name": "Изменчивые такты",
@@ -4118,7 +4127,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Карманная ракетница — 500eb — IR 57"
+   "alt": "Towa Pocket Launcher",
+   "label": "Карманная ракетница (Towa Pocket Launcher) — 500eb — IR 57"
   },
   {
    "name": "Карманный усилок",
@@ -4568,7 +4578,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Киберподушка — 100eb — IR 68"
+   "alt": "Cyberpillow",
+   "label": "Киберподушка (Cyberpillow) — 100eb — IR 68"
   },
   {
    "name": "Киберпозвоночник Sycust",
@@ -6454,7 +6465,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Наружный видеоэкран — 100eb — IR 68"
+   "alt": "External Vidscreen",
+   "label": "Наружный видеоэкран (External Vidscreen) — 100eb — IR 68"
   },
   {
    "name": "Наручники",
@@ -6544,7 +6556,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "НеоЯзык — 100eb — IR 69"
+   "alt": "NeuTongue",
+   "label": "НеоЯзык (NeuTongue) — 100eb — IR 69"
   },
   {
    "alt": "Neon Lighting",
@@ -6607,7 +6620,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Ноготочки «Вкл-Выкл» — 100eb — IR 69"
+   "alt": "Lead’s Turn-On-Show-Off Nails",
+   "label": "Ноготочки «Вкл-Выкл» (Lead’s Turn-On-Show-Off Nails) — 100eb — IR 69"
   },
   {
    "name": "Ногти Lead Включи-Удиви-Отключи",
@@ -8577,7 +8591,8 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "Покрытие для Спонсоров — 50eb — IR 70"
+   "alt": "Sponsored Covering",
+   "label": "Покрытие для Спонсоров (Sponsored Covering) — 50eb — IR 70"
   },
   {
    "name": "Полуночница™",
@@ -8938,7 +8953,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Разлагающаяся пусковая установка — 500eb — IR 55"
+   "alt": "Biotechnica Enviro-launcher",
+   "label": "Разлагающаяся пусковая установка (Biotechnica Enviro-launcher) — 500eb — IR 55"
   },
   {
    "name": "Разогреватель Киббла",
@@ -8950,7 +8966,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Разогреватель Киббла — 100eb — IR 70"
+   "alt": "PersonalPak KibbleWarmer",
+   "label": "Разогреватель Киббла (PersonalPak KibbleWarmer) — 100eb — IR 70"
   },
   {
    "name": "Разрывной огнемёт",
@@ -8962,7 +8979,8 @@
    "tier": "Очень дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Разрывной огнемёт — 1000eb — IR 57"
+   "alt": "UrbanTech Burst Flamethrower",
+   "label": "Разрывной огнемёт (UrbanTech Burst Flamethrower) — 1000eb — IR 57"
   },
   {
    "name": "Разъём для щепок",
@@ -9076,7 +9094,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Регулятор Голода — 500eb — IR 68"
+   "alt": "Appetite Controller",
+   "label": "Регулятор Голода (Appetite Controller) — 500eb — IR 68"
   },
   {
    "name": "Редактор боли",
@@ -9514,7 +9533,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Сигнальная ракетница — 100eb — IR 55"
+   "alt": "Flare Gun",
+   "label": "Сигнальная ракетница (Flare Gun) — 100eb — IR 55"
   },
   {
    "name": "Синее стекло",
@@ -9681,7 +9701,8 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Слезоточивый Защитник от Погонь — 500eb — IR 56"
+   "alt": "Pursuit Security Inc. TearJerk",
+   "label": "Слезоточивый Защитник от Погонь (Pursuit Security Inc. TearJerk) — 500eb — IR 56"
   },
   {
    "alt": "SlamDance ElectroMag",
@@ -10632,7 +10653,8 @@
    "tier": "Очень дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Тяжёлая винтовка М-02 — 1000eb — IR 57"
+   "alt": "Sternmeyer M-02 Heavy Rifle",
+   "label": "Тяжёлая винтовка М-02 (Sternmeyer M-02 Heavy Rifle) — 1000eb — IR 57"
   },
   {
    "name": "Тяжёлое ОББ",
@@ -11381,7 +11403,8 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Циферблат Убийств — 100eb — IR 69"
+   "alt": "Kill Display",
+   "label": "Циферблат Убийств (Kill Display) — 100eb — IR 69"
   },
   {
    "name": "Цифровой Гладиатор",
@@ -12098,7 +12121,8 @@
    "tier": "Очень дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Эгида — 1000eb — IR 56"
+   "alt": "Militech Aegis",
+   "label": "Эгида (Militech Aegis) — 1000eb — IR 56"
   },
   {
    "alt": "Linear Frame Ω (Omega), External",
