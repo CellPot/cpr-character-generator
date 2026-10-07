@@ -32,6 +32,7 @@
   "ir_woodchipper": "IR 55",
   "ir_chrome": "IR 68",
   "ir_cyberseats": "IR 34",
+  "ir_weather": "IR 78",
   "dg_gear": "DG 144",
   "gm_bodies": "GM 20",
   "gm_implants": "GM 14",
@@ -2340,6 +2341,19 @@
    "label": "Водородный Микро-Компрессор (Micro Hydrogen Combuster) — 500eb — BC 88"
   },
   {
+   "alt": "Waterproof Jacket Lining",
+   "name": "Водостойкая подкладка для куртки",
+   "price": 500,
+   "cyber": false,
+   "hl": 0,
+   "src": "IR",
+   "chip": "IR 78",
+   "tier": "Дорогое",
+   "href": "",
+   "kind": "gear",
+   "label": "Водостойкая подкладка для куртки (Waterproof Jacket Lining) — 500eb — IR 78"
+  },
+  {
    "name": "Воздушка",
    "price": 1000,
    "cyber": false,
@@ -3780,6 +3794,19 @@
    "href": "",
    "kind": "gear",
    "label": "Змееловка (Snaketrap) — 500eb — MWU 5–6"
+  },
+  {
+   "alt": "Umbrella",
+   "name": "Зонт",
+   "price": 10,
+   "cyber": false,
+   "hl": 0,
+   "src": "IR",
+   "chip": "IR 78",
+   "tier": "Дешевка",
+   "href": "",
+   "kind": "gear",
+   "label": "Зонт (Umbrella) — 10eb — IR 78"
   },
   {
    "alt": "IMI UZ 2045 Pro",
@@ -7038,6 +7065,19 @@
    "href": "",
    "kind": "gear",
    "label": "Отсрочивающий Состав (Delaying Compound) — 50eb — HPH 4"
+  },
+  {
+   "alt": "Hot-Weather Jacket Lining",
+   "name": "Охлаждающая подкладка для куртки",
+   "price": 500,
+   "cyber": false,
+   "hl": 0,
+   "src": "IR",
+   "chip": "IR 78",
+   "tier": "Дорогое",
+   "href": "",
+   "kind": "gear",
+   "label": "Охлаждающая подкладка для куртки (Hot-Weather Jacket Lining) — 500eb — IR 78"
   },
   {
    "alt": "WatchBox",
@@ -10425,6 +10465,19 @@
    "label": "Тактический Зонт Militech — 1000eb — DG 144"
   },
   {
+   "alt": "Militech Tactical Umbrella",
+   "name": "Тактический зонт Милитех",
+   "price": 1000,
+   "cyber": false,
+   "hl": 0,
+   "src": "IR",
+   "chip": "IR 78",
+   "tier": "Очень дорогое",
+   "href": "",
+   "kind": "gear",
+   "label": "Тактический зонт Милитех (Militech Tactical Umbrella) — 1000eb — IR 78"
+  },
+  {
    "name": "Тактический прицел",
    "price": 500,
    "cyber": true,
@@ -10720,6 +10773,19 @@
    "kind": "gear",
    "alt": "Heavy Pistol",
    "label": "Тяжёлый пистолет (Heavy Pistol) — 100eb — СТР 171"
+  },
+  {
+   "alt": "Cold-Weather Jacket Lining",
+   "name": "Тёплая подкладка для куртки",
+   "price": 500,
+   "cyber": false,
+   "hl": 0,
+   "src": "IR",
+   "chip": "IR 78",
+   "tier": "Дорогое",
+   "href": "",
+   "kind": "gear",
+   "label": "Тёплая подкладка для куртки (Cold-Weather Jacket Lining) — 500eb — IR 78"
   },
   {
    "name": "Увеличенный магазин",
