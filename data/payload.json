@@ -1069,6 +1069,7 @@
    "label": "Аварийный выключатель C9 (C9 Kill Switch) — 100eb — SF 17–19"
   },
   {
+   "alt": "Bodyweight AutoInjector",
    "name": "Автоинъектор Бодивейт",
    "price": 100,
    "cyber": true,
@@ -1078,7 +1079,7 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Автоинъектор Бодивейт — 100eb — HPH 5"
+   "label": "Автоинъектор Бодивейт (Bodyweight AutoInjector) — 100eb — HPH 5"
   },
   {
    "alt": "Pistol Autosear",
@@ -1477,6 +1478,7 @@
    "label": "Белый шершень Танто — 500eb — BC 93"
   },
   {
+   "alt": "Berserker",
    "name": "Берсеркер",
    "price": 100,
    "cyber": false,
@@ -1486,7 +1488,7 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Берсеркер — 100eb — HPH 2–3"
+   "label": "Берсеркер (Berserker) — 100eb — HPH 2–3"
   },
   {
    "name": "Бинокль",
@@ -2511,6 +2513,7 @@
    "label": "Газовый боеприпас воздушного подрыва (Airburst Ammunition) — 125eb — SF 22–25"
   },
   {
+   "alt": "Pursuit Security Inc. Gas Jet",
    "name": "Газомёт Стремительной Охраны",
    "price": 500,
    "cyber": true,
@@ -2520,7 +2523,7 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Газомёт Стремительной Охраны — 500eb — HPH 5"
+   "label": "Газомёт Стремительной Охраны (Pursuit Security Inc. Gas Jet) — 500eb — HPH 5"
   },
   {
    "alt": "GunMart Home Defender",
@@ -3212,6 +3215,7 @@
    "label": "Динамомашинка в бутылке — 20eb — SYW 3–5"
   },
   {
+   "alt": "Distilling Compound",
    "name": "Дистилляционный Состав",
    "price": 100,
    "cyber": false,
@@ -3221,7 +3225,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Дистилляционный Состав — 100eb — HPH 4"
+   "label": "Дистилляционный Состав (Distilling Compound) — 100eb — HPH 4"
   },
   {
    "alt": "Nomad Long Rifle",
@@ -3954,6 +3958,7 @@
    "label": "Ионные Наручники — 500eb — GRM 2"
   },
   {
+   "alt": "Timewarp",
    "name": "Искривление Времени",
    "price": 100,
    "cyber": false,
@@ -3963,7 +3968,7 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Искривление Времени — 100eb — HPH 2–3"
+   "label": "Искривление Времени (Timewarp) — 100eb — HPH 2–3"
   },
   {
    "name": "Искусственное плечо",
@@ -6870,6 +6875,7 @@
    "label": "Орк (Orcish FantaForm™) — 2500eb — EX45 3–8"
   },
   {
+   "alt": "Osmosis Compound",
    "name": "Осмотический Состав",
    "price": 50,
    "cyber": false,
@@ -6879,7 +6885,7 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "Осмотический Состав — 50eb — HPH 4"
+   "label": "Осмотический Состав (Osmosis Compound) — 50eb — HPH 4"
   },
   {
    "name": "Отсек для Щепки",
@@ -6894,6 +6900,7 @@
    "label": "Отсек для Щепки — 100eb — YNBF 12"
   },
   {
+   "alt": "Delaying Compound",
    "name": "Отсрочивающий Состав",
    "price": 50,
    "cyber": false,
@@ -6903,7 +6910,7 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "Отсрочивающий Состав — 50eb — HPH 4"
+   "label": "Отсрочивающий Состав (Delaying Compound) — 50eb — HPH 4"
   },
   {
    "alt": "WatchBox",
@@ -8508,6 +8515,7 @@
    "label": "Потрошители (Rippers) — 500eb — СТР 108"
   },
   {
+   "alt": "Prime Time",
    "name": "Прайм Тайм",
    "price": 50,
    "cyber": false,
@@ -8517,7 +8525,7 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Прайм Тайм — 50eb — HPH 2–3"
+   "label": "Прайм Тайм (Prime Time) — 50eb — HPH 2–3"
   },
   {
    "name": "Прицеп",
@@ -10086,6 +10094,7 @@
    "label": "Стукач Томми — 1000eb — BC 123"
   },
   {
+   "alt": "Suzumebachi Assassin Drone",
    "name": "Судзумебачи",
    "price": 5000,
    "cyber": false,
@@ -10095,7 +10104,7 @@
    "tier": "Роскошь",
    "href": "",
    "kind": "gear",
-   "label": "Судзумебачи — 5000eb — HPH 5"
+   "label": "Судзумебачи (Suzumebachi Assassin Drone) — 5000eb — HPH 5"
   },
   {
    "name": "Сумка",
@@ -11380,6 +11389,7 @@
    "label": "Шевелись, Плотва! (Roach Race) — 20eb — AAA 7–9"
   },
   {
+   "alt": "Sixgun",
    "name": "Шестистволка",
    "price": 100,
    "cyber": false,
@@ -11389,7 +11399,7 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Шестистволка — 100eb — HPH 2–3"
+   "label": "Шестистволка (Sixgun) — 100eb — HPH 2–3"
   },
   {
    "name": "Шифратор / Дешифратор",
