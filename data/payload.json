@@ -179,6 +179,7 @@
    "label": "E-TACK Народный Защитник — 500eb — BC 115"
   },
   {
+   "alt": "EBM PiR2",
    "name": "EBM PiR2",
    "price": 500,
    "cyber": true,
@@ -188,7 +189,7 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "EBM PiR2 — 500eb — AAA 7–9"
+   "label": "EBM PiR2 (EBM PiR2) — 500eb — AAA 7–9"
   },
   {
    "name": "GRAF3",
@@ -203,6 +204,7 @@
    "label": "GRAF3 — 5000eb — IR 39–41"
   },
   {
+   "alt": "The Garden",
    "name": "Garden",
    "price": 0,
    "cyber": false,
@@ -212,7 +214,7 @@
    "tier": "бесплатно",
    "href": "",
    "kind": "gear",
-   "label": "Garden — 0eb — AAA 7–9"
+   "label": "Garden (The Garden) — 0eb — AAA 7–9"
   },
   {
    "name": "Hello Cutie Fisher Kitty",
@@ -336,6 +338,7 @@
    "label": "Highland Defense: пусковая липких бомб (Highland Defense Stickybomb Launcher) — 1300eb — SF 12–19"
   },
   {
+   "alt": "HusTool",
    "name": "HusTool",
    "price": 20,
    "cyber": false,
@@ -345,7 +348,7 @@
    "tier": "в день",
    "href": "",
    "kind": "gear",
-   "label": "HusTool — 20eb — AAA 7–9"
+   "label": "HusTool (HusTool) — 20eb — AAA 7–9"
   },
   {
    "name": "IMI Chainknife",
@@ -397,6 +400,7 @@
    "label": "Magnum Opus Hellbringer — 1000eb — DG 144"
   },
   {
+   "alt": "MediaWare BrainGen",
    "name": "MediaWare BrainGen",
    "price": 50,
    "cyber": true,
@@ -406,7 +410,7 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "MediaWare BrainGen — 50eb — AAA 7–9"
+   "label": "MediaWare BrainGen (MediaWare BrainGen) — 50eb — AAA 7–9"
   },
   {
    "name": "Mega Ouchie",
@@ -699,6 +703,7 @@
    "label": "Raven Microcyb «Мудрец» (Raven Microcyb Wiseman) — 27480eb — GM 20"
   },
   {
+   "alt": "Raven Microcybernetics Drake",
    "name": "Raven Microcybernetics Drake",
    "price": 100,
    "cyber": true,
@@ -708,7 +713,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Raven Microcybernetics Drake — 100eb — AAA 7–9"
+   "label": "Raven Microcybernetics Drake (Raven Microcybernetics Drake) — 100eb — AAA 7–9"
   },
   {
    "alt": "Raven Microcyb Kestrel 2",
@@ -724,6 +729,7 @@
    "label": "Raven Microcybernetics «Кестрел 2» (Raven Microcyb Kestrel 2) — 1000eb — GM 14–19"
   },
   {
+   "alt": "Rocklin Augmentics Neuron",
    "name": "Rocklin Augmentics Neuron",
    "price": 1000,
    "cyber": true,
@@ -733,7 +739,7 @@
    "tier": "О. дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Rocklin Augmentics Neuron — 1000eb — AAA 7–9"
+   "label": "Rocklin Augmentics Neuron (Rocklin Augmentics Neuron) — 1000eb — AAA 7–9"
   },
   {
    "alt": "Rocklin Augmentics Alpha Class",
@@ -825,6 +831,7 @@
    "label": "Scatter Ratter (Scatter Ratter) — 2552eb — SF 12–19"
   },
   {
+   "alt": "Segotari Double Agent",
    "name": "Segotari Double Agent",
    "price": 50,
    "cyber": false,
@@ -834,7 +841,7 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "Segotari Double Agent — 50eb — AAA 7–9"
+   "label": "Segotari Double Agent (Segotari Double Agent) — 50eb — AAA 7–9"
   },
   {
    "name": "Slippy",
@@ -947,6 +954,7 @@
    "label": "Triti-Fizz — 10eb — BC 124"
   },
   {
+   "alt": "Wyzard Technologies Merlyn",
    "name": "Wyzard Technologies Merlyn",
    "price": 1000,
    "cyber": false,
@@ -956,9 +964,10 @@
    "tier": "О. дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Wyzard Technologies Merlyn — 1000eb — AAA 7–9"
+   "label": "Wyzard Technologies Merlyn (Wyzard Technologies Merlyn) — 1000eb — AAA 7–9"
   },
   {
+   "alt": "ZPost",
    "name": "Z-Почта",
    "price": 0,
    "cyber": false,
@@ -968,9 +977,10 @@
    "tier": "бесплатно",
    "href": "",
    "kind": "gear",
-   "label": "Z-Почта — 0eb — AAA 7–9"
+   "label": "Z-Почта (ZPost) — 0eb — AAA 7–9"
   },
   {
+   "alt": "Zetatech Grade A",
    "name": "Zetatech Grade A",
    "price": 100,
    "cyber": false,
@@ -980,9 +990,10 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Zetatech Grade A — 100eb — AAA 7–9"
+   "label": "Zetatech Grade A (Zetatech Grade A) — 100eb — AAA 7–9"
   },
   {
+   "alt": "Zetatech Grade A-Plus",
    "name": "Zetatech Grade A-Plus",
    "price": 500,
    "cyber": false,
@@ -992,7 +1003,7 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Zetatech Grade A-Plus — 500eb — AAA 7–9"
+   "label": "Zetatech Grade A-Plus (Zetatech Grade A-Plus) — 500eb — AAA 7–9"
   },
   {
    "name": "Zonda Metrocar",
@@ -1628,6 +1639,7 @@
    "label": "Болотный туман (Swamp Mist) — 500eb — MWU 5–6"
   },
   {
+   "alt": "Big SAAI",
    "name": "Больше САИИ",
    "price": 100,
    "cyber": false,
@@ -1637,7 +1649,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Больше САИИ — 100eb — AAA 7–9"
+   "label": "Больше САИИ (Big SAAI) — 100eb — AAA 7–9"
   },
   {
    "name": "БольшеКот®",
@@ -1913,6 +1925,7 @@
    "label": "Бюджетный Разъем для Щепок — 100eb — BC 17"
   },
   {
+   "alt": "BabelChat",
    "name": "ВавилонЧат",
    "price": 0,
    "cyber": false,
@@ -1922,7 +1935,7 @@
    "tier": "бесплатно",
    "href": "",
    "kind": "gear",
-   "label": "ВавилонЧат — 0eb — AAA 7–9"
+   "label": "ВавилонЧат (BabelChat) — 0eb — AAA 7–9"
   },
   {
    "name": "Вампиры",
@@ -1938,6 +1951,7 @@
    "label": "Вампиры (Vampyres) — 500eb — СТР 108"
   },
   {
+   "alt": "Brainwasher",
    "name": "Вдохновитель",
    "price": 50,
    "cyber": false,
@@ -1947,7 +1961,7 @@
    "tier": "в месяц",
    "href": "",
    "kind": "gear",
-   "label": "Вдохновитель — 50eb — AAA 7–9"
+   "label": "Вдохновитель (Brainwasher) — 50eb — AAA 7–9"
   },
   {
    "name": "Велосипед",
@@ -2119,6 +2133,7 @@
    "label": "Вествуд — 500eb — BC 121"
   },
   {
+   "alt": "Breacher",
    "name": "Взломщик",
    "price": 500,
    "cyber": false,
@@ -2128,7 +2143,7 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Взломщик — 500eb — AAA 7–9"
+   "label": "Взломщик (Breacher) — 500eb — AAA 7–9"
   },
   {
    "name": "Взрывной АДаптер",
@@ -4593,6 +4608,7 @@
    "label": "КиллСтром Микрофон Банши — 1000eb — BC 40"
   },
   {
+   "alt": "BangMe!",
    "name": "КиньМне!",
    "price": 10,
    "cyber": false,
@@ -4602,7 +4618,7 @@
    "tier": "Дешёвое",
    "href": "",
    "kind": "gear",
-   "label": "КиньМне! — 10eb — AAA 7–9"
+   "label": "КиньМне! (BangMe!) — 10eb — AAA 7–9"
   },
   {
    "name": "Кироши МоноВизор",
@@ -6872,6 +6888,7 @@
    "label": "Отсрочивающий Состав — 50eb — HPH 4"
   },
   {
+   "alt": "WatchBox",
    "name": "Охранный Бокс",
    "price": 50,
    "cyber": false,
@@ -6881,7 +6898,7 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "Охранный Бокс — 50eb — AAA 7–9"
+   "label": "Охранный Бокс (WatchBox) — 50eb — AAA 7–9"
   },
   {
    "name": "Оч. тяжёлое ОББ",
@@ -9242,6 +9259,7 @@
    "label": "Светящиеся тату (Light Tattoo) — 100eb — СТР 108"
   },
   {
+   "alt": "Crunch Whistle",
    "name": "Свисток для Обработки",
    "price": 100,
    "cyber": false,
@@ -9251,7 +9269,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Свисток для Обработки — 100eb — AAA 7–9"
+   "label": "Свисток для Обработки (Crunch Whistle) — 100eb — AAA 7–9"
   },
   {
    "name": "СвобоДоступные Ножны",
@@ -9715,6 +9733,7 @@
    "label": "Спонсируемый Киберглаз — 50eb — BC 22"
   },
   {
+   "alt": "Ask Alex Anything",
    "name": "Спроси Сашу",
    "price": 0,
    "cyber": false,
@@ -9724,7 +9743,7 @@
    "tier": "бесплатно",
    "href": "",
    "kind": "gear",
-   "label": "Спроси Сашу — 0eb — AAA 7–9"
+   "label": "Спроси Сашу (Ask Alex Anything) — 0eb — AAA 7–9"
   },
   {
    "name": "Среднее ОББ",
@@ -11327,6 +11346,7 @@
    "label": "Шариковый Киберпалец — 100eb — BC 24"
   },
   {
+   "alt": "Roach Race",
    "name": "Шевелись, Плотва!",
    "price": 20,
    "cyber": false,
@@ -11336,7 +11356,7 @@
    "tier": "в день",
    "href": "",
    "kind": "gear",
-   "label": "Шевелись, Плотва! — 20eb — AAA 7–9"
+   "label": "Шевелись, Плотва! (Roach Race) — 20eb — AAA 7–9"
   },
   {
    "name": "Шестистволка",
@@ -11968,6 +11988,7 @@
    "label": "Эльф — 2100eb — EX45 3–8"
   },
   {
+   "alt": "Elflines Online Elftracker",
    "name": "Эльф-Трекер",
    "price": 50,
    "cyber": false,
@@ -11977,7 +11998,7 @@
    "tier": "Ценное",
    "href": "",
    "kind": "gear",
-   "label": "Эльф-Трекер — 50eb — AAA 7–9"
+   "label": "Эльф-Трекер (Elflines Online Elftracker) — 50eb — AAA 7–9"
   }
  ],
  "dv": [
