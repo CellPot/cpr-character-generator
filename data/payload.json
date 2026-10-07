@@ -4352,6 +4352,7 @@
    "label": "Кибернога (Cyberleg) — 100eb — СТР 108"
   },
   {
+   "alt": "Homing Tracer Cyberfinger",
    "name": "Киберпалец с Функцией Наведения",
    "price": 500,
    "cyber": true,
@@ -4361,7 +4362,7 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Киберпалец с Функцией Наведения — 500eb — YNBF 12"
+   "label": "Киберпалец с Функцией Наведения (Homing Tracer Cyberfinger) — 500eb — YNBF 12"
   },
   {
    "name": "Киберпалец-Аэрогиппо",
@@ -6905,6 +6906,7 @@
    "label": "Осмотический Состав (Osmosis Compound) — 50eb — HPH 4"
   },
   {
+   "alt": "Chipware Compartment",
    "name": "Отсек для Щепки",
    "price": 100,
    "cyber": true,
@@ -6914,7 +6916,7 @@
    "tier": "Премиум",
    "href": "",
    "kind": "gear",
-   "label": "Отсек для Щепки — 100eb — YNBF 12"
+   "label": "Отсек для Щепки (Chipware Compartment) — 100eb — YNBF 12"
   },
   {
    "alt": "Delaying Compound",
@@ -10912,6 +10914,7 @@
    "label": "Усиленные антитела (Enhanced Antibodies) — 500eb — СТР 108"
   },
   {
+   "alt": "Hardened Cybereye Casing",
    "name": "Усиленный Корпус Киберглаза",
    "price": 500,
    "cyber": true,
@@ -10921,7 +10924,7 @@
    "tier": "Дорогое",
    "href": "",
    "kind": "gear",
-   "label": "Усиленный Корпус Киберглаза — 500eb — YNBF 12"
+   "label": "Усиленный Корпус Киберглаза (Hardened Cybereye Casing) — 500eb — YNBF 12"
   },
   {
    "name": "Усиленный слух",
