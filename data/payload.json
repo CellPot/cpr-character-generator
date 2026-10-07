@@ -1134,7 +1134,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Анализатор голосового стресса — 100eb — СТР 108"
+   "alt": "Voice Stress Analyzer",
+   "label": "Анализатор голосового стресса (Voice Stress Analyzer) — 100eb — СТР 108"
   },
   {
    "name": "АнтиЭМИ Покрытие",
@@ -1171,7 +1172,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Антиослепление — 100eb — СТР 108"
+   "alt": "Anti-Dazzle",
+   "label": "Антиослепление (Anti-Dazzle) — 100eb — СТР 108"
   },
   {
    "name": "Антирадиационный костюм",
@@ -1349,7 +1351,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "АудиоВокс — 500eb — СТР 108"
+   "alt": "AudioVox",
+   "label": "АудиоВокс (AudioVox) — 500eb — СТР 108"
   },
   {
    "name": "Аудиорекордер",
@@ -1361,7 +1364,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Аудиорекордер — 100eb — СТР 108"
+   "alt": "Audio Recorder",
+   "label": "Аудиорекордер (Audio Recorder) — 100eb — СТР 108"
   },
   {
    "name": "Аэрогиппо",
@@ -1474,7 +1478,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Биомонитор — 100eb — СТР 108"
+   "alt": "Biomonitor",
+   "label": "Биомонитор (Biomonitor) — 100eb — СТР 108"
   },
   {
    "name": "Биосистема",
@@ -1631,7 +1636,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Большие костяшки — 100eb — СТР 108"
+   "alt": "Big Knucks",
+   "label": "Большие костяшки (Big Knucks) — 100eb — СТР 108"
   },
   {
    "name": "Борг: Укрепленное Экранирование",
@@ -1848,7 +1854,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Быстросъёмное крепление — 100eb — СТР 108"
+   "alt": "Quick Change Mount",
+   "label": "Быстросъёмное крепление (Quick Change Mount) — 100eb — СТР 108"
   },
   {
    "name": "Быстрые Пальцы Rocklin Augmentics",
@@ -1896,7 +1903,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Вампиры — 500eb — СТР 108"
+   "alt": "Vampyres",
+   "label": "Вампиры (Vampyres) — 500eb — СТР 108"
   },
   {
    "name": "Вдохновитель",
@@ -2176,7 +2184,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Виртуальное зрение — 100eb — СТР 108"
+   "alt": "Virtuality",
+   "label": "Виртуальное зрение (Virtuality) — 100eb — СТР 108"
   },
   {
    "name": "Вихрь",
@@ -2226,7 +2235,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Внутренний Агент — 100eb — СТР 108"
+   "alt": "Internal Agent",
+   "label": "Внутренний Агент (Internal Agent) — 100eb — СТР 108"
   },
   {
    "name": "Водительский Ошейник",
@@ -2346,7 +2356,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Выкидное ОББ — 500eb — СТР 108"
+   "alt": "Popup Melee Weapon",
+   "label": "Выкидное ОББ (Popup Melee Weapon) — 500eb — СТР 108"
   },
   {
    "name": "Выкидное ОДБ",
@@ -2358,7 +2369,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Выкидное ОДБ — 500eb — СТР 108"
+   "alt": "Popup Ranged Weapon",
+   "label": "Выкидное ОДБ (Popup Ranged Weapon) — 500eb — СТР 108"
   },
   {
    "name": "Выкидной Дробовик",
@@ -2394,7 +2406,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Выкидной гранатомёт — 500eb — СТР 108"
+   "alt": "Popup Grenade Launcher",
+   "label": "Выкидной гранатомёт (Popup Grenade Launcher) — 500eb — СТР 108"
   },
   {
    "name": "Выкидной щит",
@@ -2406,7 +2419,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Выкидной щит — 500eb — СТР 108"
+   "alt": "Popup Shield",
+   "label": "Выкидной щит (Popup Shield) — 500eb — СТР 108"
   },
   {
    "name": "Высокоплотный Пуленепробиваемый Щит",
@@ -3073,7 +3087,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Демпфер — 100eb — СТР 108"
+   "alt": "Level Damper",
+   "label": "Демпфер (Level Damper) — 100eb — СТР 108"
   },
   {
    "name": "Детектор жучков",
@@ -3098,7 +3113,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Детектор жучков — 100eb — СТР 108"
+   "alt": "Bug Detector",
+   "label": "Детектор жучков (Bug Detector) — 100eb — СТР 108"
   },
   {
    "name": "Детектор радиации",
@@ -3110,7 +3126,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Детектор радиации — 1000eb — СТР 108"
+   "alt": "Radiation Detector",
+   "label": "Детектор радиации (Radiation Detector) — 1000eb — СТР 108"
   },
   {
    "name": "Диктофон",
@@ -3258,7 +3275,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Дротикомёт — 500eb — СТР 108"
+   "alt": "Dartgun",
+   "label": "Дротикомёт (Dartgun) — 500eb — СТР 108"
   },
   {
    "name": "Дубинка-шокер",
@@ -3319,7 +3337,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Жабры — 1000eb — СТР 108"
+   "alt": "Gills",
+   "label": "Жабры (Gills) — 1000eb — СТР 108"
   },
   {
    "name": "Желаемый декор",
@@ -3404,7 +3423,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Закалённое экранирование — 1000eb — СТР 108"
+   "alt": "Hardened Shielding",
+   "label": "Закалённое экранирование (Hardened Shielding) — 1000eb — СТР 108"
   },
   {
    "name": "Записыватель брейндансов",
@@ -3416,7 +3436,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Записыватель брейндансов — 500eb — СТР 108"
+   "alt": "Braindance Recorder",
+   "label": "Записыватель брейндансов (Braindance Recorder) — 500eb — СТР 108"
   },
   {
    "name": "Заряд C9",
@@ -3761,7 +3782,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Изменчивые такты — 100eb — СТР 108"
+   "alt": "Shift Tacts",
+   "label": "Изменчивые такты (Shift Tacts) — 100eb — СТР 108"
   },
   {
    "name": "Изолента",
@@ -3798,7 +3820,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Имплантированный эндоскелет ß (бета) — 5000eb — СТР 108"
+   "alt": "Implanted Linear Frame ß (Beta)",
+   "label": "Имплантированный эндоскелет ß (бета) (Implanted Linear Frame ß (Beta)) — 5000eb — СТР 108"
   },
   {
    "name": "Имплантированный эндоскелет Σ (сигма)",
@@ -3810,7 +3833,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Имплантированный эндоскелет Σ (сигма) — 1000eb — СТР 108"
+   "alt": "Implanted Linear Frame ∑ (Sigma)",
+   "label": "Имплантированный эндоскелет Σ (сигма) (Implanted Linear Frame ∑ (Sigma)) — 1000eb — СТР 108"
   },
   {
    "name": "Иней",
@@ -3884,7 +3908,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Искусственное плечо — 1000eb — СТР 108"
+   "alt": "Artificial Shoulder Mount",
+   "label": "Искусственное плечо (Artificial Shoulder Mount) — 1000eb — СТР 108"
   },
   {
    "name": "Искусственные мышцы и усиленные кости",
@@ -3896,7 +3921,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Искусственные мышцы и усиленные кости — 1000eb — СТР 108"
+   "alt": "Grafted Muscle and Bone Lace",
+   "label": "Искусственные мышцы и усиленные кости (Grafted Muscle and Bone Lace) — 1000eb — СТР 108"
   },
   {
    "name": "К-тех Универсальная звукоизоляция",
@@ -4103,7 +4129,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Керензиков — 500eb — СТР 108"
+   "alt": "Kerenzikov",
+   "label": "Керензиков (Kerenzikov) — 500eb — СТР 108"
   },
   {
    "name": "КиберКамера EX-1",
@@ -4127,7 +4154,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Киберглаз — 100eb — СТР 108"
+   "alt": "Cybereye",
+   "label": "Киберглаз (Cybereye) — 100eb — СТР 108"
   },
   {
    "name": "Кибердека",
@@ -4139,7 +4167,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Кибердека — 500eb — СТР 108"
+   "alt": "Cyberdeck",
+   "label": "Кибердека (Cyberdeck) — 500eb — СТР 108"
   },
   {
    "name": "Кибердека (обычного качества)",
@@ -4190,7 +4219,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Киберзмея — 1000eb — СТР 108"
+   "alt": "Cybersnake",
+   "label": "Киберзмея (Cybersnake) — 1000eb — СТР 108"
   },
   {
    "name": "Киберкресло Mercurius",
@@ -4238,7 +4268,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Кибернога — 100eb — СТР 108"
+   "alt": "Cyberleg",
+   "label": "Кибернога (Cyberleg) — 100eb — СТР 108"
   },
   {
    "name": "Киберпалец с Функцией Наведения",
@@ -4442,7 +4473,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Киберрука — 500eb — СТР 108"
+   "alt": "Cyberarm",
+   "label": "Киберрука (Cyberarm) — 500eb — СТР 108"
   },
   {
    "name": "Киберрука Энтузиаста с Модульными пальцами",
@@ -4586,7 +4618,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Коготь — 500eb — СТР 108"
+   "alt": "Talon Foot",
+   "label": "Коготь (Talon Foot) — 500eb — СТР 108"
   },
   {
    "name": "Когти росомахи",
@@ -4598,7 +4631,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Когти росомахи — 500eb — СТР 108"
+   "alt": "Wolvers",
+   "label": "Когти росомахи (Wolvers) — 500eb — СТР 108"
   },
   {
    "name": "Кожа",
@@ -4684,7 +4718,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Коммуникатор (рация) — 100eb — СТР 108"
+   "alt": "Radio Communicator",
+   "label": "Коммуникатор (рация) (Radio Communicator) — 100eb — СТР 108"
   },
   {
    "name": "КомпактЩит SkidRow PackShield",
@@ -4708,7 +4743,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Комплект Кибераудио — 500eb — СТР 108"
+   "alt": "Cyberaudio Suite",
+   "label": "Комплект Кибераудио (Cyberaudio Suite) — 500eb — СТР 108"
   },
   {
    "name": "Комплект Кибераудио по скидке",
@@ -4807,7 +4843,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Контрацептив — 10eb — СТР 108"
+   "alt": "Contraceptive Implant",
+   "label": "Контрацептив (Contraceptive Implant) — 10eb — СТР 108"
   },
   {
    "name": "Корпоративный Остров",
@@ -5146,7 +5183,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Ласты — 500eb — СТР 108"
+   "alt": "Web Foot",
+   "label": "Ласты (Web Foot) — 500eb — СТР 108"
   },
   {
    "name": "Линзы — Asia Pop",
@@ -5290,7 +5328,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Личный порт — 500eb — СТР 108"
+   "alt": "Interface Plugs",
+   "label": "Личный порт (Interface Plugs) — 500eb — СТР 108"
   },
   {
    "name": "Луки и арбалеты",
@@ -5416,7 +5455,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Массив датчиков — 1000eb — СТР 108"
+   "alt": "Sensor Array",
+   "label": "Массив датчиков (Sensor Array) — 1000eb — СТР 108"
   },
   {
    "name": "Мастер Напитков 3000",
@@ -5465,7 +5505,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Медсканер — 500eb — СТР 108"
+   "alt": "Medscanner",
+   "label": "Медсканер (Medscanner) — 500eb — СТР 108"
   },
   {
    "name": "Мериш",
@@ -5551,7 +5592,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "МикроВидео — 500eb — СТР 108"
+   "alt": "MicroVideo",
+   "label": "МикроВидео (MicroVideo) — 500eb — СТР 108"
   },
   {
    "name": "МикроОптика",
@@ -5563,7 +5605,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "МикроОптика — 100eb — СТР 108"
+   "alt": "MicroOptics",
+   "label": "МикроОптика (MicroOptics) — 100eb — СТР 108"
   },
   {
    "name": "Микровальдо Raven Microcybernetics",
@@ -6030,7 +6073,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Мр. Перчик™ — 100eb — СТР 108"
+   "alt": "Mr. Studd™ Sexual Implant",
+   "label": "Мр. Перчик™ (Mr. Studd™ Sexual Implant) — 100eb — СТР 108"
   },
   {
    "name": "Мультигипо",
@@ -6079,7 +6123,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Мультиоптическое фасеточное крепление — 1000eb — СТР 108"
+   "alt": "MultiOptic Mount",
+   "label": "Мультиоптическое фасеточное крепление (MultiOptic Mount) — 1000eb — СТР 108"
   },
   {
    "name": "Мультитул",
@@ -6194,7 +6239,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Назальные фильтры — 100eb — СТР 108"
+   "alt": "Nasal Filters",
+   "label": "Назальные фильтры (Nasal Filters) — 100eb — СТР 108"
   },
   {
    "name": "Наноматрица Травматической Реакции",
@@ -6267,7 +6313,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Независимая подача воздуха — 1000eb — СТР 108"
+   "alt": "Independent Air Supply",
+   "label": "Независимая подача воздуха (Independent Air Supply) — 1000eb — СТР 108"
   },
   {
    "name": "Нейролинк",
@@ -6279,7 +6326,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Нейролинк — 500eb — СТР 108"
+   "alt": "Neural Link",
+   "label": "Нейролинк (Neural Link) — 500eb — СТР 108"
   },
   {
    "name": "Нео-Советская Киберрука",
@@ -6352,7 +6400,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Нога скейт — 500eb — СТР 108"
+   "alt": "Skate Foot",
+   "label": "Нога скейт (Skate Foot) — 500eb — СТР 108"
   },
   {
    "name": "Ноготочки «Вкл-Выкл»",
@@ -8117,7 +8166,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Пластиковое покрытие — 100eb — СТР 108"
+   "alt": "Plastic Covering",
+   "label": "Пластиковое покрытие (Plastic Covering) — 100eb — СТР 108"
   },
   {
    "name": "Плечевая камера",
@@ -8129,7 +8179,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Плечевая камера — 500eb — СТР 108"
+   "alt": "Shoulder Cam",
+   "label": "Плечевая камера (Shoulder Cam) — 500eb — СТР 108"
   },
   {
    "name": "Пневматический гвоздомёт Кочевников",
@@ -8166,7 +8217,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Подкожная броня — 1000eb — СТР 108"
+   "alt": "Subdermal Armor",
+   "label": "Подкожная броня (Subdermal Armor) — 1000eb — СТР 108"
   },
   {
    "name": "Подкожные часы",
@@ -8178,7 +8230,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Подкожные часы — 100eb — СТР 108"
+   "alt": "Skinwatch",
+   "label": "Подкожные часы (Skinwatch) — 100eb — СТР 108"
   },
   {
    "name": "Подкожный карман",
@@ -8190,7 +8243,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Подкожный карман — 100eb — СТР 108"
+   "alt": "Subdermal Pocket",
+   "label": "Подкожный карман (Subdermal Pocket) — 100eb — СТР 108"
   },
   {
    "name": "Подростковый Пекаль",
@@ -8276,7 +8330,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Покрытие Реалскин™ — 500eb — СТР 108"
+   "alt": "Realskinn™ Covering",
+   "label": "Покрытие Реалскин™ (Realskinn™ Covering) — 500eb — СТР 108"
   },
   {
    "name": "Покрытие Суперхром®",
@@ -8288,7 +8343,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Покрытие Суперхром® — 1000eb — СТР 108"
+   "alt": "Superchrome® Covering",
+   "label": "Покрытие Суперхром® (Superchrome® Covering) — 1000eb — СТР 108"
   },
   {
    "name": "Покрытие для Спонсоров",
@@ -8312,7 +8368,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Полуночница™ — 100eb — СТР 108"
+   "alt": "Midnight Lady™ Sexual Implant",
+   "label": "Полуночница™ (Midnight Lady™ Sexual Implant) — 100eb — СТР 108"
   },
   {
    "name": "Порт авторизации",
@@ -8349,7 +8406,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Потрошители — 500eb — СТР 108"
+   "alt": "Rippers",
+   "label": "Потрошители (Rippers) — 500eb — СТР 108"
   },
   {
    "name": "Прайм Тайм",
@@ -8499,7 +8557,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Прыжковый ускоритель — 500eb — СТР 108"
+   "alt": "Jump Booster",
+   "label": "Прыжковый ускоритель (Jump Booster) — 500eb — СТР 108"
   },
   {
    "name": "Псайберстафф УотчМэн",
@@ -8560,7 +8619,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Радар / Сонар — 1000eb — СТР 108"
+   "alt": "Radar / Sonar Implant",
+   "label": "Радар / Сонар (Radar / Sonar Implant) — 1000eb — СТР 108"
   },
   {
    "name": "Радар-детектор",
@@ -8585,7 +8645,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Радар-детектор — 500eb — СТР 108"
+   "alt": "Radar Detector",
+   "label": "Радар-детектор (Radar Detector) — 500eb — СТР 108"
   },
   {
    "name": "Радиосканер / проигрыватель",
@@ -8610,7 +8671,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Радиосканер / проигрыватель — 50eb — СТР 108"
+   "alt": "Radio Scanner / Music Player",
+   "label": "Радиосканер / проигрыватель (Radio Scanner / Music Player) — 50eb — СТР 108"
   },
   {
    "name": "Радлайн Киберрука-Дугомет «Блицкриг»",
@@ -8682,7 +8744,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Разъём для щепок — 500eb — СТР 108"
+   "alt": "Chipware Socket",
+   "label": "Разъём для щепок (Chipware Socket) — 500eb — СТР 108"
   },
   {
    "name": "Ракетная Установка Красотка",
@@ -8792,7 +8855,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Редактор боли — 1000eb — СТР 108"
+   "alt": "Pain Editor",
+   "label": "Редактор боли (Pain Editor) — 1000eb — СТР 108"
   },
   {
    "name": "Рейвен Микрокиб Кестрел 2",
@@ -8951,7 +9015,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Рука мультитул — 100eb — СТР 108"
+   "alt": "Tool Hand",
+   "label": "Рука мультитул (Tool Hand) — 100eb — СТР 108"
   },
   {
    "name": "Рукохват",
@@ -8963,7 +9028,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Рукохват — 100eb — СТР 108"
+   "alt": "Grapple Hand",
+   "label": "Рукохват (Grapple Hand) — 100eb — СТР 108"
   },
   {
    "name": "Рэйвен Микрокибернетикс МикроВалдо",
@@ -9025,7 +9091,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Сандвистан — 500eb — СТР 108"
+   "alt": "Sandevistan",
+   "label": "Сандвистан (Sandevistan) — 500eb — СТР 108"
   },
   {
    "name": "Санру Hello Cutie «1ИстиннаяЛюбовь»",
@@ -9101,7 +9168,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Светящиеся тату — 100eb — СТР 108"
+   "alt": "Light Tattoo",
+   "label": "Светящиеся тату (Light Tattoo) — 100eb — СТР 108"
   },
   {
    "name": "Свисток для Обработки",
@@ -9137,7 +9205,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Связывание токсинов — 100eb — СТР 108"
+   "alt": "Toxin Binders",
+   "label": "Связывание токсинов (Toxin Binders) — 100eb — СТР 108"
   },
   {
    "name": "Сдвиг цвета",
@@ -9149,7 +9218,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Сдвиг цвета — 100eb — СТР 108"
+   "alt": "Color Shift",
+   "label": "Сдвиг цвета (Color Shift) — 100eb — СТР 108"
   },
   {
    "name": "Серпентизируй Себя®",
@@ -9321,7 +9391,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Скрытая кобура — 500eb — СТР 108"
+   "alt": "Hidden Holster",
+   "label": "Скрытая кобура (Hidden Holster) — 500eb — СТР 108"
   },
   {
    "name": "Слабое освещение / ИК/УФ",
@@ -9333,7 +9404,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Слабое освещение / ИК/УФ — 500eb — СТР 108"
+   "alt": "Low Light / Infrared / UV",
+   "label": "Слабое освещение / ИК/УФ (Low Light / Infrared / UV) — 500eb — СТР 108"
   },
   {
    "name": "Слайсы да кубики",
@@ -9345,7 +9417,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Слайсы да кубики — 500eb — СТР 108"
+   "alt": "Slice ‘N Dice",
+   "label": "Слайсы да кубики (Slice ‘N Dice) — 500eb — СТР 108"
   },
   {
    "name": "Слезоточивый Защитник от Погонь",
@@ -9418,7 +9491,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Смартлинк — 100eb — СТР 108"
+   "alt": "Subdermal Grip",
+   "label": "Смартлинк (Subdermal Grip) — 100eb — СТР 108"
   },
   {
    "name": "Смертный",
@@ -9630,7 +9704,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Стандартная кисть — 100eb — СТР 108"
+   "alt": "Standard Hand",
+   "label": "Стандартная кисть (Standard Hand) — 100eb — СТР 108"
   },
   {
    "name": "Стандартная стопа",
@@ -9642,7 +9717,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Стандартная стопа — 100eb — СТР 108"
+   "alt": "Standard Foot",
+   "label": "Стандартная стопа (Standard Foot) — 100eb — СТР 108"
   },
   {
    "name": "Стандартный Киберпалец",
@@ -10031,7 +10107,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Тактильное усиление — 100eb — СТР 108"
+   "alt": "Tactile Boost",
+   "label": "Тактильное усиление (Tactile Boost) — 100eb — СТР 108"
   },
   {
    "name": "Тактическая Умная Броня",
@@ -10067,7 +10144,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Тактический прицел — 500eb — СТР 108"
+   "alt": "Targeting Scope",
+   "label": "Тактический прицел (Targeting Scope) — 500eb — СТР 108"
   },
   {
    "name": "Творческий порыв",
@@ -10091,7 +10169,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "ТелеОптика — 500eb — СТР 108"
+   "alt": "TeleOptics",
+   "label": "ТелеОптика (TeleOptics) — 500eb — СТР 108"
   },
   {
    "name": "Тепловая приманка",
@@ -10128,7 +10207,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Техноволосы — 100eb — СТР 108"
+   "alt": "Techhair",
+   "label": "Техноволосы (Techhair) — 100eb — СТР 108"
   },
   {
    "name": "Техсканер",
@@ -10153,7 +10233,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Техсканер — 500eb — СТР 108"
+   "alt": "Techscanner",
+   "label": "Техсканер (Techscanner) — 500eb — СТР 108"
   },
   {
    "name": "Техтроника Россия BMG-500",
@@ -10190,7 +10271,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Тканекожа — 500eb — СТР 108"
+   "alt": "Skin Weave",
+   "label": "Тканекожа (Skin Weave) — 500eb — СТР 108"
   },
   {
    "name": "Транс Смерти",
@@ -10239,7 +10321,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Трекер маячка — 100eb — СТР 108"
+   "alt": "Homing Tracer",
+   "label": "Трекер маячка (Homing Tracer) — 100eb — СТР 108"
   },
   {
    "name": "Тренировочная дека Кирама",
@@ -10670,7 +10753,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Усиленные антитела — 500eb — СТР 108"
+   "alt": "Enhanced Antibodies",
+   "label": "Усиленные антитела (Enhanced Antibodies) — 500eb — СТР 108"
   },
   {
    "name": "Усиленный Корпус Киберглаза",
@@ -10694,7 +10778,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Усиленный слух — 100eb — СТР 108"
+   "alt": "Amplified Hearing",
+   "label": "Усиленный слух (Amplified Hearing) — 100eb — СТР 108"
   },
   {
    "name": "Усилитель Звукового Удара",
@@ -10718,7 +10803,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Усилитель картинки — 500eb — СТР 108"
+   "alt": "Image Enhance",
+   "label": "Усилитель картинки (Image Enhance) — 500eb — СТР 108"
   },
   {
    "name": "Усилитель обоняния",
@@ -10730,7 +10816,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Усилитель обоняния — 100eb — СТР 108"
+   "alt": "Olfactory Boost",
+   "label": "Усилитель обоняния (Olfactory Boost) — 100eb — СТР 108"
   },
   {
    "name": "Ускоритель Бусидо",
@@ -10881,7 +10968,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Химический анализатор — 500eb — СТР 108"
+   "alt": "Chemical Analyzer",
+   "label": "Химический анализатор (Chemical Analyzer) — 500eb — СТР 108"
   },
   {
    "name": "Химкожа",
@@ -10893,7 +10981,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Химкожа — 100eb — СТР 108"
+   "alt": "Chemskin",
+   "label": "Химкожа (Chemskin) — 100eb — СТР 108"
   },
   {
    "name": "Хирон",
@@ -10905,7 +10994,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Хирон — 100eb — СТР 108"
+   "alt": "Chyron",
+   "label": "Хирон (Chyron) — 100eb — СТР 108"
   },
   {
    "name": "Хроматическая Рейв-Граната Hello Cutie",
@@ -10929,7 +11019,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Царапки — 100eb — СТР 108"
+   "alt": "Scratchers",
+   "label": "Царапки (Scratchers) — 100eb — СТР 108"
   },
   {
    "name": "Цепкие подошвы",
@@ -10941,7 +11032,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Цепкие подошвы — 500eb — СТР 108"
+   "alt": "Grip Foot",
+   "label": "Цепкие подошвы (Grip Foot) — 500eb — СТР 108"
   },
   {
    "name": "Цепной Потрошитель",
@@ -11190,7 +11282,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Шифратор / Дешифратор — 100eb — СТР 108"
+   "alt": "Scrambler / Descrambler",
+   "label": "Шифратор / Дешифратор (Scrambler / Descrambler) — 100eb — СТР 108"
   },
   {
    "name": "Шифратор / дешифратор",
@@ -11606,7 +11699,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "Щепка памяти — 10eb — СТР 108"
+   "alt": "Memory Chip",
+   "label": "Щепка памяти (Memory Chip) — 10eb — СТР 108"
   },
   {
    "name": "ЩепкоХранилище",
@@ -11630,7 +11724,8 @@
    "tier": "",
    "href": "",
    "kind": "gear",
-   "label": "ЭМИ-нить — 10eb — СТР 108"
+   "alt": "EMP Threading",
+   "label": "ЭМИ-нить (EMP Threading) — 10eb — СТР 108"
   },
   {
    "name": "Эверест Авантюрные Товары «Альпинист»",
