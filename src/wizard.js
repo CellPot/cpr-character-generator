@@ -1585,11 +1585,16 @@ function catalogIndex(){
    player picked a real, priced thing off the book, and editing it afterward
    would let the row drift from what it actually costs. Removing it and
    picking again is the only way to change one. */
+/* The book's English name for a catalogue row, as the same .itsub[lang=en] line the
+   reference puts under every name — so the player can find it in an English book. */
+function gearAlt(row){
+  return row.alt ? '<span class="itsub" lang="en">'+esc(row.alt)+"</span>" : "";
+}
 function pickFromCatalog(which, item){
   if(!S[which]) S[which] = [];
   S[which].push({name: item.name, price: item.price, qty: 1, cyber: item.cyber, hl: item.hl,
                 locked: true, src: item.src, chip: item.chip, tier: item.tier,
-                href: item.href});
+                href: item.href, alt: item.alt || ""});
   save(); paintAll();
 }
 /* A locked row's real page citation — "BC 108", "CRB 108", "CRB 171"…
@@ -1726,7 +1731,7 @@ function paintGearList(which, boxId){
     var qtyCell = '<td class="n"><input type="number" class="cgnum" min="1" step="1" data-cg="gearqty" '
        + 'data-list="'+which+'" data-i="'+i+'" value="'+qty+'"></td>';
     if(row.locked){
-      h += '<tr><td>'+esc(row.name)+gearChip(row)+gearTier(row)+"</td>"
+      h += '<tr><td>'+esc(row.name)+gearChip(row)+gearTier(row)+gearAlt(row)+"</td>"
          + qtyCell
          + '<td class="n">'+(row.price||0)
          + (qty>1 ? '<span class="itsub">×'+qty+" = "+((row.price||0)*qty)+'eb</span>' : "")+"</td>"
@@ -1877,7 +1882,7 @@ function gearSheetHtml(which, label, fate){
     h += '<ul class="cggear">';
     for(var i=0;i<rows.length;i++){
       var row = rows[i], qty = row.qty || 1;
-      h += "<li>"+esc(row.name || "без названия")+(qty>1 ? " ×"+qty : "")
+      h += "<li>"+esc(row.name || "без названия")+(qty>1 ? " ×"+qty : "")+gearAlt(row)
          + " — <b>"+((row.price||0)*qty)+"eb</b>"
          + (qty>1 ? ' <span class="itsub">'+(row.price||0)+"eb × "+qty+"</span>" : "")
          + (row.cyber ? ' <span class="x2">'+((row.hl||0)*qty)+" ПЧ</span>" : "")
