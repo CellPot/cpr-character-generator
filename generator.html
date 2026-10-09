@@ -1312,7 +1312,6 @@ main{max-width:1060px;margin:0 auto;padding:22px 28px 60px}
   </div>
   <p class="cgrow">
    <button type="button" class="cgbtn cgprim" data-cg="print">Печать / PDF</button>
-   <button type="button" class="cgbtn" data-cg="copy">Скопировать текстом</button>
    <button type="button" class="cgbtn" data-cg="savemd">Скачать .md</button>
    <button type="button" class="cgbtn" data-cg="savejson">Сохранить .json</button>
    <button type="button" class="cgbtn" data-cg="loadjson">Загрузить .json</button>
@@ -1657,9 +1656,9 @@ function preset(kind){
 }
 function esc(t){ return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
 /* The rank-4 facts arrive as the book's own cells with its <b> on the mechanics kept.
-   That is right on screen and wrong in the clipboard, where the copied sheet is
-   plain text — so the tags come off, and the entities they were escaped as go
-   back to being characters. */
+   That is right on screen and wrong in the .md export, which is plain text — so
+   the tags come off, and the entities they were escaped as go back to being
+   characters. */
 function plainText(t){
   return String(t).replace(/<[^>]+>/g, "")
                   .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
@@ -3865,239 +3864,6 @@ root.addEventListener("change", function(ev){
 });
 
 /* ----------------------------------------------------------------- step 5: sheet */
-function sheetText(){
-  var r = role(), dv = derived(), out = [];
-  out.push((S.name || "Безымянный") + " — " + (r ? r.name : "?"));
-  if(dv){
-    var line = [];
-    for(var i=0;i<D.stats.length;i++) line.push(D.stats[i]+" "+eff(D.stats[i]));
-    out.push(line.join("  "));
-    out.push("ПЗ "+dv.hp+"   Тяжёлое ранение "+dv.serious+"   Спасбросок "+dv.death
-             +"   Человечность "+dv.hum
-             +(dv.hl ? "  (ЭМП "+dv.empBase+" × 10 = "+dv.humBase+", минус "+dv.hl
-                       +" ПЧ за хром; "+dv.hum+" ÷ 10 = ЭМП "+dv.emp+")" : ""));
-  }
-  if(r){
-    out.push("");
-    out.push("Ролевая способность: "+r.ability+", ранг "+D.abilityRank);
-    /* Everything the rank has already handed over. The copied sheet goes to a GM,
-       and "rank 4" on its own tells them nothing about what the character can
-       actually call on, spend or drive. */
-    var k4 = rank4();
-    if(k4){
-      for(var kf=0;kf<k4.facts.length;kf++)
-        out.push("  "+k4.facts[kf].k+": "+plainText(k4.facts[kf].v));
-      var pl = pool();
-      if(pl){
-        out.push("  Очки ("+pl.budget+", осталось "+ptsLeft()+"):");
-        for(var po=0;po<pl.opts.length;po++)
-          if(ptsOf(pl.opts[po].name))
-            out.push("    "+pl.opts[po].name+" — "+ptsOf(pl.opts[po].name));
-      }
-      var pk2 = picks();
-      if(pk2 && pk2.kind === "nomad"){
-        var taken = [];
-        for(var sl=0;sl<pk2.slots;sl++)
-          if(slotOf(sl)) taken.push(slotLabel(slotOf(sl)));
-        if(taken.length) out.push("  Автопарк Семьи: "+taken.join(", "));
-        if(S.abil && S.abil.drive) out.push("  С собой: "+S.abil.drive);
-      }
-      if(pk2 && pk2.kind === "fixer" && S.abil && (S.abil.culture || S.abil.lang))
-        out.push("  Свой чел: "+(S.abil.culture||"культура не выбрана")
-                 +" / "+(S.abil.lang||"язык не выбран"));
-    }
-    out.push("");
-    out.push("ДЕНЬГИ");
-    if(isCalc())
-      out.push("  На старте: "+Math.max(0, gearLeft("buy"))+"eb — остаток от "
-               +gearBudget("buy")+"eb на Снаряжение (Стиль не переносится, он сгорает)");
-    else
-      out.push("  На старте: "+Math.max(0, gearLeft("start"))+"eb из "+gearBudget("start")
-               +"eb сверх снаряжения"
-               +(gearBudget("start") === D.cash.start
-                 ? " — один предмет категории «"+D.cash.tier.name+"» ("
-                   +plainText(D.cash.tier.like).replace(/\.$/, "")+") или несколько дешевле"
-                 : " (бюджет задан ГМом)"));
-    out.push("  Между заказами: 1d6 в неделю, "+r.income.low+"–"+r.income.high
-             +"eb (колонка Ранг 1–4)");
-    if(!isCalc()){
-      var startRows = gearRows("start");
-      if(startRows.length){
-        out.push("  ДОП. ПОКУПКИ (потрачено "+gearSpent("start")+" из "+gearBudget("start")+"eb):");
-        for(var sr=0;sr<startRows.length;sr++){
-          var srow = startRows[sr], sqty = srow.qty || 1;
-          out.push("    "+(srow.name||"без названия")+(sqty>1 ? " ×"+sqty : "")
-                   +" — "+((srow.price||0)*sqty)+"eb"
-                   +(sqty>1 ? "  ("+(srow.price||0)+"eb x "+sqty+")" : "")
-                   +(srow.cyber ? "  ["+((srow.hl||0)*sqty)+" ПЧ]" : "")
-                   +(srow.locked && srow.chip ? "  ["+srow.chip+"]" : ""));
-        }
-      }
-    }
-    out.push("");
-    out.push("НАВЫКИ");
-    if(isCalc()){
-      var names4 = boughtKeys3();
-      for(var s4=0;s4<names4.length;s4++){
-        var key4 = names4[s4], nm4 = skillBase(key4), info4 = D.skills[nm4], lvl4 = skillLevel3(key4);
-        if(multi3(nm4)) nm4 += " ("+(S.picks[key4]||"выбери")+")";
-        out.push("  "+nm4+" "+lvl4
-                 +(S.stats?("  ["+info4.stat+"+навык = "+(eff(info4.stat)+lvl4)+"]"):""));
-      }
-    } else {
-      for(var s=0;s<r.skills.length;s++){
-        var sk = r.skills[s], nm = sk.skill;
-        if(sk.pick === "") nm += " ("+(S.picks[sk.skill]||"выбери 1")+")";
-        else if(sk.pick) nm += " ("+sk.pick+")";
-        var slv = lv(sk);
-        out.push("  "+nm+" "+slv+(S.stats?("  ["+sk.stat+"+навык = "+(eff(sk.stat)+slv)+"]"):""));
-      }
-    }
-    /* The culture language is a skill and prints with the skills, as it does on
-       the rendered sheet. Sitting outside this block it landed AFTER GEAR,
-       so the copied text listed "Language (Chinese) 4" under the armour. */
-    if(langRow())
-      out.push("  Язык ("+(S.lang||"не выбран")+") 4"
-               +(S.stats?("  [ИНТ+навык = "+(eff("ИНТ")+4)+"]"):""));
-    /* The skills the Role ability grants — the Medtech's Surgery and Medical Tech, the Fixer's second language. They are skills, so they print
-       with the skills. */
-    var hb2 = hbBought();
-    for(var hj=0;hj<hb2.length;hj++)
-      out.push("  "+hb2[hj].name+" "+hb2[hj].level
-               +(S.stats?("  ["+hb2[hj].stat+"+навык = "+(eff(hb2[hj].stat)+hb2[hj].level)+"]"):""));
-    var ex2 = abilSkills();
-    for(var e2=0;e2<ex2.length;e2++){
-      var xs = ex2[e2];
-      out.push("  "+xs.skill+(xs.spec ? " ("+xs.spec+")" : "")+" "+xs.level
-               +(S.stats?("  ["+xs.stat+"+навык = "+(eff(xs.stat)+xs.level)+"]"):""));
-    }
-    var cyt = cyber();
-    /* Method #3 has no items[] to list — its implants are just rows in Gear/
-       Style below, each already carrying its own HL — so only the total is worth a
-       separate line here. */
-    if(cyt && cyt.hl && isCalc()){
-      out.push("");
-      out.push("КИБЕРИМПЛАНТЫ  (всего " + cyt.hl + " ПЧ, см. Снаряжение и Стиль ниже)");
-    } else if(cyt && cyt.items){
-      out.push("");
-      /* Per-implant HL here too: the GM reading the printout is the person most
-         likely to check the total, and the total is the thing that moved EMP. */
-      out.push("КИБЕРИМПЛАНТЫ  (всего " + cyt.hl + " ПЧ"
-               + (cyt.extraHl ? ", включая " + cyt.extraHl + " от доп. покупок ниже" : "") + ")");
-      for(var ci2=0;ci2<cyt.items.length;ci2++)
-        out.push("  "+cyberItem(cyt.items[ci2], ci2).text+"  ["+cyt.items[ci2].hl+" ПЧ]");
-    }
-    out.push("");
-    if(isCalc()){
-      if(S.sponsor && S.sponsor.active)
-        out.push("Продан за +"+D.sponsor.bonus+"eb на кибернетику — "
-                 +(S.sponsor.kind||"работодатель не выбран")+", на крючке: "
-                 +(S.sponsor.hook||"не выбрано"));
-      var lists4 = [["buy","СНАРЯЖЕНИЕ",gearBudget("buy"),true],["style","СТИЛЬ",gearBudget("style"),false]];
-      for(var li4=0;li4<lists4.length;li4++){
-        var which4 = lists4[li4][0], label4 = lists4[li4][1], budget4 = lists4[li4][2],
-            carries4 = lists4[li4][3], rows4 = gearRows(which4), left4 = gearLeft(which4);
-        out.push(label4 + "  (потрачено " + gearSpent(which4) + " из " + budget4 + "eb; "
-                 + (left4 < 0 ? "перерасход " + (-left4) + "eb"
-                              : "останется " + left4 + "eb" + (carries4 ? " — в деньги" : " — сгорает"))
-                 + ")");
-        for(var r4=0;r4<rows4.length;r4++){
-          var row4 = rows4[r4], qty4 = row4.qty || 1;
-          out.push("  "+(row4.name||"без названия")+(qty4>1 ? " ×"+qty4 : "")
-                   +" — "+((row4.price||0)*qty4)+"eb"
-                   +(qty4>1 ? "  ("+(row4.price||0)+"eb x "+qty4+")" : "")
-                   +(row4.cyber ? "  ["+((row4.hl||0)*qty4)+" ПЧ]" : "")
-                   +(row4.locked && row4.chip ? "  ["+row4.chip+"]" : ""));
-        }
-        out.push("");
-      }
-      out.pop();
-    } else {
-      out.push("СНАРЯЖЕНИЕ");
-      /* The copied sheet goes to a GM who has to adjudicate these, so it carries the
-         short form too — "Heavy Melee Weapon (3d6)" is the difference between a name and a
-         usable line. */
-      for(var g=0;g<r.gear.length;g++){
-        var gi = gearItem(r.gear[g], g);
-        out.push("  "+gi.text+(gi.short ? " ("+gi.short+")" : ""));
-      }
-    }
-  }
-  var any = false;
-  for(var L3=0;L3<D.life.length;L3++) if(got(D.life[L3])){ any = true; break; }
-  if(any){
-    out.push("");
-    out.push("ЖИЗНЕННЫЙ ПУТЬ");
-    for(var L=0;L<D.life.length;L++){
-      var t = D.life[L], g = got(t);
-      if(!g) continue;
-      var lines = [];
-      for(var c=0;c<t.cols.length;c++){
-        if(c === t.pickCol) continue;
-        var cell = cellOf(t, c);
-        if(!cell) continue;
-        var line = plain(
-          (t.harm && c === 1 && S.harm && harmable(t)) ? unstop(cell) : cell, t.key, c);
-        if(t.harm && c === 1 && S.harm && harmable(t)) line += " — " + S.harm;
-        line += undone(t, c, false);
-        lines.push(shownCols(t) > 1 ? (shortCol(t, c) + ": " + line) : line);
-      }
-      if(!lines.length) continue;
-      if(lines.length === 1) out.push("  " + t.label + ": " + lines[0]);
-      else {
-        out.push("  " + t.label + ":");
-        for(var q=0;q<lines.length;q++) out.push("    " + lines[q]);
-      }
-    }
-  } else {
-    /* The copied text is the other rendering of the sheet and has to be checked
-       separately — being right on screen says nothing about it (the culture
-       language was filed under GEAR here while the rendered sheet had it
-       correctly among the skills). So the unrolled path is stated here too. */
-    out.push("");
-    out.push("ЖИЗНЕННЫЙ ПУТЬ: не заполнен — ни одна таблица не брошена "
-             + "(в том числе Враг, Друг и Цель).");
-  }
-  var shown2 = pathShown(), pl2 = [];
-  for(var sp2=0;sp2<shown2.length;sp2++){
-    var st2 = shown2[sp2];
-    if(st2.fork){
-      if(forkPick(st2.n) >= 0) pl2.push("  "+st2.q+" "+st2.fork[forkPick(st2.n)].label);
-    } else if(pathRoll(st2.n)) {
-      pl2.push("  "+st2.q+" "+st2.rows[pathRoll(st2.n)-1]);
-    }
-  }
-  if(pl2.length){ out.push(""); out.push("РОЛЕВОЙ ПУТЬ"); out = out.concat(pl2); }
-  else if(shown2.length){ out.push(""); out.push("РОЛЕВОЙ ПУТЬ: не заполнен."); }
-
-  var subT2 = subType(), subS2 = subStats();
-  if(subT2 && subS2){
-    var sd2 = subDerived(), sl2 = [];
-    for(var q2=0;q2<subT2.stats.length;q2++)
-      sl2.push(subT2.stats[q2]+" "+subS2[subT2.stats[q2]]);
-    out.push("");
-    out.push("ПОДЧИНЁННЫЙ");
-    out.push("  "+((S.sub && S.sub.name) || "Без имени")+" — "+subT2.name
-             +" (прикрытие: "+subT2.cover+")");
-    out.push("  "+sl2.join("  "));
-    out.push("  ПЗ "+sd2.hp+"   Тяжёлое ранение "+sd2.serious+"   Спасбросок "+sd2.death
-             +"   Лояльность "+D.subord.loyalty);
-    for(var sk2=0;sk2<subT2.skills.length;sk2++)
-      out.push("    "+subT2.skills[sk2].skill+" "+subT2.skills[sk2].level);
-    out.push("  Хром: "+subT2.cyber);
-    out.push("  Снаряжение: "+subT2.gear);
-    if(((S.sub && S.sub.note) || "").trim()) out.push("  Кто он: "+S.sub.note.trim());
-  }
-
-  var wrote = [];
-  for(var f=0;f<D.notes.length;f++){
-    var val = (S.notes[D.notes[f].key]||"").trim();
-    if(val) wrote.push("  "+D.notes[f].label+": "+val);
-  }
-  if(wrote.length){ out.push(""); out.push("О ПЕРСОНАЖЕ"); out = out.concat(wrote); }
-  return out.join("\n");
-}
-
 /* The same sheet as a Markdown note, for a campaign folder: tables rather than
    aligned columns, skills ordered by their roll, and an empty block at the end for
    the GM's own notes. Portable on purpose — no wiki links, no image embeds. */
@@ -4161,6 +3927,17 @@ function sheetMarkdown(){
   if(k4){
     out.push("");
     for(var kf=0;kf<k4.facts.length;kf++) out.push("- "+k4.facts[kf].k+": "+plainText(k4.facts[kf].v));
+    /* The Role's own decisions — the Nomad's vehicles, the Fixer's culture and
+       language — are part of what the ability handed over, and the GM needs them. */
+    var pk = picks();
+    if(pk && pk.kind === "nomad"){
+      var taken = [];
+      for(var sl=0;sl<pk.slots;sl++) if(slotOf(sl)) taken.push(slotLabel(slotOf(sl)));
+      if(taken.length) out.push("- Автопарк Семьи: "+taken.join(", "));
+      if(S.abil && S.abil.drive) out.push("- С собой: "+S.abil.drive);
+    }
+    if(pk && pk.kind === "fixer" && S.abil && (S.abil.culture || S.abil.lang))
+      out.push("- Свой чел: "+(S.abil.culture||"культура не выбрана")+" / "+(S.abil.lang||"язык не выбран"));
     var pl = pool();
     if(pl){
       var pr = [];
@@ -4225,7 +4002,8 @@ function sheetMarkdown(){
     out.push("Кибернетика: всего "+cyt.hl+" ПЧ (см. строки снаряжения и стиля).");
     out.push("");
   }
-  out.push("**Деньги: "+Math.max(0, isCalc() ? gearLeft("buy") : gearLeft("start"))+"eb**");
+  out.push("**Деньги: "+Math.max(0, isCalc() ? gearLeft("buy") : gearLeft("start"))+"eb**"
+           +(r.income ? " · между заказами 1d6 в неделю, "+r.income.low+"–"+r.income.high+"eb (колонка Ранг 1–4)" : ""));
   out.push("");
   var life = [];
   for(var L=0;L<D.life.length;L++){
@@ -4243,12 +4021,19 @@ function sheetMarkdown(){
     }
     if(parts.length) life.push("- **"+t.label+":** "+parts.join("; "));
   }
-  var shown = pathShown();
+  /* A sheet that silently omits a section reads as a finished one, so an unrolled
+     path says so here exactly as it does on the rendered sheet. */
+  var anyLife = false;
+  for(var L2=0;L2<D.life.length;L2++) if(got(D.life[L2])){ anyLife = true; break; }
+  if(!anyLife)
+    life.push("- Жизненный путь **не заполнен** — ни одна таблица не брошена (в том числе Враг, Друг и Цель).");
+  var shown = pathShown(), pathRows = 0;
   for(var sp=0;sp<shown.length;sp++){
     var st = shown[sp];
-    if(st.fork){ if(forkPick(st.n) >= 0) life.push("- "+st.q+" "+st.fork[forkPick(st.n)].label); }
-    else if(pathRoll(st.n)) life.push("- "+st.q+" "+st.rows[pathRoll(st.n)-1]);
+    if(st.fork){ if(forkPick(st.n) >= 0){ life.push("- "+st.q+" "+st.fork[forkPick(st.n)].label); pathRows++; } }
+    else if(pathRoll(st.n)){ life.push("- "+st.q+" "+st.rows[pathRoll(st.n)-1]); pathRows++; }
   }
+  if(shown.length && !pathRows) life.push("- Ролевой путь **не заполнен** — ни один шаг не брошен.");
   if(life.length){ out.push("## Жизненный путь"); out.push(""); out = out.concat(life); out.push(""); }
   var subT = subType(), subS = subStats();
   if(subT && subS){
@@ -4265,6 +4050,7 @@ function sheetMarkdown(){
     out.push("");
     out.push("Хром: "+subT.cyber+". Снаряжение: "+subT.gear+".");
     out.push("");
+    if(((S.sub && S.sub.note) || "").trim()){ out.push("Кто он: "+S.sub.note.trim()); out.push(""); }
   }
   out.push("## Характер / GM-заметки");
   out.push("");
@@ -4710,7 +4496,7 @@ function paintSheet(){
     h += '<p class="note">Полные таблицы — ' + link("lifepath", "Жизненный путь") + ".</p>";
   } else {
     /* An unrolled Lifepath used to vanish — no heading on the sheet, nothing
-       in the copied text, nothing in the print — so a GM was handed a sheet that
+       in the .md, nothing in the print — so a GM was handed a sheet that
        looked finished and had no Enemy, no Friend and no Goal, with nothing saying
        they had never been rolled. The step IS optional ("Empty rows break nothing"), and that is precisely why its absence has to be stated instead of
        rendered as nothing: the same rule that makes "Language (pick 1)" print
@@ -5215,18 +5001,6 @@ root.addEventListener("click", function(ev){
   if(a==="loadjson"){
     var fi = q("importfile");
     if(fi){ fi.value = ""; fi.click(); }
-  }
-  if(a==="copy"){
-    var text = sheetText();
-    /* "Copied" is worth clearing after a moment; "Failed — select it by hand"
-       is an instruction, and the timer used to wipe it too, two seconds after the
-       one thing that needed reading. Only a success schedules the reset. */
-    var back = function(){ setTimeout(function(){ t.textContent = "Скопировать текстом"; }, 1800); };
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(text).then(
-        function(){ t.textContent = "Copied"; back(); },
-        function(){ if(fallbackCopy(text, t)) back(); });
-    } else if(fallbackCopy(text, t)) back();
   }
 });
 /* Import: read the chosen file, confirm over a character that is already there,
