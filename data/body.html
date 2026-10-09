@@ -19,6 +19,8 @@
   <b>«+ отдельная глава»</b> значит, что Роль не слабее, но до первой игры придётся
   прочитать ещё одну главу правил. Это совет генератора, а не правило книги —
   играть можно любой.</p>
+  <p class="cgrow"><button type="button" class="cgbtn" data-cg="loadjson">Загрузить сохранённого персонажа (.json)</button>
+  <input type="file" accept=".json,application/json" data-cg="importfile" hidden></p>
   <div class="rolegrid"><button type="button" class="rolecard" data-cg="role" data-role="Рокербой"><span class="rname">Рокербой</span><span class="rabil">Харизматическое Давление</span><span class="rblurb">Голос улицы: заводит толпу, ведёт за собой людей и превращает выступление в оружие.</span></button>
 <button type="button" class="rolecard starter" data-cg="role" data-role="Соло"><span class="rname">Соло</span><span class="rabil">Боевое Чутьё</span><span class="rblurb">Наёмный ствол. Лучший боец в команде — видит засаду раньше всех и переживает то, что не переживёт никто.</span><span class="rcue easy">Проще для новичка</span><span class="rwhy">Стреляй и замечай засады. Способность — просто запас боевых очков.</span></button>
 <button type="button" class="rolecard" data-cg="role" data-role="Нетраннер"><span class="rname">Нетраннер</span><span class="rabil">Интерфейс</span><span class="rblurb">Взламывает СЕТь: камеры, замки, турели и чужой хром. В бою сидит в стороне и ломает архитектуру.</span><span class="rcue more">+ отдельная глава</span><span class="rwhy">нужна вся глава Нетраннинг</span></button>
@@ -208,7 +210,6 @@
    <button type="button" class="cgbtn" data-cg="savemd">Скачать .md</button>
    <button type="button" class="cgbtn" data-cg="savejson">Сохранить .json</button>
    <button type="button" class="cgbtn" data-cg="loadjson">Загрузить .json</button>
-   <input type="file" accept=".json,application/json" data-cg="importfile" hidden>
    <button type="button" class="cgbtn" data-cg="reset">Начать заново</button>
   </p>
   <div class="cgsheet" data-cg="sheet"></div>

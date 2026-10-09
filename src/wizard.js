@@ -83,6 +83,7 @@ var TYPE = {method:"string", role:"string", stats:"object", roll:"number",
 var HB_MAX = 20;
 /* Quotes and angle brackets are stripped because the name is written into
    attributes (the roll button's data-key). */
+function hbWhat(s){ return String(s || "").replace(/\s+/g, " ").trim().slice(0, 200); }
 function hbName(s){ return String(s).replace(/["<>]/g, "").replace(/\s+/g, " ").trim().slice(0, 40); }
 function load(){
   var got = null;
@@ -161,7 +162,7 @@ function normalise(got){
     if(!e0 || typeof e0 !== "object" || typeof e0.name !== "string") continue;
     var n0 = hbName(e0.name);
     if(!n0 || D.stats.indexOf(e0.stat) < 0) continue;
-    hb.push({name:n0, stat:e0.stat, x2:!!e0.x2,
+    hb.push({name:n0, stat:e0.stat, x2:!!e0.x2, what:hbWhat(e0.what),
              level: (typeof e0.level === "number" && e0.level >= 0 && e0.level <= D.skillMax)
                     ? Math.round(e0.level) : 0});
   }
@@ -1310,13 +1311,16 @@ function paintBudget(){
   var r = role();
   if(!r){ box.innerHTML = ""; return; }
   var leftN = unspent();
+  var tight = (leftN === 0 && isEdge())
+    ? '<span class="cghint">Все 86 очков уже стоят в наборе Роли, поэтому «+» нигде не нажимается. '
+      + 'Чтобы вложить в другой навык, сначала убери очки у другого («−») или нажми «всё в минимум».</span>' : "";
   box.innerHTML = '<span class="cgbleft'+(leftN ? " cgbon" : "")+'">Осталось <b>'+leftN
     + "</b> из "+D.budget+"</span>"
     + '<span class="cgbpre">'
     + '<button type="button" class="cgbtn cgmini" data-cg="preset" data-kind="role">набор Роли</button>'
     + '<button type="button" class="cgbtn cgmini" data-cg="preset" data-kind="four">по 4 в каждый</button>'
     + '<button type="button" class="cgbtn cgmini" data-cg="preset" data-kind="min">всё в минимум</button>'
-    + "</span>";
+    + "</span>" + tight;
 }
 /* A stepper repaints the table it lives in, so the button under the cursor is a new
    element and has lost focus. The mouse does not notice; the keyboard does, and
@@ -1348,11 +1352,12 @@ function paintHomebrew(){
         + '(хомбрю, настройка кампании)? Впиши название, выбери СТАТ и добавь — он тратит те же очки '
         + 'и попадёт на лист.</p>';
   if(S.homebrew.length){
-    h += '<div class="tw"><table class="rf"><thead><tr><th>Навык</th><th class="n">Уровень</th>'
-       + '<th class="n">Очки</th><th class="n">СТАТ</th><th class="n">Всего</th></tr></thead><tbody>';
+    h += '<div class="tw"><table class="rf"><thead><tr><th>Свой навык</th><th class="n">Уровень</th>'
+       + '<th class="n">Очки</th><th class="n">СТАТ</th><th class="n">Всего</th><th>Обычно берёт</th></tr></thead><tbody>';
     for(var i=0;i<S.homebrew.length;i++){
       var e = S.homebrew[i], step = e.x2 ? 2 : 1, sv = eff(e.stat), tot = (sv===null) ? null : sv + e.level;
       h += "<tr><th>"+esc(e.name)+(e.x2 ? ' <span class="x2">×2</span>' : "")
+         + (e.what ? '<span class="itsub">'+esc(e.what)+"</span>" : "")
          + ' <button type="button" class="cgbtn cgmini" data-cg="hbrm" data-i="'+i+'" title="Убрать навык">✕</button></th>'
          + '<td class="n"><span class="cgstep">'
          + '<button type="button" class="cgpm" data-cg="hbdown" data-i="'+i+'"'
@@ -1365,12 +1370,13 @@ function paintHomebrew(){
             : '<button type="button" class="cgsum" data-cg="roll" data-key="'+esc(e.name)
               + '" data-stat="'+esc(e.stat)+'" data-level="'+e.level+'" data-total="'+tot
               + '" title="Бросить проверку">'+tot+"</button>")
-         + "</td></tr>";
+         + "</td><td>"+(tot===null ? "—" : tierChip(tot))+"</td></tr>";
     }
     h += "</tbody></table></div>";
   }
   if(S.homebrew.length < HB_MAX){
     h += '<p class="cgrow"><input type="text" class="cgpick" data-cg="hbname" maxlength="40" placeholder="Название навыка"> '
+       + '<input type="text" class="cgpick" data-cg="hbwhat" maxlength="200" placeholder="Описание — что позволяет"> '
        + '<select data-cg="hbstat">';
     for(var s=0;s<D.stats.length;s++) h += '<option>'+esc(D.stats[s])+"</option>";
     h += '</select> <label><input type="checkbox" data-cg="hbx2"> ×2</label> '
@@ -1396,7 +1402,8 @@ root.addEventListener("click", function(ev){
   if(a === "hbadd"){
     var nameIn = q("hbname"), name = hbName(nameIn ? nameIn.value : "");
     if(!name || S.homebrew.length >= HB_MAX) return;
-    S.homebrew.push({name:name, stat:q("hbstat").value, x2:q("hbx2").checked, level:0});
+    S.homebrew.push({name:name, stat:q("hbstat").value, x2:q("hbx2").checked, level:0,
+                      what:hbWhat(q("hbwhat") ? q("hbwhat").value : "")});
     save(); paintAll();
     var again = q("hbname"); if(again) again.focus();
   }
@@ -3040,7 +3047,7 @@ function paintSheet(){
   for(var hi=0;hi<hbs.length;hi++){
     var hv = eff(hbs[hi].stat), ht = (hv===null) ? null : hv + hbs[hi].level;
     h += "<tr><th>"+esc(hbs[hi].name)+(hbs[hi].x2 ? ' <span class="x2">×2</span>' : "")
-       + '<span class="itsub">Свой навык.</span></th><td class="n">'+hbs[hi].level+'</td><td class="n">'
+       + '<span class="itsub">'+esc(hbs[hi].what || "Свой навык.")+'</span></th><td class="n">'+hbs[hi].level+'</td><td class="n">'
        + (ht===null ? esc(hbs[hi].stat) : esc(hbs[hi].stat)+" "+hv+" + "+hbs[hi].level+" = <b>"+ht+"</b>")
        + "</td><td>"+(ht===null ? "" : tierChip(ht))+"</td></tr>";
   }
