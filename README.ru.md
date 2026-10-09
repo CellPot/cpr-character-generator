@@ -1,7 +1,9 @@
+[English](README.md) · **Русский**
+
 # Генератор персонажа для Cyberpunk RED
 
 Мастер создания персонажа для Cyberpunk RED. Одна HTML-страница, без регистрации, работает
-без интернета. Русский и английский. [English version](README.md)
+без интернета. Русский и английский.
 
 **[▶ Открыть онлайн](https://cellpot.github.io/cpr-character-generator/)** или скачать
 `generator.html` и открыть в браузере.

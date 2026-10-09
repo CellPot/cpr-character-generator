@@ -1,7 +1,9 @@
+**English** · [Русский](README.ru.md)
+
 # Character Generator for Cyberpunk RED
 
 A character wizard for Cyberpunk RED. One HTML page, no sign-up, works offline.
-English and Russian. [Русская версия](README.ru.md)
+English and Russian.
 
 **[▶ Open online](https://cellpot.github.io/cpr-character-generator/)**, or download
 `generator.html` and open it in a browser.
