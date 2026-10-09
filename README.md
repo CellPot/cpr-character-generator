@@ -56,7 +56,7 @@ headings, is under the SIL Open Font License 1.1 — text and copyright in
 
 ## Credits
 
-The Russian terms follow the fan translations of the Cyberpunk RED books. Many thanks to
+The Russian terms mostly follow the fan translations of the Cyberpunk RED books. Many thanks to
 their authors:
 
 - **rustablerpg.ru** and the VK group **vk.com/cyberpunk_red_rus** — the Core Rulebook,
@@ -69,6 +69,10 @@ their authors:
   catalogue;
 - **LieSnPeace** ([t.me/cyberpunk_red_rus](https://t.me/cyberpunk_red_rus)) — Breaking
   Your Stuff.
+
+## Contributing
+
+Contributions: issues welcome, PRs are not accepted.
 
 ## Build
 

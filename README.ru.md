@@ -57,7 +57,7 @@ Cyberpunk — зарегистрированный товарный знак CD 
 
 ## Благодарности
 
-Русские термины — по фанатским переводам книг Cyberpunk RED. Огромное спасибо их авторам:
+Русские термины — в основном по фанатским переводам книг Cyberpunk RED. Огромное спасибо их авторам:
 
 - **rustablerpg.ru** и группа VK **vk.com/cyberpunk_red_rus** — корбук, Black Chrome,
   Досье Danger Gal, Exotics of 2045;
@@ -68,6 +68,10 @@ Cyberpunk — зарегистрированный товарный знак CD 
   Best Friend, Going Quiet, Toggle's Temple, Solo of Fortune 2045 и каталог Ночного Рынка;
 - **LieSnPeace** ([t.me/cyberpunk_red_rus](https://t.me/cyberpunk_red_rus)) — Breaking
   Your Stuff.
+
+## Участие
+
+Issues приветствуются, pull request'ы не принимаются.
 
 ## Сборка
 

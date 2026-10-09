@@ -52,7 +52,7 @@ def legal(sources):
 R. Talsorian Games and is not approved or endorsed by RTG.</p>
 <p%(ru2)s>Cyberpunk is a trademark of CD PROJEKT S.A.; Cyberpunk RED and its rules
 belong to R. Talsorian Games. The full text of the rules is in the books; a chip like
-<b>CRB 146</b> is a page. Russian terms follow the fan translations; thanks to their authors:
+<b>CRB 146</b> is a page. Russian terms mostly follow the fan translations; thanks to their authors:
 <b>rustablerpg.ru</b> and <b>vk.com/cyberpunk_red_rus</b>, the VK group
 <b>Cyberpunk RED на русском языке</b>, <b>@kr45n1y</b> (<b>t.me/redcyberpunk</b>) and
 <b>LieSnPeace</b> (<b>t.me/cyberpunk_red_rus</b>).</p>
@@ -60,7 +60,7 @@ belong to R. Talsorian Games. The full text of the rules is in the books; a chip
 </footer>""" % {"title": TITLE, "keys": keys,
                 "ru2": ru("Cyberpunk — товарный знак CD PROJEKT S.A.; Cyberpunk RED и его правила — "
                           "R. Talsorian Games. Полный текст правил — в книгах; чип вроде "
-                          "<b>КБ 146</b> — страница. Термины — по фанатским переводам, спасибо их авторам: "
+                          "<b>КБ 146</b> — страница. Термины — в основном по фанатским переводам, спасибо их авторам: "
                           "<b>rustablerpg.ru</b> и <b>vk.com/cyberpunk_red_rus</b>, группе VK "
                           "<b>«Cyberpunk RED на русском языке»</b>, <b>@kr45n1y</b> "
                           "(<b>t.me/redcyberpunk</b>) и <b>LieSnPeace</b> (<b>t.me/cyberpunk_red_rus</b>)."),
