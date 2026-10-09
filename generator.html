@@ -4841,6 +4841,10 @@ root.addEventListener("click", function(ev){
        The popover is position:fixed and would ride along onto the paper. */
     if(window.CPR_POP_CLOSE) window.CPR_POP_CLOSE();
     document.body.classList.add("cgprint");
+    /* The browser proposes the page title as the PDF file name. */
+    if(savedTitle === null) savedTitle = document.title;
+    var fname = (S.name || "").replace(/[\\\/:*?"<>|]+/g, " ").replace(/\s+/g, " ").trim();
+    document.title = fname || "Безымянный";
     window.print();
   }
   if(a==="reset"){
@@ -4878,8 +4882,10 @@ function paintAll(){
   if(nameField && nameField.value !== S.name) nameField.value = S.name || "";
 }
 
+var savedTitle = null;
 window.addEventListener("afterprint", function(){
   document.body.classList.remove("cgprint");
+  if(savedTitle !== null){ document.title = savedTitle; savedTitle = null; }
 });
 
 /* No per-key backfills here any more — load() merges onto blank(), so a save
