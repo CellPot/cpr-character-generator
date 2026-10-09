@@ -1,65 +1,82 @@
-# Генератор персонажа — для Cyberpunk RED
+# Character Generator — for Cyberpunk RED
 
-Пошаговый мастер создания персонажа по правилам корбука Cyberpunk RED на русском —
-одна HTML-страница, без регистрации и без интернета. Откройте `generator.html` в браузере.
+*Русская версия: [README.ru.md](README.ru.md)*
 
-- Все три метода книги: **#1 «Уличная крыса»**, **#2 «Эджраннер»**, **#3 «Полный пакет»**.
-- Роль → СТАТы → навыки → Жизненный путь (общий и ролевой) → снаряжение → готовый лист:
-  ПЗ, порог ранения, спасбросок, Человечность со стартовыми имплантами, ролевая
-  способность на ранге 4, деньги.
-- Подбор снаряжения из каталога: названия, цены и источник (корбук и дополнения).
-- На выходе: печать / PDF, заметка в Markdown и файл сохранения (ниже). Пока вы работаете,
-  персонаж сам хранится в вашем браузере и никуда не отправляется.
+A step-by-step character creation wizard for Cyberpunk RED, built on the rules of the
+Core Rulebook. One HTML page, no sign-up, no internet needed. Open `generator.html` in a
+browser. The interface and the data come in English and Russian; the page follows your
+browser's language the first time and has a language switch.
 
-**Это не замена книге.** Здесь механика, таблицы и краткий пересказ своими словами;
-рядом с каждым правилом указана страница корбука (чип «КБ 144») или дополнения
-(«BC 9»), где оно изложено полностью.
+- All three methods of the book: **#1 Street Rat**, **#2 Edgerunner**, **#3 Complete Package**.
+- Role → STATs → skills → Lifepath (cultural and Role) → gear → finished sheet:
+  HP, Seriously Wounded threshold, Death Save, Humanity with starting cyberware, the Role
+  ability at rank 4, money.
+- Gear picked from a catalogue: names, prices and the source (Core Rulebook and supplements).
+- Output: print / PDF, a Markdown note and a save file (below). While you work, the character
+  is kept in your browser and goes nowhere.
 
-## Что получается на выходе
+**It is not a replacement for the book.** It holds mechanics, tables and short summaries in
+our own words; next to every rule there is the page of the Core Rulebook (a chip like
+"CRB 144") or of the supplement ("BC 9") where it is set out in full.
 
-Лист можно отдать тремя способами, у каждого своя задача:
+## What you get out of it
 
-- **Печать / PDF** — отдать мастеру игры или распечатать. В окне печати выберите
-  «Сохранить как PDF»: виртуальный принтер «Microsoft Print to PDF» сохраняет страницы
-  картинками, и текст в таком файле нельзя ни выделить, ни найти.
-- **Скачать .md** — заметка в Markdown (таблицы, навыки по убыванию броска) для хранилища
-  вроде Obsidian. Файл называется по имени персонажа: не кладите его поверх уже написанной
-  заметки с тем же именем.
-- **Сохранить .json / Загрузить .json** — продолжить позже или перенести персонажа на другое
-  устройство. Файл читает только этот генератор. В нём ваши выборы и броски, а не готовый
-  лист, поэтому после обновления генератора загруженный персонаж пересчитается по новым
-  данным.
+A sheet can leave the page in three ways, each for a different job:
 
-При загрузке файл проверяется: лишнее отбрасывается, а повреждённый файл не открывается
-и текущего персонажа не меняет. Кнопки «скопировать текстом» нет — для этого служит .md.
+- **Print / PDF** — hand it to your GM or print it. In the print dialog choose
+  "Save as PDF": the virtual printer "Microsoft Print to PDF" saves pages as pictures, so
+  the text of such a file cannot be selected or searched.
+- **Download .md** — a Markdown note (tables, skills sorted by roll) for a vault such as
+  Obsidian. The file is named after the character: don't drop it over a note you already wrote
+  under the same name.
+- **Save .json / Load .json** — to continue later or to move a character to another device.
+  Only this generator reads that file. It holds your choices and rolls, not the finished
+  sheet, so after the generator is updated a loaded character is recalculated from the new data.
 
-## Правовое
+A loaded file is checked: anything extra is dropped, and a damaged file is not opened and
+leaves the current character as it was. There is no "copy as text" button — the .md does that.
 
-Генератор персонажа is unofficial content provided under the Homebrew Content Policy of
+## Legal
+
+Character Generator is unofficial content provided under the Homebrew Content Policy of
 R. Talsorian Games and is not approved or endorsed by RTG.
 
-Cyberpunk — зарегистрированный товарный знак CD PROJEKT S.A. Cyberpunk RED, его правила
-и игровые материалы принадлежат R. Talsorian Games. Проект бесплатный и некоммерческий.
-Текст книг сюда не копируется: таблицы Жизненного пути и прочие случайные таблицы,
-названия и числа — то, что [политика RTG](https://rtalsoriangames.com/homebrew-content-policy/)
-прямо разрешает генераторам; описания навыков, снаряжения и способностей написаны заново.
+Cyberpunk is a registered trademark of CD PROJEKT S.A. Cyberpunk RED, its rules and game
+materials belong to R. Talsorian Games. This project is free and non-commercial. No book text
+is copied here: the Lifepath and other random tables, names and numbers are what
+[RTG's policy](https://rtalsoriangames.com/homebrew-content-policy/) expressly allows
+generators to use; the descriptions of skills, gear and abilities are written anew.
 
-Русские термины — по переводу проекта **rustablerpg.ru** для группы
-**vk.com/cyberpunk_red_rus**.
+The code (`src/`, `build.py`) is under the MIT license, see `LICENSE`. The license does not
+extend to game material.
 
-Код (`src/`, `build.py`) — под лицензией MIT, см. `LICENSE`. На игровые материалы
-лицензия не распространяется.
-
-Шрифт Play (© 2011 Jonas Hecksher, Playtypes, e-types AS), вшитый в `src/base.css` для
-заголовков, распространяется под SIL Open Font License 1.1 — текст и копирайт в
+The Play font (© 2011 Jonas Hecksher, Playtypes, e-types AS), embedded in `src/base.css` for
+headings, is under the SIL Open Font License 1.1 — text and copyright in
 `LICENSES/Play-OFL.txt`.
 
-## Сборка
+## Credits
+
+The Russian terms follow the fan translations of the Cyberpunk RED books. Many thanks to
+their authors:
+
+- **rustablerpg.ru** and the VK group **vk.com/cyberpunk_red_rus** — the Core Rulebook,
+  Black Chrome, Danger Gal Dossier, Exotics of 2045;
+- the VK group **«Cyberpunk RED на русском языке»** — Interface RED (Ultimate), Cargo
+  Containers & Cube Hotels, The 12 Days of Gunmas, All About Drones;
+- **@kr45n1y** ([t.me/redcyberpunk](https://t.me/redcyberpunk)) — Hot Pursuit, Cyberfists of
+  Fury, Going Metal, Did Someone Say Murder?, No Place Like Home, All About Agents, Your New
+  Best Friend, Going Quiet, Toggle's Temple, Solo of Fortune 2045 and the Night Markets
+  catalogue;
+- **LieSnPeace** ([t.me/cyberpunk_red_rus](https://t.me/cyberpunk_red_rus)) — Breaking
+  Your Stuff.
+
+## Build
 
 ```
-python build.py        # → generator.html; только стандартная библиотека Python 3
+python build.py        # → generator.html; Python 3 standard library only
 ```
 
-`data/` — данные мастера (СТАТ-шаблоны, наборы навыков, таблицы, каталог) — **экспортируется**
-из отдельного рабочего проекта, где они извлекаются и сверяются с книгами; руками не правится.
-`texts/summaries.json` — наши собственные краткие формулировки, которыми заменён текст книги.
+`data/` — the wizard's data (STAT templates, skill sets, tables, the catalogue) — is
+**exported** from a separate working project where it is extracted and checked against the
+books; it is not edited by hand. `texts/summaries.json` holds our own short wording that
+replaces the book's text.
