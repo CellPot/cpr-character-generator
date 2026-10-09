@@ -83,6 +83,9 @@ Contributions: issues welcome, PRs are not accepted.
 python build.py        # → generator.html; Python 3 standard library only
 ```
 
+`generator.html` is committed already built. `build.py` rebuilds it from `src/`, `data/` and
+`texts/` in this repository only; it does not regenerate `data/`.
+
 `data/` — the wizard's data (STAT templates, skill sets, tables, the catalogue) — is
 **exported** from a separate working project where it is extracted and checked against the
 books; it is not edited by hand. `texts/summaries.json` holds our own short wording that

@@ -12,9 +12,10 @@ Inputs, all in this repository:
                                   the wizard's markup and data, EXPORTED — never edit
                                   them by hand (see CLAUDE.md)
 
-Deterministic: the same inputs give the same bytes. Standard library only.
+Deterministic: the same inputs give the same bytes (the page date comes from git when the
+inputs are committed). Standard library only.
 """
-import datetime, io, json, os, re, sys
+import datetime, io, json, os, re, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "generator.html")
@@ -80,10 +81,29 @@ INPUTS = ("src/base.css", "src/wizard.css", "src/page.css", "src/standalone.js",
           "src/wizard.js", "data/body.html", "data/payload.json", "build.py")
 
 
+def git(*args):
+    """Output of a git command run in this repository, or None if git or the repository
+    is not there (a downloaded zip)."""
+    try:
+        r = subprocess.run(("git",) + args, cwd=HERE, capture_output=True, text=True,
+                           encoding="utf-8", timeout=30)
+    except (OSError, subprocess.SubprocessError):
+        return None
+    return r.stdout.strip() if r.returncode == 0 else None
+
+
 def last_updated():
-    """Newest mtime among the inputs — the reference's rule (its _build_book.py):
-    not today's date, so a rebuild that changes nothing does not move it, or
-    «обновлено» would stop meaning anything."""
+    """When the inputs last changed — not today's date, so a rebuild that changes
+    nothing does not move it, or «обновлено» would stop meaning anything.
+
+    Modified inputs (uncommitted work): the newest mtime. Clean inputs: the date of the last commit that touched them, so a
+    fresh clone — where every mtime is «now» — builds the same bytes as the committed
+    page. No git: the newest mtime."""
+    dirty = git("status", "--porcelain", "--", *INPUTS)
+    if dirty == "":
+        stamp = git("log", "-1", "--format=%cd", "--date=format:%d.%m.%Y", "--", *INPUTS)
+        if stamp:
+            return stamp
     newest = max(os.path.getmtime(os.path.join(HERE, f)) for f in INPUTS)
     d = datetime.date.fromtimestamp(newest)
     return "%02d.%02d.%d" % (d.day, d.month, d.year)
