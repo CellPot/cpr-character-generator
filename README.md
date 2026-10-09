@@ -50,6 +50,10 @@ Cyberpunk — зарегистрированный товарный знак CD 
 Код (`src/`, `build.py`) — под лицензией MIT, см. `LICENSE`. На игровые материалы
 лицензия не распространяется.
 
+Шрифт Play (© 2011 Jonas Hecksher, Playtypes, e-types AS), вшитый в `src/base.css` для
+заголовков, распространяется под SIL Open Font License 1.1 — текст и копирайт в
+`LICENSES/Play-OFL.txt`.
+
 ## Сборка
 
 ```
