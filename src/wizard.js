@@ -197,9 +197,23 @@ function normalise(got){
   /* A stored roll is read for its `out` alone, and that is written into the page, so
      it must be a number — "<img …>" in a file's `out` was markup. The other fields are
      kept (a save must round-trip unchanged) but only if they are what rollExpr writes. */
+  /* life, notes and dice are keyed by the table / field keys of D. A key this build has
+     no table or field for — a renamed one from an older save — is dropped: left in, it
+     would sit in the file for good, invisible, yet counted by anyNote(). */
+  var lifeKeys = {}, noteKeys = {};
+  for(var lk0=0;lk0<D.life.length;lk0++) lifeKeys[D.life[lk0].key] = true;
+  for(var nk0=0;nk0<D.notes.length;nk0++) noteKeys[D.notes[nk0].key] = true;
+  function onlyKnown(o, known){
+    var r = {};
+    for(var k2 in o) if(o.hasOwnProperty(k2) && known[k2] === true) r[k2] = o[k2];
+    return r;
+  }
+  out.life = onlyKnown(out.life, lifeKeys);
+  out.notes = onlyKnown(out.notes, noteKeys);
   var dice = {}, fin = function(x){ return typeof x === "number" && isFinite(x); };
   for(var dk in out.dice){
     if(!out.dice.hasOwnProperty(dk)) continue;
+    if(lifeKeys[dk.split("|")[0]] !== true) continue;
     var de = out.dice[dk];
     if(!de || typeof de !== "object" || !fin(de.out)) continue;
     var roll = {};
