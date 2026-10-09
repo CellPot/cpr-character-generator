@@ -1941,10 +1941,12 @@ function pickFromCatalog(which, item){
 /* A locked row's real page citation — "BC 108", "CRB 108", "CRB 171"…
    whatever catalog_from_*() put in `chip` (always a genuine citation now,). Always linked to the item's own
    source section, same as every other citation chip in the book. */
+function rowChip(row){ var it = rowItem(row); return it && it.chip ? it.chip : row.chip; }
 function gearChip(row){
-  if(!row.chip) return "";
-  return row.href.charAt(0) === "#" ? ' <a href="'+esc(row.href)+'" class="p">'+esc(cite(row.chip))+"</a>"
-                  : ' <span class="p">'+esc(cite(row.chip))+"</span>";
+  var chip = rowChip(row);
+  if(!chip) return "";
+  return row.href.charAt(0) === "#" ? ' <a href="'+esc(row.href)+'" class="p">'+esc(cite(chip))+"</a>"
+                  : ' <span class="p">'+esc(cite(chip))+"</span>";
 }
 /* The price-TIER word ("Premium", "Cheap"...), where the source has one —
    a SECOND, separate badge from the citation above: it answers a different
@@ -2698,7 +2700,7 @@ function mdGearRows(rows){
   return rows.map(function(row){
     var qty = row.qty || 1;
     return [(rowName(row)||T("gear_sheet_html.unnamed"))+(qty>1 ? " ×"+qty : "")+(row.cyber ? " ["+((row.hl||0)*qty)+T("md_gear_rows.hl") : ""),
-            row.locked && row.chip ? cite(row.chip) : "", ((row.price||0)*qty)+"eb"];
+            row.locked && rowChip(row) ? cite(rowChip(row)) : "", ((row.price||0)*qty)+"eb"];
   });
 }
 function sheetMarkdown(){
