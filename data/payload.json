@@ -1,30 +1,30 @@
 {
  "links": {
-  "skills": "КБ 130",
-  "checks": "КБ 129",
-  "stats": "КБ 72",
-  "derived_stats": "КБ 79",
-  "generation": "КБ 73",
-  "weapons": "КБ 171",
-  "melee": "КБ 175",
-  "armor": "КБ 182",
-  "wounds": "КБ 186",
-  "trauma_team": "КБ 220",
-  "prices": "КБ 334",
-  "style": "КБ 356",
-  "price_categories": "КБ 334–387",
-  "income": "КБ 380",
-  "housing": "КБ 377",
-  "ammo": "КБ 340",
-  "gear": "КБ 351",
-  "drugs": "КБ 357",
-  "transport": "КБ 189",
-  "chrome": "КБ 117",
-  "cyberware_catalogue": "КБ 111",
-  "installation": "КБ 110",
-  "roles": "КБ 144–166",
-  "lifepath": "КБ 43–69",
-  "net": "КБ 195–218",
+  "skills": "СТР 130",
+  "checks": "СТР 129",
+  "stats": "СТР 72",
+  "derived_stats": "СТР 79",
+  "generation": "СТР 73",
+  "weapons": "СТР 171",
+  "melee": "СТР 175",
+  "armor": "СТР 182",
+  "wounds": "СТР 186",
+  "trauma_team": "СТР 220",
+  "prices": "СТР 334",
+  "style": "СТР 356",
+  "price_categories": "СТР 334–387",
+  "income": "СТР 380",
+  "housing": "СТР 377",
+  "ammo": "СТР 340",
+  "gear": "СТР 351",
+  "drugs": "СТР 357",
+  "transport": "СТР 189",
+  "chrome": "СТР 117",
+  "cyberware_catalogue": "СТР 111",
+  "installation": "СТР 110",
+  "roles": "СТР 144–166",
+  "lifepath": "СТР 43–69",
+  "net": "СТР 195–218",
   "bc_weapons": "BC 102",
   "bc_armor": "BC 35",
   "bc_cyber": "BC 17",
@@ -13541,14 +13541,14 @@
       ]
      }
     ],
-    "href": "КБ 54"
+    "href": "СТР 54"
    },
    "starter": "",
    "extra": null,
    "name": "Rockerboy",
    "anchor": "rokerboy",
    "ability": "Charismatic Impact",
-   "abilityHref": "КБ 144",
+   "abilityHref": "СТР 144",
    "abilityWhat": "Performer and rebel. Charismatic Impact turns listeners into fans ready to help.",
    "blurb": "The voice of the street: warms up the crowd, leads people and turns a performance into a weapon.",
    "tpl": [
@@ -13885,7 +13885,7 @@
        {
         "text": "Audio Recorder",
         "note": "Records sound onto a Memory Chip or into a connected Agent.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -13895,7 +13895,7 @@
        {
         "text": "Chemskin",
         "note": "Permanent skin recolouring. Paired with Techhair it gives +2 to Personal Grooming — the bonus does not stack.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -13905,7 +13905,7 @@
        {
         "text": "Cyberaudio Suite",
         "note": "The base: a module in the inner ear with 3 option slots. Only one can be installed.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -13915,7 +13915,7 @@
        {
         "text": "Techhair",
         "note": "Artificial glowing hair that changes length and colour. Paired with Chemskin it gives +2 to Personal Grooming — the bonus does not stack.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      }
@@ -13928,7 +13928,7 @@
        "text": "Very Heavy Pistol",
        "short": "4d6, mag 8",
        "note": "Damage 4d6 · mag 8 · ROF 1 · one-handed · skill Handgun.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       }
      ]
     },
@@ -13938,7 +13938,7 @@
        "text": "Basic VH Pistol Ammo x50",
        "short": "mag 8",
        "note": "Magazine: 8 — that many shots before reloading.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       }
      ]
     },
@@ -13948,13 +13948,13 @@
        "text": "Heavy Melee Weapon",
        "short": "3d6",
        "note": "Melee weapon: pipe, sword, spiked club. Damage 3d6 · ROF 2.",
-       "href": "КБ 175"
+       "href": "СТР 175"
       },
       {
        "text": "Flashbang Grenade",
        "short": "no damage",
        "note": "No damage. Anyone who fails a Resist Torture/Drugs check against DV 15 is blinded and deafened for a minute (critical eye and ear injuries, no extra damage).",
-       "href": "КБ 340"
+       "href": "СТР 340"
       }
      ]
     },
@@ -13964,7 +13964,7 @@
        "text": "Teargas Grenade x2",
        "short": "no damage",
        "note": "Deals no damage. A target with meat eyes must pass a Resist Torture/Drugs check at DV 13 or take the critical “Damaged Eye” for a minute — no bonus damage.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       }
      ]
     },
@@ -13974,7 +13974,7 @@
        "text": "Light Armorjack (Body) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the body.",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -13984,7 +13984,7 @@
        "text": "Light Armorjack (Head) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the head (head and body are separate locations).",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -13994,7 +13994,7 @@
        "text": "Agent",
        "short": "100eb",
        "note": "Pocket AI assistant: comms, Data Pool access, organiser. +2 to Library Search, and +2 to Wardrobe & Style if you dress by its advice. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -14004,7 +14004,7 @@
        "text": "Computer",
        "short": "50eb",
        "note": "An ordinary laptop or desktop — texts, the Data Pool. Price 50eb (Costly).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -14014,13 +14014,13 @@
        "text": "Electric Guitar",
        "short": "500eb",
        "note": "Or another instrument of your choice; an electric one needs an amplifier. Price 500eb (Expensive).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       },
       {
        "text": "Bug Detector",
        "short": "500eb",
        "note": "Sounds an alert if there is a bug or other spy device within 2 m. Price 500eb (Expensive).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -14030,7 +14030,7 @@
        "text": "Glow Paint x5",
        "short": "20eb",
        "note": "A spray can of paint that glows in the dark — for marking things and writing. Price 20eb (Everyday).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -14040,7 +14040,7 @@
        "text": "Pocket Amplifier",
        "short": "50eb",
        "note": "A compact amplifier for two instruments: audible at 100 m, 6 hours per charge. Price 50eb (Costly).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -14050,7 +14050,7 @@
        "text": "Radio Scanner/Music Player",
        "short": "50eb",
        "note": "Player and radio receiver: music, all frequencies within 1 km (encrypted ones only with a Scrambler/Descrambler). Price 50eb (Costly).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -14060,7 +14060,7 @@
        "text": "Video Camera",
        "short": "100eb",
        "note": "Records video with sound, 12 hours on one Memory Chip. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -14070,7 +14070,7 @@
        "text": "Generic Chic: Jacket, Jewelry x3, Top x4",
        "short": "clothing",
        "note": "Street style — standard, colourful, modular. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     },
@@ -14080,7 +14080,7 @@
        "text": "Leisurewear: Jewelry, Glasses, Footwear",
        "short": "clothing",
        "note": "Street style — comfort, agility, athleticism. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     },
@@ -14090,7 +14090,7 @@
        "text": "Urban Flash: Bottoms, Top",
        "short": "clothing",
        "note": "Street style — flashy, technological, streetwear. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     }
@@ -14289,14 +14289,14 @@
       ]
      }
     ],
-    "href": "КБ 55"
+    "href": "СТР 55"
    },
    "starter": "Shoot and spot ambushes. The ability is just a pool of combat points.",
    "extra": null,
    "name": "Solo",
    "anchor": "solo",
    "ability": "Combat Awareness",
-   "abilityHref": "КБ 146",
+   "abilityHref": "СТР 146",
    "abilityWhat": "A hired fighter. Combat Awareness is a pool of points the Solo splits before a fight between defence, accuracy, initiative and a sense of threat.",
    "blurb": "A gun for hire. The best fighter on the team — sees the ambush before anyone and survives what nobody else would.",
    "tpl": [
@@ -14633,7 +14633,7 @@
        {
         "text": "Biomonitor",
         "note": "A screen under the skin shows pulse, breathing, temperature and sugar; feeds the data to the Agent.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -14643,7 +14643,7 @@
        {
         "text": "Neural Link",
         "note": "The base: an artificial nervous system with 5 option slots. Neural implants and the smartgun link cannot be installed without it.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -14653,12 +14653,12 @@
        {
         "text": "Sandevistan",
         "note": "Speedware: as an Action, +3 to Initiative for a minute, then an hour to recharge. Only one speedware can be installed; needs a Neural Link.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        },
        {
         "text": "Wolvers",
         "note": "Retractable claws — a Heavy Melee Weapon (3d6, ROF 2); hidden with no check. Can go into a living arm if it holds no other implants.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      }
@@ -14671,7 +14671,7 @@
        "text": "Assault Rifle",
        "short": "5d6, mag 25",
        "note": "Damage 5d6 · mag 25 · ROF 1 · two-handed · skill Shoulder Arms. Features: Autofire (4) · Suppressive Fire.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       }
      ]
     },
@@ -14681,7 +14681,7 @@
        "text": "Very Heavy Pistol",
        "short": "4d6, mag 8",
        "note": "Damage 4d6 · mag 8 · ROF 1 · one-handed · skill Handgun.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       }
      ]
     },
@@ -14691,13 +14691,13 @@
        "text": "Heavy Melee Weapon",
        "short": "3d6",
        "note": "Melee weapon: pipe, sword, spiked club. Damage 3d6 · ROF 2.",
-       "href": "КБ 175"
+       "href": "СТР 175"
       },
       {
        "text": "Bulletproof Shield",
        "short": "10 HP",
        "note": "A transparent polycarbonate shield. Holds 10 HP, then breaks.",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -14707,7 +14707,7 @@
        "text": "Basic VH Pistol Ammo x30",
        "short": "mag 8",
        "note": "Magazine: 8 — that many shots before reloading.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       }
      ]
     },
@@ -14717,7 +14717,7 @@
        "text": "Basic Rifle Ammo x70",
        "short": "mag 25",
        "note": "Magazine: 25 — that many shots before reloading.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       }
      ]
     },
@@ -14727,7 +14727,7 @@
        "text": "Light Armorjack (Body) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the body.",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -14737,7 +14737,7 @@
        "text": "Light Armorjack (Head) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the head (head and body are separate locations).",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -14747,7 +14747,7 @@
        "text": "Agent",
        "short": "100eb",
        "note": "Pocket AI assistant: comms, Data Pool access, organiser. +2 to Library Search, and +2 to Wardrobe & Style if you dress by its advice. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -14757,7 +14757,7 @@
        "text": "Leisurewear: Footwear x2, Jacket x3, Glasses, Bottoms x2, Top x2",
        "short": "clothing",
        "note": "Street style — comfort, agility, athleticism. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     }
@@ -14922,17 +14922,17 @@
       ]
      }
     ],
-    "href": "КБ 56"
+    "href": "СТР 56"
    },
    "starter": "",
    "extra": {
-    "href": "КБ 195–218",
+    "href": "СТР 195–218",
     "what": "needs the whole Netrunning chapter"
    },
    "name": "Netrunner",
    "anchor": "netranner",
    "ability": "Interface",
-   "abilityHref": "КБ 147",
+   "abilityHref": "СТР 147",
    "abilityWhat": "A hacker who enters the Net through a cyberdeck. Interface determines what they can do inside someone else's architecture: hack, control, fight BLACK ICE.",
    "blurb": "Hacks the NET: cameras, locks, turrets and other people's chrome. In a fight sits aside and breaks architecture.",
    "tpl": [
@@ -15269,7 +15269,7 @@
        {
         "text": "Interface Plugs",
         "note": "A jack for direct connection to smart weapons, a Cyberdeck, machinery and vehicles. Needs a Neural Link; as many ports, as many simultaneous connections.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -15279,7 +15279,7 @@
        {
         "text": "Neural Link",
         "note": "The base: an artificial nervous system with 5 option slots. Neural implants and the smartgun link cannot be installed without it.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -15289,7 +15289,7 @@
        {
         "text": "Shift Tacts",
         "note": "Contact lenses that change colour with mood or temperature; one pattern, can be switched off.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      }
@@ -15302,7 +15302,7 @@
        "text": "Very Heavy Pistol",
        "short": "4d6, mag 8",
        "note": "Damage 4d6 · mag 8 · ROF 1 · one-handed · skill Handgun.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       }
      ]
     },
@@ -15312,7 +15312,7 @@
        "text": "Basic VH Pistol Ammo x30",
        "short": "mag 8",
        "note": "Magazine: 8 — that many shots before reloading.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       }
      ]
     },
@@ -15322,7 +15322,7 @@
        "text": "Light Armorjack (Body) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the body.",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -15332,7 +15332,7 @@
        "text": "Light Armorjack (Head) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the head (head and body are separate locations).",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -15342,7 +15342,7 @@
        "text": "Agent",
        "short": "100eb",
        "note": "Pocket AI assistant: comms, Data Pool access, organiser. +2 to Library Search, and +2 to Wardrobe & Style if you dress by its advice. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -15352,7 +15352,7 @@
        "text": "Cyberdeck (7 slots)",
        "short": "",
        "note": "A platform for Programs and Hardware: 7 slots. Connecting needs Interface Plugs and a Neural Link — both are already in the Netrunner's starting chrome. Price 500eb (Expensive).",
-       "href": "КБ 196"
+       "href": "СТР 196"
       }
      ]
     },
@@ -15362,7 +15362,7 @@
        "text": "Virtuality Goggles",
        "short": "100eb",
        "note": "Overlays the picture of cyberspace on ordinary vision — a netrunner's working tool. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -15372,7 +15372,7 @@
        "text": "Program: Armor",
        "short": "Reduces brain damage by 4",
        "note": "A defensive program: while running, brain damage −4. One copy active; each copy can be run once per connection. Price 50eb.",
-       "href": "КБ 202"
+       "href": "СТР 202"
       }
      ]
     },
@@ -15382,7 +15382,7 @@
        "text": "Program: Sword",
        "short": "3d6 damage to Black ICE programs",
        "note": "An attack program for a Cyberdeck: 3d6 damage to Black ICE, 2d6 to other Programs. Price 50eb.",
-       "href": "КБ 202"
+       "href": "СТР 202"
       }
      ]
     },
@@ -15392,13 +15392,13 @@
        "text": "Program: See Ya",
        "short": "+2 to Pathfinder checks",
        "note": "A booster program: +2 to Pathfinder while running. Price 20eb.",
-       "href": "КБ 202"
+       "href": "СТР 202"
       },
       {
        "text": "Eraser",
        "short": "+2 to Cloak checks",
        "note": "A booster program: +2 to Cloak while running. Price 20eb.",
-       "href": "КБ 202"
+       "href": "СТР 202"
       }
      ]
     },
@@ -15408,13 +15408,13 @@
        "text": "Program: Sword",
        "short": "3d6 damage to Black ICE programs",
        "note": "An attack program for a Cyberdeck: 3d6 damage to Black ICE, 2d6 to other Programs. Price 50eb.",
-       "href": "КБ 202"
+       "href": "СТР 202"
       },
       {
        "text": "Wisp",
        "short": "1d6 to the brain, −1 NET Action",
        "note": "An attack program for a Cyberdeck: 1d6 damage to the netrunner's brain and one NET Action fewer on their turn (never below 2). Price 50eb.",
-       "href": "КБ 205"
+       "href": "СТР 205"
       }
      ]
     },
@@ -15424,13 +15424,13 @@
        "text": "Program: Worm",
        "short": "+2 to Backdoor checks",
        "note": "A booster program: +2 to Backdoor while running. Price 50eb.",
-       "href": "КБ 202"
+       "href": "СТР 202"
       },
       {
        "text": "Sword",
        "short": "3d6 damage to Black ICE programs",
        "note": "An attack program for a Cyberdeck: 3d6 damage to Black ICE, 2d6 to other Programs. Price 50eb.",
-       "href": "КБ 202"
+       "href": "СТР 202"
       }
      ]
     },
@@ -15440,7 +15440,7 @@
        "text": "Generic Chic: Top x10",
        "short": "clothing",
        "note": "Street style — standard, colourful, modular. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     },
@@ -15450,7 +15450,7 @@
        "text": "Leisurewear: Footwear x2, Jewelry, Bottoms x2",
        "short": "clothing",
        "note": "Street style — comfort, agility, athleticism. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     },
@@ -15460,7 +15460,7 @@
        "text": "Urban Flash: Jacket",
        "short": "clothing",
        "note": "Street style — flashy, technological, streetwear. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     }
@@ -15655,17 +15655,17 @@
       ]
      }
     ],
-    "href": "КБ 58"
+    "href": "СТР 58"
    },
    "starter": "",
    "extra": {
-    "href": "КБ 144–166",
+    "href": "СТР 144–166",
     "what": "needs the Fabrication and Upgrade tables"
    },
    "name": "Tech",
    "anchor": "tehnik",
    "ability": "Maker",
-   "abilityHref": "КБ 148",
+   "abilityHref": "СТР 148",
    "abilityWhat": "A jack of all trades. Maker lets you repair faster, improve things and build new ones — all the way to inventions.",
    "blurb": "Repairs, upgrades and builds from junk whatever shoots. The only one who can bring a machine back to life.",
    "tpl": [
@@ -16002,7 +16002,7 @@
        {
         "text": "Cybereye",
         "note": "The base: an artificial eye in place of the real one, 3 option slots. Some options can only be installed in a pair of eyes; HL is paid for each option.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -16012,7 +16012,7 @@
        {
         "text": "MicroOptics",
         "note": "A microscope with up to 400× magnification.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -16022,7 +16022,7 @@
        {
         "text": "Skinwatch",
         "note": "A glowing dial under the skin: time and date.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -16032,7 +16032,7 @@
        {
         "text": "Tool Hand",
         "note": "Tools in the fingers: screwdriver, wrench, drill. Can be installed in a living arm.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      }
@@ -16045,13 +16045,13 @@
        "text": "Shotgun",
        "short": "5d6, mag 4",
        "note": "Damage 5d6 · mag 4 · ROF 1 · two-handed · skill Shoulder Arms. Features: Shotgun Blast. 5d6 — slug only (one target, can be aimed). Shell — 3d6 to everyone within 6 m, DV 13, no aimed shot.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       },
       {
        "text": "Assault Rifle",
        "short": "5d6, mag 25",
        "note": "Damage 5d6 · mag 25 · ROF 1 · two-handed · skill Shoulder Arms. Features: Autofire (4) · Suppressive Fire.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       }
      ]
     },
@@ -16061,13 +16061,13 @@
        "text": "Basic Rifle Ammo x100",
        "short": "mag 25",
        "note": "Magazine: 25 — that many shots before reloading.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       },
       {
        "text": "Basic Shotgun Shell x100",
        "short": "mag 4",
        "note": "Magazine: 4 — that many shots before reloading. In the original this is shot (Basic Shotgun Shell): “Shotgun Blast”, 3d6 to everyone within 6 m, DV 13, no aimed shot. For 5d6 you need a slug.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       }
      ]
     },
@@ -16077,7 +16077,7 @@
        "text": "Flashbang Grenade",
        "short": "no damage",
        "note": "No damage. Anyone who fails a Resist Torture/Drugs check against DV 15 is blinded and deafened for a minute (critical eye and ear injuries, no extra damage).",
-       "href": "КБ 340"
+       "href": "СТР 340"
       }
      ]
     },
@@ -16087,7 +16087,7 @@
        "text": "Light Armorjack (Body) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the body.",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -16097,7 +16097,7 @@
        "text": "Light Armorjack (Head) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the head (head and body are separate locations).",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -16107,7 +16107,7 @@
        "text": "Agent",
        "short": "100eb",
        "note": "Pocket AI assistant: comms, Data Pool access, organiser. +2 to Library Search, and +2 to Wardrobe & Style if you dress by its advice. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -16117,7 +16117,7 @@
        "text": "Anti-Smog Breathing Mask",
        "short": "20eb",
        "note": "While it is on your face no gas or smoke works on you. Price 20eb (Everyday).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -16127,7 +16127,7 @@
        "text": "Disposable Cell Phone",
        "short": "50eb",
        "note": "A cheap phone not tied to its owner — call and throw it away. Price 50eb (Costly).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -16137,7 +16137,7 @@
        "text": "Duct Tape x5",
        "short": "20eb",
        "note": "Sticky tape, sometimes the glowing kind — for marks in the dark. Price 20eb (Everyday).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -16147,7 +16147,7 @@
        "text": "Flashlight",
        "short": "20eb",
        "note": "A beam of 100 m, 10 hours per charge. Price 20eb (Everyday).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -16157,7 +16157,7 @@
        "text": "Road Flare x6",
        "short": "10eb",
        "note": "Disposable; lights an area of 100×100 m for an hour; colour of your choice. Price 10eb (Cheap).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -16167,7 +16167,7 @@
        "text": "Tech Bag",
        "short": "500eb",
        "note": "A full repair kit: multitool, soldering iron, tape, fasteners, pry bars, hammer. Price 500eb (Expensive).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -16177,7 +16177,7 @@
        "text": "Generic Chic: Bottoms x8, Top x10",
        "short": "clothing",
        "note": "Street style — standard, colourful, modular. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     },
@@ -16187,7 +16187,7 @@
        "text": "Leisurewear: Footwear x2",
        "short": "clothing",
        "note": "Street style — comfort, agility, athleticism. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     }
@@ -16388,17 +16388,17 @@
       ]
      }
     ],
-    "href": "КБ 60"
+    "href": "СТР 60"
    },
    "starter": "",
    "extra": {
-    "href": "КБ 117",
+    "href": "СТР 117",
     "what": "needs Cyberware and Trauma Team"
    },
    "name": "Medtech",
    "anchor": "medteh",
    "ability": "Medicine",
-   "abilityHref": "КБ 149",
+   "abilityHref": "СТР 149",
    "abilityWhat": "A street doctor. Medicine gives what nobody else can do: install and remove implants, surgery, pharmaceuticals, cryosystems.",
    "blurb": "Puts you back on your feet after everything has gone wrong: stabilisation, surgery, installing chrome.",
    "tpl": [
@@ -16735,7 +16735,7 @@
        {
         "text": "Biomonitor",
         "note": "A screen under the skin shows pulse, breathing, temperature and sugar; feeds the data to the Agent.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -16745,7 +16745,7 @@
        {
         "text": "Cybereye",
         "note": "The base: an artificial eye in place of the real one, 3 option slots. Some options can only be installed in a pair of eyes; HL is paid for each option.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -16755,12 +16755,12 @@
        {
         "text": "Nasal Filters",
         "note": "Filters in the nose: gas and smoke do not work. Switched off without an Action.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        },
        {
         "text": "Toxin Binders",
         "note": "+2 to Resist Torture/Drugs; a second one doesn't add.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -16770,7 +16770,7 @@
        {
         "text": "TeleOptics",
         "note": "Zoom to 800 m; +1 to a single or aimed shot at a target farther than 51 m. Does not stack with a sniper scope.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      }
@@ -16783,13 +16783,13 @@
        "text": "Shotgun",
        "short": "5d6, mag 4",
        "note": "Damage 5d6 · mag 4 · ROF 1 · two-handed · skill Shoulder Arms. Features: Shotgun Blast. 5d6 — slug only (one target, can be aimed). Shell — 3d6 to everyone within 6 m, DV 13, no aimed shot.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       },
       {
        "text": "Assault Rifle",
        "short": "5d6, mag 25",
        "note": "Damage 5d6 · mag 25 · ROF 1 · two-handed · skill Shoulder Arms. Features: Autofire (4) · Suppressive Fire.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       }
      ]
     },
@@ -16799,13 +16799,13 @@
        "text": "Basic Rifle Ammo x100",
        "short": "mag 25",
        "note": "Magazine: 25 — that many shots before reloading.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       },
       {
        "text": "Basic Shotgun Shell x100",
        "short": "mag 4",
        "note": "Magazine: 4 — that many shots before reloading. In the original this is shot (Basic Shotgun Shell): “Shotgun Blast”, 3d6 to everyone within 6 m, DV 13, no aimed shot. For 5d6 you need a slug.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       }
      ]
     },
@@ -16815,13 +16815,13 @@
        "text": "Incendiary Rifle Ammo x10",
        "short": "mag 25",
        "note": "Magazine 25. If it penetrates armor the target catches fire and loses 2 HP (ignoring armor) after each of their turns; putting the fire out takes their Action. Burning does not stack.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       },
       {
        "text": "Incendiary Shotgun Shell x10",
        "short": "mag 4",
        "note": "Magazine 4. If it penetrates armor the target catches fire and loses 2 HP (ignoring armor) after each of their turns; putting the fire out takes their Action. Burning does not stack.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       }
      ]
     },
@@ -16831,7 +16831,7 @@
        "text": "Smoke Grenade x2",
        "short": "no damage",
        "note": "Deals no damage. Smoke fills a 10×10 m area for a minute: −4 to anything it hinders.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       }
      ]
     },
@@ -16841,7 +16841,7 @@
        "text": "Light Armorjack (Body) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the body.",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -16851,7 +16851,7 @@
        "text": "Light Armorjack (Head) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the head (head and body are separate locations).",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -16861,7 +16861,7 @@
        "text": "Bulletproof Shield",
        "short": "10 HP",
        "note": "A transparent polycarbonate shield. Holds 10 HP, then breaks.",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -16871,7 +16871,7 @@
        "text": "Agent",
        "short": "100eb",
        "note": "Pocket AI assistant: comms, Data Pool access, organiser. +2 to Library Search, and +2 to Wardrobe & Style if you dress by its advice. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -16881,7 +16881,7 @@
        "text": "Airhypo",
        "short": "50eb",
        "note": "A needleless injector: administer a dose as an Action. A Medtech can also jab someone who objects — with a melee attack that deals no damage. Price 50eb (Costly).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -16891,7 +16891,7 @@
        "text": "Handcuffs",
        "short": "50eb",
        "note": "A character with BODY 11+ tears them easily. Price 50eb (Costly).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -16901,7 +16901,7 @@
        "text": "Flashlight",
        "short": "20eb",
        "note": "A beam of 100 m, 10 hours per charge. Price 20eb (Everyday).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -16911,7 +16911,7 @@
        "text": "Generic Chic: Jacket x3",
        "short": "clothing",
        "note": "Street style — standard, colourful, modular. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     },
@@ -16921,7 +16921,7 @@
        "text": "Glow Paint",
        "short": "20eb",
        "note": "A spray can of paint that glows in the dark — for marking things and writing. Price 20eb (Everyday).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -16931,7 +16931,7 @@
        "text": "Medtech Bag",
        "short": "100eb",
        "note": "A field surgical kit: staplers, skin spray, sterile instruments. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -16941,7 +16941,7 @@
        "text": "Leisurewear: Footwear, Bottoms x3, Top x5",
        "short": "clothing",
        "note": "Street style — comfort, agility, athleticism. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     }
@@ -17069,14 +17069,14 @@
       ]
      }
     ],
-    "href": "КБ 62"
+    "href": "СТР 62"
    },
    "starter": "You ask questions and people believe you. Almost everything is solved by talking.",
    "extra": null,
    "name": "Media",
    "anchor": "media",
    "ability": "Credibility",
-   "abilityHref": "КБ 151",
+   "abilityHref": "СТР 151",
    "abilityWhat": "A journalist with no boss. Credibility makes their stories convincing and influential, and their sources more reliable.",
    "blurb": "A journalist people believe. Digs dirt on corporations and decides what the city learns tomorrow.",
    "tpl": [
@@ -17413,12 +17413,12 @@
        {
         "text": "Amplified Hearing",
         "note": "+2 to Perception by hearing; a second one doesn't add.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        },
        {
         "text": "Voice Stress Analyzer",
         "note": "Human Perception and Interrogation +2. As an Action — a minute of “lie detector” mode: the GM secretly rolls and tells you whether what was said looks like a lie. May be wrong.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -17428,7 +17428,7 @@
        {
         "text": "Cyberaudio Suite",
         "note": "The base: a module in the inner ear with 3 option slots. Only one can be installed.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -17438,7 +17438,7 @@
        {
         "text": "Light Tattoo",
         "note": "Glowing coloured tattoos. From three of them — +2 to Wardrobe & Style (once).",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      }
@@ -17451,13 +17451,13 @@
        "text": "Heavy Pistol",
        "short": "3d6, mag 8",
        "note": "Damage 3d6 · mag 8 · ROF 2 · one-handed · skill Handgun.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       },
       {
        "text": "Very Heavy Pistol",
        "short": "4d6, mag 8",
        "note": "Damage 4d6 · mag 8 · ROF 1 · one-handed · skill Handgun.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       }
      ]
     },
@@ -17467,13 +17467,13 @@
        "text": "Basic Heavy Pistol Ammo x50",
        "short": "mag 8",
        "note": "Magazine: 8 — that many shots before reloading.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       },
       {
        "text": "Basic VH Pistol Ammo x50",
        "short": "mag 8",
        "note": "Magazine: 8 — that many shots before reloading.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       }
      ]
     },
@@ -17483,7 +17483,7 @@
        "text": "Light Armorjack (Body) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the body.",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -17493,7 +17493,7 @@
        "text": "Light Armorjack (Head) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the head (head and body are separate locations).",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -17503,7 +17503,7 @@
        "text": "Audio Recorder",
        "short": "100eb",
        "note": "Records sound, 24 hours on one Memory Chip. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -17513,7 +17513,7 @@
        "text": "Binoculars",
        "short": "50eb",
        "note": "Magnification 2–3×. Price 50eb (Costly).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -17523,13 +17523,13 @@
        "text": "Disposable Cell Phone x2",
        "short": "50eb",
        "note": "A cheap phone not tied to its owner — call and throw it away. Price 50eb (Costly).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       },
       {
        "text": "Grapple Gun",
        "short": "100eb",
        "note": "Fires a hook and line 30 m as an Action; the line (10 HP) holds double the owner's weight, and climbing it carries no penalty. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -17539,7 +17539,7 @@
        "text": "Flashlight",
        "short": "20eb",
        "note": "A beam of 100 m, 10 hours per charge. Price 20eb (Everyday).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -17549,7 +17549,7 @@
        "text": "Computer",
        "short": "50eb",
        "note": "An ordinary laptop or desktop — texts, the Data Pool. Price 50eb (Costly).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -17559,7 +17559,7 @@
        "text": "Radio Scanner/Music Player",
        "short": "50eb",
        "note": "Player and radio receiver: music, all frequencies within 1 km (encrypted ones only with a Scrambler/Descrambler). Price 50eb (Costly).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -17569,7 +17569,7 @@
        "text": "Scrambler/Descrambler",
        "short": "500eb",
        "note": "Encrypts your communications and decrypts other people's. Price 500eb (Expensive).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -17579,7 +17579,7 @@
        "text": "Video Camera",
        "short": "100eb",
        "note": "Records video with sound, 12 hours on one Memory Chip. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -17589,7 +17589,7 @@
        "text": "Generic Chic: Footwear, Bottoms, Top",
        "short": "clothing",
        "note": "Street style — standard, colourful, modular. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     },
@@ -17599,7 +17599,7 @@
        "text": "Leisurewear: Jacket",
        "short": "clothing",
        "note": "Street style — comfort, agility, athleticism. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     },
@@ -17609,7 +17609,7 @@
        "text": "Urban Flash: Glasses",
        "short": "clothing",
        "note": "Street style — flashy, technological, streetwear. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     }
@@ -17765,14 +17765,14 @@
       ]
      }
     ],
-    "href": "КБ 63"
+    "href": "СТР 63"
    },
    "starter": "",
    "extra": null,
    "name": "Exec",
    "anchor": "korporat",
    "ability": "Teamwork",
-   "abilityHref": "КБ 153",
+   "abilityHref": "СТР 153",
    "abilityWhat": "A corporate employee. Teamwork gives company resources: gear, housing, and with rank — team members.",
    "blurb": "A corporate person: resources, access and team members. Solves problems with money and connections.",
    "tpl": [
@@ -18109,12 +18109,12 @@
        {
         "text": "Biomonitor",
         "note": "A screen under the skin shows pulse, breathing, temperature and sugar; feeds the data to the Agent.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        },
        {
         "text": "Techhair",
         "note": "Artificial glowing hair that changes length and colour. Paired with Chemskin it gives +2 to Personal Grooming — the bonus does not stack.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -18124,7 +18124,7 @@
        {
         "text": "Cyberaudio Suite",
         "note": "The base: a module in the inner ear with 3 option slots. Only one can be installed.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -18134,7 +18134,7 @@
        {
         "text": "Internal Agent",
         "note": "An Agent built into the head and voice-controlled; shows its picture on any screen nearby. The chip can only be removed surgically.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -18144,12 +18144,12 @@
        {
         "text": "Toxin Binders",
         "note": "+2 to Resist Torture/Drugs; a second one doesn't add.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        },
        {
         "text": "Nasal Filters",
         "note": "Filters in the nose: gas and smoke do not work. Switched off without an Action.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      }
@@ -18162,7 +18162,7 @@
        "text": "Very Heavy Pistol",
        "short": "4d6, mag 8",
        "note": "Damage 4d6 · mag 8 · ROF 1 · one-handed · skill Handgun.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       }
      ]
     },
@@ -18172,7 +18172,7 @@
        "text": "Basic VH Pistol Ammo x50",
        "short": "mag 8",
        "note": "Magazine: 8 — that many shots before reloading.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       }
      ]
     },
@@ -18182,7 +18182,7 @@
        "text": "Light Armorjack (Body) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the body.",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -18192,7 +18192,7 @@
        "text": "Light Armorjack (Head) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the head (head and body are separate locations).",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -18202,7 +18202,7 @@
        "text": "Radio Communicator x4",
        "short": "100eb",
        "note": "Radio comms within one kilometre. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -18212,7 +18212,7 @@
        "text": "Scrambler/Descrambler",
        "short": "500eb",
        "note": "Encrypts your communications and decrypts other people's. Price 500eb (Expensive).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -18222,7 +18222,7 @@
        "text": "Businesswear: Footwear, Jacket, Bottoms, Glasses, Top, Jewelry x2",
        "short": "clothing",
        "note": "Street style — leadership, presence, authority. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     }
@@ -18368,14 +18368,14 @@
       ]
      }
     ],
-    "href": "КБ 65"
+    "href": "СТР 65"
    },
    "starter": "You call for backup, and the GM runs it.",
    "extra": null,
    "name": "Lawman",
    "anchor": "zakonnik",
    "ability": "Backup",
-   "abilityHref": "КБ 158",
+   "abilityHref": "СТР 158",
    "abilityWhat": "A cop, guard or agent. Backup calls colleagues to help — the higher the rank, the more serious the people who arrive.",
    "blurb": "A Night City cop. Has the right to ask questions, carry weapons openly and call for backup.",
    "tpl": [
@@ -18712,7 +18712,7 @@
        {
         "text": "Hidden Holster",
         "note": "A hiding place in the body for a small weapon; if access is convenient you draw it without an Action.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -18722,7 +18722,7 @@
        {
         "text": "Subdermal Pocket",
         "note": "A hiding place under the skin, 5×10 cm, with a clasp; what is inside can't be found without a surgeon.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      }
@@ -18735,13 +18735,13 @@
        "text": "Shotgun",
        "short": "5d6, mag 4",
        "note": "Damage 5d6 · mag 4 · ROF 1 · two-handed · skill Shoulder Arms. Features: Shotgun Blast. 5d6 — slug only (one target, can be aimed). Shell — 3d6 to everyone within 6 m, DV 13, no aimed shot.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       },
       {
        "text": "Assault Rifle",
        "short": "5d6, mag 25",
        "note": "Damage 5d6 · mag 25 · ROF 1 · two-handed · skill Shoulder Arms. Features: Autofire (4) · Suppressive Fire.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       }
      ]
     },
@@ -18751,7 +18751,7 @@
        "text": "Heavy Pistol",
        "short": "3d6, mag 8",
        "note": "Damage 3d6 · mag 8 · ROF 2 · one-handed · skill Handgun.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       }
      ]
     },
@@ -18761,19 +18761,19 @@
        "text": "Basic Rifle Ammo x100",
        "short": "mag 25",
        "note": "Magazine: 25 — that many shots before reloading.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       },
       {
        "text": "Basic Shotgun Shell x100",
        "short": "mag 4",
        "note": "Magazine: 4 — that many shots before reloading. In the original this is shot (Basic Shotgun Shell): “Shotgun Blast”, 3d6 to everyone within 6 m, DV 13, no aimed shot. For 5d6 you need a slug.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       },
       {
        "text": "Slug Ammunition x100",
        "short": "mag 4",
        "note": "Magazine: 4 — that many shots before reloading. Slug: the shotgun's full 5d6 damage against a single target, can be aimed.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       }
      ]
     },
@@ -18783,7 +18783,7 @@
        "text": "Basic Heavy Pistol Ammo x30",
        "short": "mag 8",
        "note": "Magazine: 8 — that many shots before reloading.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       }
      ]
     },
@@ -18793,13 +18793,13 @@
        "text": "Bulletproof Shield",
        "short": "10 HP",
        "note": "A transparent polycarbonate shield. Holds 10 HP, then breaks.",
-       "href": "КБ 182"
+       "href": "СТР 182"
       },
       {
        "text": "Smoke Grenade x2",
        "short": "no damage",
        "note": "Deals no damage. Smoke fills a 10×10 m area for a minute: −4 to anything it hinders.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       }
      ]
     },
@@ -18809,7 +18809,7 @@
        "text": "Light Armorjack (Body) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the body.",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -18819,7 +18819,7 @@
        "text": "Light Armorjack (Head) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the head (head and body are separate locations).",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -18829,7 +18829,7 @@
        "text": "Agent",
        "short": "100eb",
        "note": "Pocket AI assistant: comms, Data Pool access, organiser. +2 to Library Search, and +2 to Wardrobe & Style if you dress by its advice. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -18839,7 +18839,7 @@
        "text": "Flashlight",
        "short": "20eb",
        "note": "A beam of 100 m, 10 hours per charge. Price 20eb (Everyday).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -18849,7 +18849,7 @@
        "text": "Handcuffs x2",
        "short": "50eb",
        "note": "A character with BODY 11+ tears them easily. Price 50eb (Costly).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -18859,7 +18859,7 @@
        "text": "Radio Communicator",
        "short": "100eb",
        "note": "Radio comms within one kilometre. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -18869,7 +18869,7 @@
        "text": "Road Flare x10",
        "short": "10eb",
        "note": "Disposable; lights an area of 100×100 m for an hour; colour of your choice. Price 10eb (Cheap).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -18879,7 +18879,7 @@
        "text": "Generic Chic: Jacket, Bottoms x2, Top x3",
        "short": "clothing",
        "note": "Street style — standard, colourful, modular. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     },
@@ -18889,7 +18889,7 @@
        "text": "Leisurewear: Footwear x2, Jacket x2, Bottoms x2, Glasses, Top x2",
        "short": "clothing",
        "note": "Street style — comfort, agility, athleticism. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     }
@@ -19059,14 +19059,14 @@
       ]
      }
     ],
-    "href": "КБ 66"
+    "href": "СТР 66"
    },
    "starter": "",
    "extra": null,
    "name": "Fixer",
    "anchor": "fikser",
    "ability": "Operator",
-   "abilityHref": "КБ 159",
+   "abilityHref": "СТР 159",
    "abilityWhat": "A go-between and dealer. Operator gives contacts, access to rare goods and favourable haggling.",
    "blurb": "The go-between. Gets anything and knows anyone — all the team's work comes through them.",
    "tpl": [
@@ -19403,7 +19403,7 @@
        {
         "text": "Cyberaudio Suite",
         "note": "The base: a module in the inner ear with 3 option slots. Only one can be installed.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -19413,7 +19413,7 @@
        {
         "text": "Internal Agent",
         "note": "An Agent built into the head and voice-controlled; shows its picture on any screen nearby. The chip can only be removed surgically.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -19423,7 +19423,7 @@
        {
         "text": "Subdermal Pocket",
         "note": "A hiding place under the skin, 5×10 cm, with a clasp; what is inside can't be found without a surgeon.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -19433,12 +19433,12 @@
        {
         "text": "Voice Stress Analyzer",
         "note": "Human Perception and Interrogation +2. As an Action — a minute of “lie detector” mode: the GM secretly rolls and tells you whether what was said looks like a lie. May be wrong.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        },
        {
         "text": "Amplified Hearing",
         "note": "+2 to Perception by hearing; a second one doesn't add.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      }
@@ -19451,13 +19451,13 @@
        "text": "Heavy Pistol",
        "short": "3d6, mag 8",
        "note": "Damage 3d6 · mag 8 · ROF 2 · one-handed · skill Handgun.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       },
       {
        "text": "Very Heavy Pistol",
        "short": "4d6, mag 8",
        "note": "Damage 4d6 · mag 8 · ROF 1 · one-handed · skill Handgun.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       }
      ]
     },
@@ -19467,13 +19467,13 @@
        "text": "Heavy Pistol",
        "short": "3d6, mag 8",
        "note": "Damage 3d6 · mag 8 · ROF 2 · one-handed · skill Handgun.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       },
       {
        "text": "Very Heavy Pistol",
        "short": "4d6, mag 8",
        "note": "Damage 4d6 · mag 8 · ROF 1 · one-handed · skill Handgun.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       }
      ]
     },
@@ -19483,7 +19483,7 @@
        "text": "Light Melee Weapon",
        "short": "1d6",
        "note": "Melee weapon: knife, tomahawk. Damage 1d6 · ROF 2.",
-       "href": "КБ 175"
+       "href": "СТР 175"
       }
      ]
     },
@@ -19493,13 +19493,13 @@
        "text": "Basic Heavy Pistol Ammo x100",
        "short": "mag 8",
        "note": "Magazine: 8 — that many shots before reloading.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       },
       {
        "text": "Basic VH Pistol Ammo x100",
        "short": "mag 8",
        "note": "Magazine: 8 — that many shots before reloading.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       }
      ]
     },
@@ -19509,7 +19509,7 @@
        "text": "Light Armorjack (Body) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the body.",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -19519,7 +19519,7 @@
        "text": "Light Armorjack (Head) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the head (head and body are separate locations).",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -19529,7 +19529,7 @@
        "text": "Agent",
        "short": "100eb",
        "note": "Pocket AI assistant: comms, Data Pool access, organiser. +2 to Library Search, and +2 to Wardrobe & Style if you dress by its advice. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -19539,7 +19539,7 @@
        "text": "Bug Detector",
        "short": "500eb",
        "note": "Sounds an alert if there is a bug or other spy device within 2 m. Price 500eb (Expensive).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -19549,7 +19549,7 @@
        "text": "Computer",
        "short": "50eb",
        "note": "An ordinary laptop or desktop — texts, the Data Pool. Price 50eb (Costly).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -19559,7 +19559,7 @@
        "text": "Disposable Cell Phone x2",
        "short": "50eb",
        "note": "A cheap phone not tied to its owner — call and throw it away. Price 50eb (Costly).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -19569,7 +19569,7 @@
        "text": "Generic Chic: Contact Lenses, Jewelry",
        "short": "clothing",
        "note": "Street style — standard, colourful, modular. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     },
@@ -19579,7 +19579,7 @@
        "text": "Leisurewear: Glasses",
        "short": "clothing",
        "note": "Street style — comfort, agility, athleticism. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     },
@@ -19589,7 +19589,7 @@
        "text": "Urban Flash: Footwear, Jacket, Bottoms, Top",
        "short": "clothing",
        "note": "Street style — flashy, technological, streetwear. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     }
@@ -19872,14 +19872,14 @@
       ]
      }
     ],
-    "href": "КБ 68"
+    "href": "СТР 68"
    },
    "starter": "You have a car and a family you can always drive to.",
    "extra": null,
    "name": "Nomad",
    "anchor": "kochevnik",
    "ability": "Moto",
-   "abilityHref": "КБ 161",
+   "abilityHref": "СТР 161",
    "abilityWhat": "A person of the roads and the Family. Moto gives vehicles from the Family Motorpool and upgrades for them — more with each rank.",
    "blurb": "Family and wheels. Drives anything that rolls or flies, and always has somewhere to go.",
    "tpl": [
@@ -20216,12 +20216,12 @@
        {
         "text": "Interface Plugs",
         "note": "A jack for direct connection to smart weapons, a Cyberdeck, machinery and vehicles. Needs a Neural Link; as many ports, as many simultaneous connections.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        },
        {
         "text": "Wolvers",
         "note": "Retractable claws — a Heavy Melee Weapon (3d6, ROF 2); hidden with no check. Can go into a living arm if it holds no other implants.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      },
@@ -20231,7 +20231,7 @@
        {
         "text": "Neural Link",
         "note": "The base: an artificial nervous system with 5 option slots. Neural implants and the smartgun link cannot be installed without it.",
-        "href": "КБ 111"
+        "href": "СТР 111"
        }
       ]
      }
@@ -20244,13 +20244,13 @@
        "text": "Heavy Pistol",
        "short": "3d6, mag 8",
        "note": "Damage 3d6 · mag 8 · ROF 2 · one-handed · skill Handgun.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       },
       {
        "text": "Very Heavy Pistol",
        "short": "4d6, mag 8",
        "note": "Damage 4d6 · mag 8 · ROF 1 · one-handed · skill Handgun.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       }
      ]
     },
@@ -20260,13 +20260,13 @@
        "text": "Basic Heavy Pistol Ammo x100",
        "short": "mag 8",
        "note": "Magazine: 8 — that many shots before reloading.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       },
       {
        "text": "Basic VH Pistol Ammo x100",
        "short": "mag 8",
        "note": "Magazine: 8 — that many shots before reloading.",
-       "href": "КБ 340"
+       "href": "СТР 340"
       }
      ]
     },
@@ -20276,13 +20276,13 @@
        "text": "Heavy Melee Weapon",
        "short": "3d6",
        "note": "Melee weapon: pipe, sword, spiked club. Damage 3d6 · ROF 2.",
-       "href": "КБ 175"
+       "href": "СТР 175"
       },
       {
        "text": "Heavy Pistol",
        "short": "3d6, mag 8",
        "note": "Damage 3d6 · mag 8 · ROF 2 · one-handed · skill Handgun.",
-       "href": "КБ 171"
+       "href": "СТР 171"
       }
      ]
     },
@@ -20292,7 +20292,7 @@
        "text": "Light Armorjack (Body) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the body.",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -20302,7 +20302,7 @@
        "text": "Light Armorjack (Head) (SP 11)",
        "short": "",
        "note": "Fabric with Kevlar stitching, SP 11, no penalties. Protects the head (head and body are separate locations).",
-       "href": "КБ 182"
+       "href": "СТР 182"
       }
      ]
     },
@@ -20312,7 +20312,7 @@
        "text": "Agent",
        "short": "100eb",
        "note": "Pocket AI assistant: comms, Data Pool access, organiser. +2 to Library Search, and +2 to Wardrobe & Style if you dress by its advice. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -20322,7 +20322,7 @@
        "text": "Anti-Smog Breathing Mask",
        "short": "20eb",
        "note": "While it is on your face no gas or smoke works on you. Price 20eb (Everyday).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -20332,7 +20332,7 @@
        "text": "Duct Tape",
        "short": "20eb",
        "note": "Sticky tape, sometimes the glowing kind — for marks in the dark. Price 20eb (Everyday).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -20342,7 +20342,7 @@
        "text": "Flashlight",
        "short": "20eb",
        "note": "A beam of 100 m, 10 hours per charge. Price 20eb (Everyday).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -20352,7 +20352,7 @@
        "text": "Grapple Gun",
        "short": "100eb",
        "note": "Fires a hook and line 30 m as an Action; the line (10 HP) holds double the owner's weight, and climbing it carries no penalty. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -20362,7 +20362,7 @@
        "text": "Inflatable Bed & Sleep-bag",
        "short": "20eb",
        "note": "An inflatable bed and a sleeping bag, 15×15 cm folded. Price 20eb (Everyday).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -20372,7 +20372,7 @@
        "text": "Medtech Bag",
        "short": "100eb",
        "note": "A field surgical kit: staplers, skin spray, sterile instruments. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -20382,7 +20382,7 @@
        "text": "Radio Communicator x2",
        "short": "100eb",
        "note": "Radio comms within one kilometre. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -20392,7 +20392,7 @@
        "text": "Rope (60m/yd)",
        "short": "20eb",
        "note": "Nylon, holds up to 360 kg. Price 20eb (Everyday).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -20402,7 +20402,7 @@
        "text": "Techtool",
        "short": "100eb",
        "note": "A knife, pliers, screwdrivers and more in one folding body. Price 100eb (Premium).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -20412,7 +20412,7 @@
        "text": "Tent and Camping Equipment",
        "short": "50eb",
        "note": "A one-person tent, a heated pot and simple dishes. Price 50eb (Costly).",
-       "href": "КБ 351"
+       "href": "СТР 351"
       }
      ]
     },
@@ -20422,7 +20422,7 @@
        "text": "Bohemian: Jewelry",
        "short": "clothing",
        "note": "Street style — folksy, retro, freestyle. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     },
@@ -20432,7 +20432,7 @@
        "text": "Nomad Leathers: Top x4, Bottoms x2, Footwear x2, Jacket, Hat",
        "short": "clothing",
        "note": "Street style — western, rugged, tribal. The items of the style are listed; the price of one item is on the Fashion table.",
-       "href": "КБ 356"
+       "href": "СТР 356"
       }
      ]
     }
@@ -20491,7 +20491,7 @@
     ]
    ],
    "sec": "proishozhdenie",
-   "href": "КБ 45",
+   "href": "СТР 45",
    "pickCol": 1,
    "pickLabel": "Language",
    "perColumn": false,
@@ -20541,7 +20541,7 @@
     ]
    ],
    "sec": "lichnost",
-   "href": "КБ 46",
+   "href": "СТР 46",
    "pickCol": null,
    "pickLabel": null,
    "perColumn": false,
@@ -20601,7 +20601,7 @@
     ]
    ],
    "sec": "lichnost",
-   "href": "КБ 46",
+   "href": "СТР 46",
    "pickCol": null,
    "pickLabel": null,
    "perColumn": true,
@@ -20651,7 +20651,7 @@
     ]
    ],
    "sec": "lichnost",
-   "href": "КБ 46",
+   "href": "СТР 46",
    "pickCol": null,
    "pickLabel": null,
    "perColumn": false,
@@ -20711,7 +20711,7 @@
     ]
    ],
    "sec": "lichnost",
-   "href": "КБ 46",
+   "href": "СТР 46",
    "pickCol": null,
    "pickLabel": null,
    "perColumn": true,
@@ -20761,7 +20761,7 @@
     ]
    ],
    "sec": "lichnost",
-   "href": "КБ 46",
+   "href": "СТР 46",
    "pickCol": null,
    "pickLabel": null,
    "perColumn": false,
@@ -20810,7 +20810,7 @@
     ]
    ],
    "sec": "lichnost",
-   "href": "КБ 46",
+   "href": "СТР 46",
    "pickCol": null,
    "pickLabel": null,
    "perColumn": false,
@@ -20870,7 +20870,7 @@
     ]
    ],
    "sec": "proshloe",
-   "href": "КБ 49",
+   "href": "СТР 49",
    "pickCol": null,
    "pickLabel": null,
    "perColumn": false,
@@ -20920,7 +20920,7 @@
     ]
    ],
    "sec": "proshloe",
-   "href": "КБ 49",
+   "href": "СТР 49",
    "pickCol": null,
    "pickLabel": null,
    "perColumn": false,
@@ -20969,7 +20969,7 @@
     ]
    ],
    "sec": "proshloe",
-   "href": "КБ 49",
+   "href": "СТР 49",
    "pickCol": null,
    "pickLabel": null,
    "perColumn": false,
@@ -21018,7 +21018,7 @@
     ]
    ],
    "sec": "svyazi",
-   "href": "КБ 51",
+   "href": "СТР 51",
    "pickCol": null,
    "pickLabel": null,
    "perColumn": false,
@@ -21089,7 +21089,7 @@
     ]
    ],
    "sec": "svyazi",
-   "href": "КБ 51",
+   "href": "СТР 51",
    "pickCol": null,
    "pickLabel": null,
    "perColumn": true,
@@ -21146,7 +21146,7 @@
     ]
    ],
    "sec": "cel",
-   "href": "КБ 53",
+   "href": "СТР 53",
    "pickCol": null,
    "pickLabel": null,
    "perColumn": false,
@@ -22747,7 +22747,7 @@
   "auto": true,
   "ui": {
    "ru": {
-    "cite.crb": "КБ",
+    "cite.crb": "СТР",
     "pending_skills.unspent_points": " нераспределённых очков",
     "pending_life.culture_language": "Язык культуры",
     "dice_html.title_roll": " title=\"Бросить\">",
@@ -23573,8 +23573,8 @@
    "ru": {
     "masthead": "<h1>Генератор персонажа</h1>\n<p class=\"for\">для Cyberpunk RED</p>\n<p class=\"lede\">Роль, броски, навыки, Жизненный путь — и готовый лист по правилам корбука.</p>",
     "title": "Мастер персонажа",
-    "app": " <div class=\"cgmethods\" data-cg=\"methods\"></div>\n <nav class=\"cgtabs\" data-cg=\"tabs\"></nav>\n\n <div class=\"cgpane\" data-pane=\"1\">\n  <h3>Шаг 1. Кто твой персонаж</h3>\n  <p>Десять Ролей. Выбирай по описанию — механику можно посмотреть потом в\n  Ролевых способностях <span class=\"cgcite\">(КБ 144–166)</span>.</p>\n  <p class=\"cglegend\">Играешь впервые — бери с пометкой <b>«Проще для новичка»</b>:\n  такая способность работает сразу и не требует ничего, кроме главы про Роли.\n  <b>«+ отдельная глава»</b> значит, что Роль не слабее, но до первой игры придётся\n  прочитать ещё одну главу правил. Это совет генератора, а не правило книги —\n  играть можно любой.</p>\n  <p class=\"cgrow\"><button type=\"button\" class=\"cgbtn\" data-cg=\"loadjson\">Загрузить сохранённого персонажа (.json)</button>\n  <input type=\"file\" accept=\".json,application/json\" data-cg=\"importfile\" hidden></p>\n  <div class=\"rolegrid\" data-cg=\"rolegrid\"></div>\n  <div class=\"cgfoot\"></div>\n </div>\n\n <div class=\"cgpane\" data-pane=\"2\">\n  <h3>Шаг 2. СТАТы</h3>\n  <div data-mth=\"streetrat\">\n   <p>Бросок 1d10 по таблице твоей Роли — строка переписывается целиком. Таблицы\n   составлены так, чтобы дать пригодного для этой Роли персонажа; менять числа\n   правила не разрешают. <span class=\"cgcite\">КБ 73</span></p>\n   <p class=\"cgrow\">\n    <button type=\"button\" class=\"cgbtn cgprim\" data-cg=\"rollstats\">Бросить 1d10</button>\n    <span class=\"cgout\" data-cg=\"statroll\"></span>\n   </p>\n  </div>\n  <div data-mth=\"edge\">\n   <p>Та же таблица Роли, но бросок <b>1d10 отдельно на каждый СТАТ</b>: значение\n   берётся <b>из колонки того СТАТа</b>, на который бросал, а не из одной строки. Броски\n   идут слева направо, как в книге. <span class=\"cgcite\">КБ 77</span></p>\n   <p class=\"cgrow\">\n    <button type=\"button\" class=\"cgbtn cgprim\" data-cg=\"rollall10\">Бросить все десять</button>\n    <button type=\"button\" class=\"cgbtn\" data-cg=\"clearstats\">Очистить</button>\n    <span class=\"cgout\" data-cg=\"statprog\"></span>\n   </p>\n   <div data-cg=\"statgrid\"></div>\n  </div>\n  <div data-mth=\"calc\">\n   <p>ГМ выдаёт пул очков на все десять СТАТов сразу — по умолчанию <b>62</b>\n   («Стандартный»); книга советует ГМам держаться этого ранга, но\n   допускает и другие. Каждый СТАТ — от <b>2</b> до <b>8</b>.\n   <span class=\"cgcite\">КБ 78</span></p>\n   <div data-cg=\"statpoolpick\"></div>\n   <div class=\"cgbudget\" data-cg=\"statbudget\"></div>\n   <div data-cg=\"statalloc\"></div>\n   <p class=\"cglegend\">Разумная отправная точка — около 6 на СТАТ и пара свободных\n   очков — точная настройка этих цифр и есть смысл метода.</p>\n  </div>\n  <div data-cg=\"statbox\"></div>\n  <details class=\"cgmore\">\n   <summary>Показать всю таблицу Роли</summary>\n   <div data-cg=\"stattable\"></div>\n  </details>\n  <div class=\"cgfoot\"></div>\n </div>\n\n <div class=\"cgpane\" data-pane=\"3\">\n  <h3>Шаг 3. Навыки</h3>\n  <div data-mth=\"streetrat\">\n   <p>Уличная крыса получает набор своей Роли целиком: 13 Основных Навыков, которые\n   есть у каждого человека, плюс 7 профессиональных. Заполнить нужно только поля\n   «выбери 1». <span class=\"cgcite\">КБ 86</span></p>\n  </div>\n  <div data-mth=\"calc\">\n   <p>Полный пакет покупает из <b>всех 66 навыков</b>, а не только из набора Роли:\n   <b>86 очков</b>, ни один навык не выше <b>6</b>, а тринадцать Основных должны\n   быть не ниже <b>2</b>. Навыки с пометкой <span class=\"x2\">×2</span> стоят два\n   очка за уровень. Язык культуры даётся сверх этого бесплатно.\n   <span class=\"cgcite\">КБ 90</span></p>\n   <div class=\"cgbudget\" data-cg=\"budget3\"></div>\n   <p class=\"cgrow\"><input type=\"search\" class=\"cgtext\" data-cg=\"skillsearch\"\n      placeholder=\"Искать навык…\"></p>\n  </div>\n  <div data-mth=\"edge\">\n   <p>Список навыков у Эджраннера тот же, что у Уличной крысы, — <b>уровни выбираешь\n   сам</b>. Правил четыре: <b>86 очков</b> на все двадцать навыков, ни один не ниже\n   <b>2</b> и не выше <b>6</b>, навыки с пометкой <span class=\"x2\">×2</span> стоят\n   два очка за уровень, а язык культуры даётся сверх этого бесплатно.\n   <span class=\"cgcite\">КБ 88</span></p>\n   <div class=\"cgbudget\" data-cg=\"budget\"></div>\n   <p class=\"cglegend\">Начальная раскладка — набор Уличной крысы: он стоит ровно 86\n   очков, то есть это готовая законная раскладка, с которой можно двигать очки\n   туда, куда нужно тебе. Книга советует другой старт — по 4 в каждый навык\n   (86 ÷ 20 ≈ 4) — он рядом кнопкой.</p>\n  </div>\n  <div data-cg=\"skillbox\"></div>\n  <div data-cg=\"skillbox3\"></div>\n  <div data-cg=\"hbbox\"></div>\n  <div class=\"cgfoot\"></div>\n </div>\n\n <div class=\"cgpane\" data-pane=\"4\">\n  <h3>Шаг 4. Жизненный путь</h3>\n  <p>Откуда персонаж, какой он, кто его семья, друг, враг и чего он хочет.\n  <b>Семнадцать бросков в тринадцати таблицах</b> — три таблицы книга велит бросать\n  <b>по разу на каждую колонку</b>, а не строкой. <span class=\"cgcite\">КБ 45</span></p>\n  <p>Ниже общего пути идёт <b>свой путь Роли</b>: чем персонаж занят в профессии, на кого\n  работает и кто на него точит зуб. У каждой Роли он свой, и в семи из десяти есть\n  <b>развилка</b> — выбор, а не бросок, за которым часть шагов просто не существует.\n  <span class=\"cgcite\">КБ 53</span></p>\n  <p class=\"cglegend\">Книга разрешает и то и другое: «<b>брось 1d10 или выбери</b>».\n  Результат, который не ложится на персонажа, можно заменить — книга это разрешает\n  <span class=\"cgcite\">КБ 44</span>. Пустые строки ничего не ломают: заполнять всё\n  необязательно. Для ГМа важнее прочих <b>Враг</b>, <b>Друг</b> и <b>Цель</b> — из них\n  вырастают сцены; остальное — характер и цвет. Что враг сделает при новой встрече —\n  таблица «Сладкая месть» в главе\n  Жизненный путь <span class=\"cgcite\">(КБ 51)</span>.</p>\n  <p class=\"cgrow\">\n   <button type=\"button\" class=\"cgbtn cgprim\" data-cg=\"rolllife\">Бросить всё</button>\n   <button type=\"button\" class=\"cgbtn\" data-cg=\"clearlife\">Очистить</button>\n  </p>\n  <div data-cg=\"lifebox\"></div>\n  <div class=\"cgfoot\"></div>\n </div>\n\n <div class=\"cgpane\" data-pane=\"7\">\n  <h3>Снаряжение</h3>\n  <div data-mth=\"calc\">\n  <p>Полный пакет не берёт снаряжение из готовой таблицы — он его <b>покупает</b>.\n  Два отдельных бюджета, и один в другой не перетекает: <b>2 550eb</b> на оружие,\n  броню, снаряжение и киберимпланты, и ещё <b>800eb</b> только на Стиль. Полный\n  список того, что почём — в Ночных Рынках <span class=\"cgcite\">(КБ 334)</span> и\n  Киберимплантах <span class=\"cgcite\">(КБ 111)</span>, а здесь их можно найти по\n  названию — цена подставится сама. <span class=\"cgcite\">КБ 104</span> <span class=\"cgcite\">КБ 105</span></p>\n  <p class=\"cglegend\">У импланта из книги <b>Потеря человечности (ПЧ)</b> тоже\n  подставится сама и войдёт в подсчёт Человечности на Листе. Вписываешь имплант\n  вручную — отметь у строки <b>Кибернетика</b> и укажи ПЧ. <span class=\"cgcite\">КБ 117</span></p>\n  <p class=\"cglegend\">Бюджеты ниже можно поменять — книга даёт ровно эти числа, но\n  решать в итоге ГМу.</p>\n  <div class=\"rule\"><span class=\"lbl\">Вышел за лимит денег? <span class=\"cgcite\">КБ 117</span></span>\n  <p>На усмотрение ГМа — и только если на это согласны <b>все</b> за столом — можно\n  продаться одному из работодателей за <b>дополнительные 1 500eb</b>, которые\n  тратятся только на кибернетику, и бесплатный Нейролинк впридачу (впиши его\n  вручную: Кибернетика, цена 0, ПЧ 5 — <span class=\"cgcite\">КБ 112</span>).\n  Взамен у нанимателя появляется способ держать тебя на крючке.</p>\n  <div data-cg=\"sponsorbox\"></div>\n  </div>\n  <h4>Снаряжение</h4>\n  <div data-cg=\"buybox\"></div>\n  <h4>Стиль</h4>\n  <p class=\"cglegend\">Не потраченное здесь сгорает — в отличие от Снаряжения, оно не\n  становится стартовыми деньгами.</p>\n  <div data-cg=\"stylebox\"></div>\n  </div>\n  <div data-mth=\"streetrat\">\n  <p>Сверх стартового набора Уличная крыса получает <b>500eb</b>, которые можно\n  потратить на что-нибудь ещё прямо сейчас или оставить на потом — решаешь сам.\n  Полный список того, что почём — в Ночных\n  Рынках <span class=\"cgcite\">(КБ 334)</span> и Киберимплантах <span class=\"cgcite\">(КБ 111)</span>.\n  <span class=\"cgcite\">КБ 98</span></p>\n  </div>\n  <div data-mth=\"edge\">\n  <p>Сверх стартового набора Эджраннер получает <b>500eb</b>, которые можно\n  потратить на что-нибудь ещё прямо сейчас или оставить на потом — решаешь сам.\n  Полный список того, что почём — в Ночных\n  Рынках <span class=\"cgcite\">(КБ 334)</span> и Киберимплантах <span class=\"cgcite\">(КБ 111)</span>.\n  <span class=\"cgcite\">КБ 98</span></p>\n  </div>\n  <div data-cg=\"startkit\"></div>\n  <div data-cg=\"startbuybox\"></div>\n  <div class=\"cgfoot\"></div>\n </div>\n\n <div class=\"cgpane\" data-pane=\"6\">\n  <h3>Подчинённый</h3>\n  <p>На третьем ранге Командной работы корпорация выделяет Корпорату <b>первого\n  подчинённого</b>. Ты выбираешь, кем он работает; кого именно пришлёт отдел кадров —\n  решает бросок. <span class=\"cgcite\">КБ 154</span></p>\n  <p class=\"cglegend\">Это отдельный персонаж, и водит его <b>ГМ</b>, а не ты:\n  насколько охотно — зависит от <b>Лояльности</b>. Навыки ему повышать нельзя, из\n  брони он носит только Лёгкий бронекостюм. Подробности, таблицы Лояльности и что\n  бывает, когда она уходит в минус — в\n  Ролевых способностях <span class=\"cgcite\">(КБ 153)</span>.</p>\n  <div data-cg=\"subbox\"></div>\n  <div class=\"cgfoot\"></div>\n </div>\n\n <div class=\"cgpane\" data-pane=\"5\">\n  <!-- No «Шаг 5» here: a Корпорат has a sixth tab, so the sheet is step 5 for\n       nine Roles and step 6 for him. The tab strip numbers itself; a heading that\n       hard-codes the number can only be wrong for somebody. -->\n  <h3>Лист персонажа</h3>\n  <div class=\"cgrow\">\n   <label class=\"cgname\">Имя <input type=\"text\" data-cg=\"name\" placeholder=\"Как его зовут на Улице\"></label>\n  </div>\n  <p class=\"cgrow\">\n   <button type=\"button\" class=\"cgbtn cgprim\" data-cg=\"print\">Печать / PDF</button>\n   <button type=\"button\" class=\"cgbtn\" data-cg=\"savemd\">Скачать .md</button>\n   <button type=\"button\" class=\"cgbtn\" data-cg=\"savejson\">Сохранить .json</button>\n   <button type=\"button\" class=\"cgbtn\" data-cg=\"loadjson\">Загрузить .json</button>\n   <button type=\"button\" class=\"cgbtn\" data-cg=\"reset\">Начать заново</button>\n  </p>\n  <div class=\"cgsheet\" data-cg=\"sheet\"></div>\n  <div data-cg=\"notebox\"></div>\n <div class=\"cgfoot\"></div>\n </div>",
-    "dalshe": "<h2 class=\"sec\">Что читать дальше</h2>\n<p>Лист готов — дальше нужны только четыре вещи, и все они в корбуке:</p>\n<div class=\"tw\"><table class=\"rf\">\n<thead><tr><th>Когда за столом</th><th>Куда смотреть</th></tr></thead>\n<tbody>\n<tr><th>Как вообще что-то делается</th><td>Проверки и Навыки <span class=\"cgcite\">(КБ 125–143)</span> — СТАТ + Навык + 1d10 против Сложности.</td></tr>\n<tr><th>Начали стрелять</th><td>Перестрелка в Пятничную Ночь <span class=\"cgcite\">(КБ 167–194)</span> — инициатива, укрытия, раны.</td></tr>\n<tr><th>В тебя попали</th><td>Trauma Team <span class=\"cgcite\">(КБ 219–232)</span> — стабилизация, лечение, смерть.</td></tr>\n<tr><th>Что умеет твоя Роль</th><td>Ролевые способности <span class=\"cgcite\">(КБ 144–166)</span> — твоя способность на ранге 4.</td></tr>\n</tbody>\n</table></div>\n\n<p class=\"note\">Генератор ведёт по всем трём методам — <b>#1 «Уличная крыса»</b>,\n<b>#2 «Эджраннер»</b> и <b>#3 «Полный пакет»</b>; переключатель над вкладками.\nПодробности каждого — в главе\nСоздан для Будущего <span class=\"cgcite\">(КБ 73)</span>. #3 гибче обоих, но\nкнига прямо не рекомендует его для первого персонажа.</p>"
+    "app": " <div class=\"cgmethods\" data-cg=\"methods\"></div>\n <nav class=\"cgtabs\" data-cg=\"tabs\"></nav>\n\n <div class=\"cgpane\" data-pane=\"1\">\n  <h3>Шаг 1. Кто твой персонаж</h3>\n  <p>Десять Ролей. Выбирай по описанию — механику можно посмотреть потом в\n  Ролевых способностях <span class=\"cgcite\">(СТР 144–166)</span>.</p>\n  <p class=\"cglegend\">Играешь впервые — бери с пометкой <b>«Проще для новичка»</b>:\n  такая способность работает сразу и не требует ничего, кроме главы про Роли.\n  <b>«+ отдельная глава»</b> значит, что Роль не слабее, но до первой игры придётся\n  прочитать ещё одну главу правил. Это совет генератора, а не правило книги —\n  играть можно любой.</p>\n  <p class=\"cgrow\"><button type=\"button\" class=\"cgbtn\" data-cg=\"loadjson\">Загрузить сохранённого персонажа (.json)</button>\n  <input type=\"file\" accept=\".json,application/json\" data-cg=\"importfile\" hidden></p>\n  <div class=\"rolegrid\" data-cg=\"rolegrid\"></div>\n  <div class=\"cgfoot\"></div>\n </div>\n\n <div class=\"cgpane\" data-pane=\"2\">\n  <h3>Шаг 2. СТАТы</h3>\n  <div data-mth=\"streetrat\">\n   <p>Бросок 1d10 по таблице твоей Роли — строка переписывается целиком. Таблицы\n   составлены так, чтобы дать пригодного для этой Роли персонажа; менять числа\n   правила не разрешают. <span class=\"cgcite\">СТР 73</span></p>\n   <p class=\"cgrow\">\n    <button type=\"button\" class=\"cgbtn cgprim\" data-cg=\"rollstats\">Бросить 1d10</button>\n    <span class=\"cgout\" data-cg=\"statroll\"></span>\n   </p>\n  </div>\n  <div data-mth=\"edge\">\n   <p>Та же таблица Роли, но бросок <b>1d10 отдельно на каждый СТАТ</b>: значение\n   берётся <b>из колонки того СТАТа</b>, на который бросал, а не из одной строки. Броски\n   идут слева направо, как в книге. <span class=\"cgcite\">СТР 77</span></p>\n   <p class=\"cgrow\">\n    <button type=\"button\" class=\"cgbtn cgprim\" data-cg=\"rollall10\">Бросить все десять</button>\n    <button type=\"button\" class=\"cgbtn\" data-cg=\"clearstats\">Очистить</button>\n    <span class=\"cgout\" data-cg=\"statprog\"></span>\n   </p>\n   <div data-cg=\"statgrid\"></div>\n  </div>\n  <div data-mth=\"calc\">\n   <p>ГМ выдаёт пул очков на все десять СТАТов сразу — по умолчанию <b>62</b>\n   («Стандартный»); книга советует ГМам держаться этого ранга, но\n   допускает и другие. Каждый СТАТ — от <b>2</b> до <b>8</b>.\n   <span class=\"cgcite\">СТР 78</span></p>\n   <div data-cg=\"statpoolpick\"></div>\n   <div class=\"cgbudget\" data-cg=\"statbudget\"></div>\n   <div data-cg=\"statalloc\"></div>\n   <p class=\"cglegend\">Разумная отправная точка — около 6 на СТАТ и пара свободных\n   очков — точная настройка этих цифр и есть смысл метода.</p>\n  </div>\n  <div data-cg=\"statbox\"></div>\n  <details class=\"cgmore\">\n   <summary>Показать всю таблицу Роли</summary>\n   <div data-cg=\"stattable\"></div>\n  </details>\n  <div class=\"cgfoot\"></div>\n </div>\n\n <div class=\"cgpane\" data-pane=\"3\">\n  <h3>Шаг 3. Навыки</h3>\n  <div data-mth=\"streetrat\">\n   <p>Уличная крыса получает набор своей Роли целиком: 13 Основных Навыков, которые\n   есть у каждого человека, плюс 7 профессиональных. Заполнить нужно только поля\n   «выбери 1». <span class=\"cgcite\">СТР 86</span></p>\n  </div>\n  <div data-mth=\"calc\">\n   <p>Полный пакет покупает из <b>всех 66 навыков</b>, а не только из набора Роли:\n   <b>86 очков</b>, ни один навык не выше <b>6</b>, а тринадцать Основных должны\n   быть не ниже <b>2</b>. Навыки с пометкой <span class=\"x2\">×2</span> стоят два\n   очка за уровень. Язык культуры даётся сверх этого бесплатно.\n   <span class=\"cgcite\">СТР 90</span></p>\n   <div class=\"cgbudget\" data-cg=\"budget3\"></div>\n   <p class=\"cgrow\"><input type=\"search\" class=\"cgtext\" data-cg=\"skillsearch\"\n      placeholder=\"Искать навык…\"></p>\n  </div>\n  <div data-mth=\"edge\">\n   <p>Список навыков у Эджраннера тот же, что у Уличной крысы, — <b>уровни выбираешь\n   сам</b>. Правил четыре: <b>86 очков</b> на все двадцать навыков, ни один не ниже\n   <b>2</b> и не выше <b>6</b>, навыки с пометкой <span class=\"x2\">×2</span> стоят\n   два очка за уровень, а язык культуры даётся сверх этого бесплатно.\n   <span class=\"cgcite\">СТР 88</span></p>\n   <div class=\"cgbudget\" data-cg=\"budget\"></div>\n   <p class=\"cglegend\">Начальная раскладка — набор Уличной крысы: он стоит ровно 86\n   очков, то есть это готовая законная раскладка, с которой можно двигать очки\n   туда, куда нужно тебе. Книга советует другой старт — по 4 в каждый навык\n   (86 ÷ 20 ≈ 4) — он рядом кнопкой.</p>\n  </div>\n  <div data-cg=\"skillbox\"></div>\n  <div data-cg=\"skillbox3\"></div>\n  <div data-cg=\"hbbox\"></div>\n  <div class=\"cgfoot\"></div>\n </div>\n\n <div class=\"cgpane\" data-pane=\"4\">\n  <h3>Шаг 4. Жизненный путь</h3>\n  <p>Откуда персонаж, какой он, кто его семья, друг, враг и чего он хочет.\n  <b>Семнадцать бросков в тринадцати таблицах</b> — три таблицы книга велит бросать\n  <b>по разу на каждую колонку</b>, а не строкой. <span class=\"cgcite\">СТР 45</span></p>\n  <p>Ниже общего пути идёт <b>свой путь Роли</b>: чем персонаж занят в профессии, на кого\n  работает и кто на него точит зуб. У каждой Роли он свой, и в семи из десяти есть\n  <b>развилка</b> — выбор, а не бросок, за которым часть шагов просто не существует.\n  <span class=\"cgcite\">СТР 53</span></p>\n  <p class=\"cglegend\">Книга разрешает и то и другое: «<b>брось 1d10 или выбери</b>».\n  Результат, который не ложится на персонажа, можно заменить — книга это разрешает\n  <span class=\"cgcite\">СТР 44</span>. Пустые строки ничего не ломают: заполнять всё\n  необязательно. Для ГМа важнее прочих <b>Враг</b>, <b>Друг</b> и <b>Цель</b> — из них\n  вырастают сцены; остальное — характер и цвет. Что враг сделает при новой встрече —\n  таблица «Сладкая месть» в главе\n  Жизненный путь <span class=\"cgcite\">(СТР 51)</span>.</p>\n  <p class=\"cgrow\">\n   <button type=\"button\" class=\"cgbtn cgprim\" data-cg=\"rolllife\">Бросить всё</button>\n   <button type=\"button\" class=\"cgbtn\" data-cg=\"clearlife\">Очистить</button>\n  </p>\n  <div data-cg=\"lifebox\"></div>\n  <div class=\"cgfoot\"></div>\n </div>\n\n <div class=\"cgpane\" data-pane=\"7\">\n  <h3>Снаряжение</h3>\n  <div data-mth=\"calc\">\n  <p>Полный пакет не берёт снаряжение из готовой таблицы — он его <b>покупает</b>.\n  Два отдельных бюджета, и один в другой не перетекает: <b>2 550eb</b> на оружие,\n  броню, снаряжение и киберимпланты, и ещё <b>800eb</b> только на Стиль. Полный\n  список того, что почём — в Ночных Рынках <span class=\"cgcite\">(СТР 334)</span> и\n  Киберимплантах <span class=\"cgcite\">(СТР 111)</span>, а здесь их можно найти по\n  названию — цена подставится сама. <span class=\"cgcite\">СТР 104</span> <span class=\"cgcite\">СТР 105</span></p>\n  <p class=\"cglegend\">У импланта из книги <b>Потеря человечности (ПЧ)</b> тоже\n  подставится сама и войдёт в подсчёт Человечности на Листе. Вписываешь имплант\n  вручную — отметь у строки <b>Кибернетика</b> и укажи ПЧ. <span class=\"cgcite\">СТР 117</span></p>\n  <p class=\"cglegend\">Бюджеты ниже можно поменять — книга даёт ровно эти числа, но\n  решать в итоге ГМу.</p>\n  <div class=\"rule\"><span class=\"lbl\">Вышел за лимит денег? <span class=\"cgcite\">СТР 117</span></span>\n  <p>На усмотрение ГМа — и только если на это согласны <b>все</b> за столом — можно\n  продаться одному из работодателей за <b>дополнительные 1 500eb</b>, которые\n  тратятся только на кибернетику, и бесплатный Нейролинк впридачу (впиши его\n  вручную: Кибернетика, цена 0, ПЧ 5 — <span class=\"cgcite\">СТР 112</span>).\n  Взамен у нанимателя появляется способ держать тебя на крючке.</p>\n  <div data-cg=\"sponsorbox\"></div>\n  </div>\n  <h4>Снаряжение</h4>\n  <div data-cg=\"buybox\"></div>\n  <h4>Стиль</h4>\n  <p class=\"cglegend\">Не потраченное здесь сгорает — в отличие от Снаряжения, оно не\n  становится стартовыми деньгами.</p>\n  <div data-cg=\"stylebox\"></div>\n  </div>\n  <div data-mth=\"streetrat\">\n  <p>Сверх стартового набора Уличная крыса получает <b>500eb</b>, которые можно\n  потратить на что-нибудь ещё прямо сейчас или оставить на потом — решаешь сам.\n  Полный список того, что почём — в Ночных\n  Рынках <span class=\"cgcite\">(СТР 334)</span> и Киберимплантах <span class=\"cgcite\">(СТР 111)</span>.\n  <span class=\"cgcite\">СТР 98</span></p>\n  </div>\n  <div data-mth=\"edge\">\n  <p>Сверх стартового набора Эджраннер получает <b>500eb</b>, которые можно\n  потратить на что-нибудь ещё прямо сейчас или оставить на потом — решаешь сам.\n  Полный список того, что почём — в Ночных\n  Рынках <span class=\"cgcite\">(СТР 334)</span> и Киберимплантах <span class=\"cgcite\">(СТР 111)</span>.\n  <span class=\"cgcite\">СТР 98</span></p>\n  </div>\n  <div data-cg=\"startkit\"></div>\n  <div data-cg=\"startbuybox\"></div>\n  <div class=\"cgfoot\"></div>\n </div>\n\n <div class=\"cgpane\" data-pane=\"6\">\n  <h3>Подчинённый</h3>\n  <p>На третьем ранге Командной работы корпорация выделяет Корпорату <b>первого\n  подчинённого</b>. Ты выбираешь, кем он работает; кого именно пришлёт отдел кадров —\n  решает бросок. <span class=\"cgcite\">СТР 154</span></p>\n  <p class=\"cglegend\">Это отдельный персонаж, и водит его <b>ГМ</b>, а не ты:\n  насколько охотно — зависит от <b>Лояльности</b>. Навыки ему повышать нельзя, из\n  брони он носит только Лёгкий бронекостюм. Подробности, таблицы Лояльности и что\n  бывает, когда она уходит в минус — в\n  Ролевых способностях <span class=\"cgcite\">(СТР 153)</span>.</p>\n  <div data-cg=\"subbox\"></div>\n  <div class=\"cgfoot\"></div>\n </div>\n\n <div class=\"cgpane\" data-pane=\"5\">\n  <!-- No «Шаг 5» here: a Корпорат has a sixth tab, so the sheet is step 5 for\n       nine Roles and step 6 for him. The tab strip numbers itself; a heading that\n       hard-codes the number can only be wrong for somebody. -->\n  <h3>Лист персонажа</h3>\n  <div class=\"cgrow\">\n   <label class=\"cgname\">Имя <input type=\"text\" data-cg=\"name\" placeholder=\"Как его зовут на Улице\"></label>\n  </div>\n  <p class=\"cgrow\">\n   <button type=\"button\" class=\"cgbtn cgprim\" data-cg=\"print\">Печать / PDF</button>\n   <button type=\"button\" class=\"cgbtn\" data-cg=\"savemd\">Скачать .md</button>\n   <button type=\"button\" class=\"cgbtn\" data-cg=\"savejson\">Сохранить .json</button>\n   <button type=\"button\" class=\"cgbtn\" data-cg=\"loadjson\">Загрузить .json</button>\n   <button type=\"button\" class=\"cgbtn\" data-cg=\"reset\">Начать заново</button>\n  </p>\n  <div class=\"cgsheet\" data-cg=\"sheet\"></div>\n  <div data-cg=\"notebox\"></div>\n <div class=\"cgfoot\"></div>\n </div>",
+    "dalshe": "<h2 class=\"sec\">Что читать дальше</h2>\n<p>Лист готов — дальше нужны только четыре вещи, и все они в корбуке:</p>\n<div class=\"tw\"><table class=\"rf\">\n<thead><tr><th>Когда за столом</th><th>Куда смотреть</th></tr></thead>\n<tbody>\n<tr><th>Как вообще что-то делается</th><td>Проверки и Навыки <span class=\"cgcite\">(СТР 125–143)</span> — СТАТ + Навык + 1d10 против Сложности.</td></tr>\n<tr><th>Начали стрелять</th><td>Перестрелка в Пятничную Ночь <span class=\"cgcite\">(СТР 167–194)</span> — инициатива, укрытия, раны.</td></tr>\n<tr><th>В тебя попали</th><td>Trauma Team <span class=\"cgcite\">(СТР 219–232)</span> — стабилизация, лечение, смерть.</td></tr>\n<tr><th>Что умеет твоя Роль</th><td>Ролевые способности <span class=\"cgcite\">(СТР 144–166)</span> — твоя способность на ранге 4.</td></tr>\n</tbody>\n</table></div>\n\n<p class=\"note\">Генератор ведёт по всем трём методам — <b>#1 «Уличная крыса»</b>,\n<b>#2 «Эджраннер»</b> и <b>#3 «Полный пакет»</b>; переключатель над вкладками.\nПодробности каждого — в главе\nСоздан для Будущего <span class=\"cgcite\">(СТР 73)</span>. #3 гибче обоих, но\nкнига прямо не рекомендует его для первого персонажа.</p>"
    }
   },
   "public": true,
@@ -34857,9 +34857,9 @@
   "SYW": "Spinning Your Wheels",
   "TT": "Toggle's Temple",
   "YNBF": "Your New Best Friend",
-  "КБ": "Cyberpunk RED Corebook"
+  "СТР": "Cyberpunk RED Corebook"
  },
- "pageCite": "КБ ",
+ "pageCite": "СТР ",
  "statName": {
   "INT": "INT",
   "REF": "REF",

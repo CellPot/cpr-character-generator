@@ -54,9 +54,9 @@ def source_list(sources, tag_of=lambda t: t):
 
 
 def legal(sources):
-    # The payload tags the Core Rulebook «КБ»; the English page calls it CRB, like its page chips.
-    keys = source_list(sources, lambda t: "CRB" if t == "КБ" else t)
-    keys_ru = source_list(sources)
+    # The payload tags the Core Rulebook «СТР» (the reference's page chip); the English page calls it CRB, like its page chips.
+    keys = source_list(sources, lambda t: "CRB" if t in ("КБ", "СТР") else t)
+    keys_ru = source_list(sources, lambda t: "СТР" if t == "КБ" else t)
     return """<footer class="legal">
 <p>%(title)s is unofficial content provided under the Homebrew Content Policy of
 R. Talsorian Games and is not approved or endorsed by RTG.</p>
@@ -72,7 +72,7 @@ belong to R. Talsorian Games. The full text of the rules is in the books; a chip
                 "ru4": ru("Автор — <b>CellPot</b> · исходники, обновления и сообщения об ошибках: %s" % REPO_LINK),
                 "ru2": ru("Cyberpunk — товарный знак CD PROJEKT S.A.; Cyberpunk RED и его правила — "
                           "R. Talsorian Games. Полный текст правил — в книгах; чип вроде "
-                          "<b>КБ 146</b> — страница. Термины — в основном по фанатским переводам, спасибо их авторам: "
+                          "<b>СТР 146</b> — страница. Термины — в основном по фанатским переводам, спасибо их авторам: "
                           "<b>rustablerpg.ru</b> и <b>vk.com/cyberpunk_red_rus</b>, группе VK "
                           "<b>«Cyberpunk RED на русском языке»</b>, <b>@kr45n1y</b> "
                           "(<b>t.me/redcyberpunk</b>) и <b>LieSnPeace</b> (<b>t.me/cyberpunk_red_rus</b>)."),
