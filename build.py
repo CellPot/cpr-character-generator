@@ -22,6 +22,8 @@ OUT = os.path.join(HERE, "generator.html")
 TITLE = "Character Generator"      # the page is English; the Russian rides in data-ru
 SUBTITLE = "for Cyberpunk RED"
 TITLE_RU = "Генератор персонажа — для Cyberpunk RED"
+SITE = "https://cellpot.github.io/cpr-character-generator/"   # absolute: link previews need it
+BLURB = "A free character wizard for Cyberpunk RED: roll or build by hand, get a finished sheet. One page, works offline."
 REPO_URL = "https://github.com/CellPot/cpr-character-generator"
 REPO_LINK = '<a href="%s" target="_blank" rel="noopener">github.com/CellPot/cpr-character-generator</a>' % REPO_URL
 
@@ -127,6 +129,15 @@ def render():
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>%(title)s — %(subtitle)s</title>
+<meta name="description" content="%(blurb)s">
+<meta property="og:type" content="website">
+<meta property="og:title" content="%(title)s — %(subtitle)s">
+<meta property="og:description" content="%(blurb)s">
+<meta property="og:url" content="%(site)s">
+<meta property="og:image" content="%(site)sog.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <style>
 %(style)s
 </style>
@@ -150,7 +161,7 @@ def render():
 </html>
 """ % {"title": TITLE, "subtitle": SUBTITLE, "style": style, "body": body_markup(),
        "legal": legal(payload["sources"]), "script": script, "updated": last_updated(),
-       "title_ru": TITLE_RU,
+       "title_ru": TITLE_RU, "blurb": BLURB, "site": SITE,
        "ru_brand": ru("Фанатский инструмент · бесплатно · работает офлайн · обновлено %s" % last_updated()),
        "ru_day": ru("День"), "ru_night": ru("Ночь"), "ru_cyber": ru("Кибер"),
        "ru_auto": ru("Авто")}
