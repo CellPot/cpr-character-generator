@@ -48,8 +48,15 @@ def ru(text):
     return ' data-ru="%s"' % text.replace("&", "&amp;").replace('"', "&quot;")
 
 
+def source_list(sources, tag_of=lambda t: t):
+    items = sorted((tag_of(t), n) for t, n in sources.items())
+    return " · ".join("<b>%s</b> — %s" % (esc(t), esc(n)) for t, n in items)
+
+
 def legal(sources):
-    keys = " · ".join("<b>%s</b> — %s" % (esc(t), esc(n)) for t, n in sorted(sources.items()))
+    # The payload tags the Core Rulebook «КБ»; the English page calls it CRB, like its page chips.
+    keys = source_list(sources, lambda t: "CRB" if t == "КБ" else t)
+    keys_ru = source_list(sources)
     return """<footer class="legal">
 <p>%(title)s is unofficial content provided under the Homebrew Content Policy of
 R. Talsorian Games and is not approved or endorsed by RTG.</p>
@@ -69,7 +76,7 @@ belong to R. Talsorian Games. The full text of the rules is in the books; a chip
                           "<b>rustablerpg.ru</b> и <b>vk.com/cyberpunk_red_rus</b>, группе VK "
                           "<b>«Cyberpunk RED на русском языке»</b>, <b>@kr45n1y</b> "
                           "(<b>t.me/redcyberpunk</b>) и <b>LieSnPeace</b> (<b>t.me/cyberpunk_red_rus</b>)."),
-                "ru3": ru("Источники: %s." % keys)}
+                "ru3": ru("Источники: %s." % keys_ru)}
 
 
 def esc(t):
