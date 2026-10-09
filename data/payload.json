@@ -3040,6 +3040,7 @@
    "id": "glow-stick-crb"
   },
   {
+   "alt": "",
    "name": "Silencer",
    "price": 100,
    "cyber": false,
@@ -3050,7 +3051,7 @@
    "href": "",
    "kind": "gear",
    "label": "Silencer — 100eb — TT 14",
-   "id": "x73b2bf88"
+   "id": "silencer-tt"
   },
   {
    "name": "Masetto Holo-Wear",
@@ -9241,6 +9242,7 @@
    "id": "shotgun-underbarrel-crb"
   },
   {
+   "alt": "",
    "name": "Grapple Gun Underbarrel",
    "price": 100,
    "cyber": false,
@@ -9251,7 +9253,7 @@
    "href": "",
    "kind": "gear",
    "label": "Grapple Gun Underbarrel — 100eb — TT 14",
-   "id": "xfdf68da3"
+   "id": "grapple-gun-underbarrel-tt"
   },
   {
    "alt": "",
@@ -13011,6 +13013,7 @@
    "id": "bayonet-crb"
   },
   {
+   "alt": "",
    "name": "Airhypo Bayonet",
    "price": 100,
    "cyber": false,
@@ -13021,7 +13024,7 @@
    "href": "",
    "kind": "gear",
    "label": "Airhypo Bayonet — 100eb — TT 14",
-   "id": "xcde490cb"
+   "id": "airhypo-bayonet-tt"
   },
   {
    "name": "Memory Chips",
@@ -24804,8 +24807,9 @@
       "label": "Глоустик (Glow Stick) — 10eb — СТР 351"
      },
      {
+      "alt": "Silencer",
       "name": "Глушитель",
-      "label": "Глушитель — 100eb — TT 14"
+      "label": "Глушитель (Silencer) — 100eb — TT 14"
      },
      {
       "name": "Голо-Одежда",
@@ -27629,9 +27633,10 @@
       "label": "Подствольный дробовик (Shotgun Underbarrel) — 500eb — СТР 343"
      },
      {
+      "alt": "Grapple Gun Underbarrel",
       "name": "Подствольный пистолет-крюк",
       "tier": "Премиум",
-      "label": "Подствольный пистолет-крюк — 100eb — TT 14"
+      "label": "Подствольный пистолет-крюк (Grapple Gun Underbarrel) — 100eb — TT 14"
      },
      {
       "alt": "FBC Brimstone Coating",
@@ -29374,9 +29379,10 @@
       "label": "Штык (Bayonet) — 100eb — СТР 343"
      },
      {
+      "alt": "Airhypo Bayonet",
       "name": "Штык-аэрогиппо",
       "tier": "Премиум",
-      "label": "Штык-аэрогиппо — 100eb — TT 14"
+      "label": "Штык-аэрогиппо (Airhypo Bayonet) — 100eb — TT 14"
      },
      {
       "name": "Щепка",
