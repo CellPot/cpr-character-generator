@@ -49,3 +49,26 @@
   document.addEventListener("keydown", function(e){ if(e.key === "Escape") close(); });
   window.addEventListener("resize", close);
 })();
+
+/* ---------- language of the frame ----------
+   The wizard owns the language (it dispatches "cpr-lang"); the page around it — the
+   top bar, the theme buttons, the footer, the tab title — is written in English (the
+   language of the payload) and carries the Russian in data-ru. */
+(function(){
+  var baseTitle = document.title;
+  function apply(l){
+    var nodes = document.querySelectorAll("[data-ru]");
+    for(var i=0;i<nodes.length;i++){
+      var n = nodes[i];
+      if(n.__base === undefined) n.__base = n.innerHTML;
+      n.innerHTML = l === "ru" ? n.getAttribute("data-ru") : n.__base;
+    }
+    var lab = document.querySelectorAll("[data-ru-label]");
+    for(var j=0;j<lab.length;j++){
+      if(lab[j].__base === undefined) lab[j].__base = lab[j].getAttribute("aria-label");
+      lab[j].setAttribute("aria-label", l === "ru" ? lab[j].getAttribute("data-ru-label") : lab[j].__base);
+    }
+    document.title = l === "ru" ? (document.documentElement.getAttribute("data-title-ru") || baseTitle) : baseTitle;
+  }
+  document.addEventListener("cpr-lang", function(e){ apply(e.detail); });
+})();

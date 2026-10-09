@@ -18,8 +18,9 @@ import datetime, io, json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "generator.html")
-TITLE = "Генератор персонажа"
-SUBTITLE = "для Cyberpunk RED"
+TITLE = "Character Generator"      # the page is English; the Russian rides in data-ru
+SUBTITLE = "for Cyberpunk RED"
+TITLE_RU = "Генератор персонажа — для Cyberpunk RED"
 
 
 def read(rel):
@@ -31,13 +32,17 @@ def body_markup():
     # Embedded in a book, every id of a chapter is namespaced «c00-…», and the
     # wizard's print rules select on that (section[id$="-master"]); keep the shape.
     body = re.sub(r'id="([^"]+)"', r'id="c00-\1"', body)
-    # The game's name may stand in a descriptive subtitle, not in the title itself
-    # (RTG's Homebrew Content Policy) — so it goes right under the h1, as big as that
-    # rule allows, and «unofficial» lives in the footer's disclaimer.
-    h1 = "<h1>%s</h1>" % TITLE
-    if body.count(h1) != 1:
-        sys.exit("build: the body's <h1> is not «%s»" % TITLE)
-    return body.replace(h1, h1 + '\n<p class="for">%s</p>' % SUBTITLE)
+    # The masthead (both languages) already has the descriptive subtitle under its h1, as big
+    # as RTG's Homebrew Content Policy allows; «unofficial» lives in the footer's disclaimer.
+    if body.count('<p class="for">') != 1:
+        sys.exit("build: the body's masthead has no subtitle line")
+    return body
+
+
+def ru(text):
+    """The Russian of a piece of the frame, as an attribute: standalone.js swaps it in
+    when the wizard changes language and puts the original (English) back."""
+    return ' data-ru="%s"' % text.replace("&", "&amp;").replace('"', "&quot;")
 
 
 def legal(sources):
@@ -45,11 +50,17 @@ def legal(sources):
     return """<footer class="legal">
 <p>%(title)s is unofficial content provided under the Homebrew Content Policy of
 R. Talsorian Games and is not approved or endorsed by RTG.</p>
-<p>Cyberpunk — товарный знак CD PROJEKT S.A.; Cyberpunk RED и его правила —
-R. Talsorian Games. Полный текст правил — в книгах; чип вроде <b>КБ 146</b> — страница.
-Термины — по переводу <b>rustablerpg.ru</b> / <b>vk.com/cyberpunk_red_rus</b>.</p>
-<p>Источники: %(keys)s.</p>
-</footer>""" % {"title": TITLE, "keys": keys}
+<p%(ru2)s>Cyberpunk is a trademark of CD PROJEKT S.A.; Cyberpunk RED and its rules
+belong to R. Talsorian Games. The full text of the rules is in the books; a chip like
+<b>CRB 146</b> is a page. Russian terms follow the translation by <b>rustablerpg.ru</b> /
+<b>vk.com/cyberpunk_red_rus</b>.</p>
+<p%(ru3)s>Sources: %(keys)s.</p>
+</footer>""" % {"title": TITLE, "keys": keys,
+                "ru2": ru("Cyberpunk — товарный знак CD PROJEKT S.A.; Cyberpunk RED и его правила — "
+                          "R. Talsorian Games. Полный текст правил — в книгах; чип вроде "
+                          "<b>КБ 146</b> — страница. Термины — по переводу <b>rustablerpg.ru</b> / "
+                          "<b>vk.com/cyberpunk_red_rus</b>."),
+                "ru3": ru("Источники: %s." % keys)}
 
 
 def esc(t):
@@ -76,7 +87,7 @@ def render():
     style = "\n".join(read("src/" + f) for f in ("base.css", "wizard.css", "page.css"))
     script = "\n".join(read("src/" + f) for f in ("standalone.js", "wizard.js"))
     page = """<!doctype html>
-<html lang="ru">
+<html lang="en" data-title-ru="%(title_ru)s">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -88,8 +99,8 @@ def render():
 <body>
 <main>
 <div class="topbar">
-  <span class="brand">Фанатский инструмент · бесплатно · работает офлайн · обновлено %(updated)s</span>
-  <div class="themer" role="group" aria-label="Оформление"><button type="button" data-th="light">День</button><button type="button" data-th="dark">Ночь</button><button type="button" data-th="cyber-night">Кибер</button><button type="button" data-th="auto">Авто</button></div>
+  <span class="brand"%(ru_brand)s>Fan tool · free · works offline · updated %(updated)s</span>
+  <div class="themer" role="group" aria-label="Theme" data-ru-label="Оформление"><button type="button" data-th="light"%(ru_day)s>Day</button><button type="button" data-th="dark"%(ru_night)s>Night</button><button type="button" data-th="cyber-night"%(ru_cyber)s>Cyber</button><button type="button" data-th="auto"%(ru_auto)s>Auto</button></div>
 </div>
 %(body)s
 %(legal)s
@@ -100,7 +111,11 @@ def render():
 </body>
 </html>
 """ % {"title": TITLE, "subtitle": SUBTITLE, "style": style, "body": body_markup(),
-       "legal": legal(payload["sources"]), "script": script, "updated": last_updated()}
+       "legal": legal(payload["sources"]), "script": script, "updated": last_updated(),
+       "title_ru": TITLE_RU,
+       "ru_brand": ru("Фанатский инструмент · бесплатно · работает офлайн · обновлено %s" % last_updated()),
+       "ru_day": ru("День"), "ru_night": ru("Ночь"), "ru_cyber": ru("Кибер"),
+       "ru_auto": ru("Авто")}
     bad = [c for c in page if ord(c) < 0x20 and c not in "\n\t"]
     if bad:
         sys.exit("control characters in the page: %r" % bad[:5])

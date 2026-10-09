@@ -460,3 +460,4 @@ ul.cggear .itsub{line-height:1.45;margin-top:1px}
    what separates "Values most" from its value */
 .lpk{display:inline-block;min-width:8.5em;padding-right:10px;color:var(--steel);font-size:.78rem;vertical-align:top}
 .cgqual{color:var(--steel)}
+.cglang{margin-left:auto;display:inline-flex;gap:4px}

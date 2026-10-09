@@ -10,6 +10,7 @@
 var root = document.querySelector('[data-cg="app"]');
 if(!root) return;
 var D = JSON.parse(document.querySelector(".cg-data").textContent);
+var D_BASE = D;    // the payload as exported, in I18N.base; D is rebuilt from it per language
 var KEY = "cpr-character";
 var S = null;
 
@@ -81,6 +82,150 @@ var TYPE = {method:"string", role:"string", stats:"object", roll:"number",
             lang:"string", harm:"string", homebrew:"array",
             dice:"object", notes:"object", name:"string"};
 var HB_MAX = 20;
+/* The state stores ids (D.stats, D.roles[].id, D.skills keys …); the payload carries the
+   name to show beside each one. Everything below reads a name through these. */
+function sName(id){ return (D.statName && D.statName[id]) || id; }
+function skillName(key){ var k = key.indexOf("#"), b = k < 0 ? key : key.slice(0, k);
+                         return D.skills[b] ? D.skills[b].name : key; }
+function cite(s){
+  /* "CRB 144" and a catalogue chip "CRB 351" are corebook pages: "CRB 144" in English */
+  return LANG === "ru" ? String(s) : String(s).replace(/^(?:КБ|СТР)(?= )/, T("cite.crb"));
+}
+function idIn(list, id){ for(var i=0;i<list.length;i++) if(list[i].id === id) return true; return false; }
+function nameOf(list, id){ for(var i=0;i<list.length;i++) if(list[i].id === id) return list[i].name; return ""; }
+
+/* ---- language ---------------------------------------------------------------------
+   Every string the wizard shows is T("scope.key"): the key names the place and the idea
+   (roll_pop.success, sheet.hp), not the words. The words live in D.i18n.ui.ru and
+   D.i18n.ui.en (texts/ui.ru.json and ui.en.json); the export's checks make sure both are complete.
+   A key missing from the chosen language falls back to Russian, then to the key itself,
+   which shows up on screen as the bug it is. {0}, {1}… are filled from the arguments after
+   the key. The character (S) never holds a translated word — only ids — so changing
+   language touches the screen and nothing else. */
+var I18N = D.i18n || {};
+var UI = I18N.ui || {};
+var LANGS = I18N.langs || ["ru"];
+var BASE = I18N.base || "ru";   // the language the payload and the markup are written in
+var LANG = BASE;
+var LANG_KEY = "cpr-lang";
+function lookup(key){
+  var own = UI[LANG] || {}, base = UI[BASE] || {};
+  if(typeof own[key] === "string") return own[key];
+  return typeof base[key] === "string" ? base[key] : key;
+}
+function T(key){
+  var out = lookup(key);
+  if(arguments.length > 1){
+    var a = arguments;
+    out = out.replace(/\{(\d+)\}/g, function(m, i){ return a[+i + 1]; });
+  }
+  return out;
+}
+/* "1 point, 2 points, 5 points": Russian has three forms, English two. Give the three keys
+   (…_one, …_few, …_many); English uses the first for 1 and the last for everything else. */
+function Tn(n, one, few, many){
+  if(LANG !== "ru") return lookup(n === 1 ? one : many);
+  var m10 = n % 10, m100 = n % 100;
+  return lookup(m10 === 1 && m100 !== 11 ? one
+           : (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? few : many));
+}
+/* The data in the other language. D_BASE is the payload as exported; D.i18n.data[lang] is a sparse
+   copy of it holding only the strings that read differently in English (Role, skill and item
+   names, descriptions, the lifepath tables…). setLang() lays it over the Russian to make the
+   D the wizard reads, so nothing else has to know there are two languages. Arrays are matched
+   by position, objects by key; a missing entry means "same as Russian". */
+function overlay(base, over){
+  if(over === undefined || over === null) return base;
+  if(typeof over === "string") return over;
+  if(Array.isArray(over)){
+    if(!Array.isArray(base)) return base;
+    var out = new Array(base.length);
+    for(var i=0;i<base.length;i++) out[i] = overlay(base[i], over[i]);
+    return out;
+  }
+  if(typeof over === "object" && base && typeof base === "object" && !Array.isArray(base)){
+    var o = {};
+    for(var k in base){
+      if(!base.hasOwnProperty(k)) continue;
+      o[k] = k === "i18n" ? base[k] : overlay(base[k], over[k]);
+    }
+    return o;
+  }
+  return base;
+}
+var CATALOG_BY_ID = null;
+function applyData(){
+  var over = (I18N.data || {})[LANG];
+  D = (LANG === BASE || !over) ? D_BASE : overlay(D_BASE, over);
+  CATALOG_BY_LABEL = null; CATALOG_BY_ID = null;
+}
+/* The static markup (the steps' headings and prose, the masthead, "what to read next")
+   is exported once per language; BASE is what the page ships with, so it is kept
+   the first time it is swapped out. */
+var BODY_BASE = null;
+function bodyParts(){
+  var box = root.parentNode, up = 0, parts = {app: root};
+  /* "What to read next" is the section right after the wizard's own. */
+  var after = box && box.nextElementSibling;
+  if(after && /dalshe$/.test(after.id || "")) parts.dalshe = after;
+  var h2 = box && box.firstElementChild;
+  if(h2 && h2.tagName === "H2") parts.title = h2;
+  while(box && up < 4){
+    var mh = box.querySelector && box.querySelector(":scope > header.masthead");
+    if(mh){
+      parts.masthead = mh;
+      break;
+    }
+    box = box.parentNode; up++;
+  }
+  return parts;
+}
+function swapBody(){
+  /* Only the parts the export carries are swapped: the host book leaves its own chapter
+     masthead alone, the public page swaps its. */
+  var parts = bodyParts(), other = {};
+  for(var lg in (I18N.body || {})) if(lg !== BASE) other = I18N.body[lg];
+  if(BODY_BASE === null){
+    BODY_BASE = {};
+    for(var k in other) if(other.hasOwnProperty(k) && parts[k]) BODY_BASE[k] = parts[k].innerHTML;
+  }
+  for(var k2 in BODY_BASE){
+    if(!BODY_BASE.hasOwnProperty(k2)) continue;
+    var html = (LANG !== BASE && typeof (I18N.body[LANG] || {})[k2] === "string")
+               ? I18N.body[LANG][k2] : BODY_BASE[k2];
+    if(parts[k2].innerHTML !== html) parts[k2].innerHTML = html;
+  }
+}
+function setLang(l, fresh){
+  if(LANGS.indexOf(l) < 0) l = BASE;
+  var changed = l !== LANG;
+  LANG = l;
+  applyData();
+  if(!fresh){ try{ localStorage.setItem(LANG_KEY, l); }catch(e){} }
+  root.setAttribute("lang", l);
+  if(document.documentElement) document.documentElement.setAttribute("lang", l);
+  if(changed || fresh){
+    swapBody();
+    if(!fresh && typeof paintAll === "function" && S){
+      /* the swap brought back markup that knows no current step: show it again (go() would scroll) */
+      var panes = root.querySelectorAll(".cgpane");
+      for(var pi=0;pi<panes.length;pi++)
+        panes[pi].classList.toggle("on", panes[pi].getAttribute("data-pane") === String(cur));
+      paintAll();
+    }
+    try{ document.dispatchEvent(new CustomEvent("cpr-lang", {detail: l})); }catch(e2){}
+  }
+}
+function pickLang(){
+  var saved = null;
+  try{ saved = localStorage.getItem(LANG_KEY); }catch(e){}
+  if(saved && LANGS.indexOf(saved) >= 0) return saved;
+  if(I18N.auto && LANGS.length > 1){
+    var nav = (navigator.language || "ru").toLowerCase();
+    return nav.indexOf("ru") === 0 ? "ru" : "en";
+  }
+  return BASE;
+}
 /* Quotes and angle brackets are stripped because the name is written into
    attributes (the roll button's data-key). */
 function hbWhat(s){ return String(s || "").replace(/\s+/g, " ").trim().slice(0, 200); }
@@ -110,7 +255,7 @@ function normalise(got){
      step 5, and a STAT block missing a key prints HP as NaN. */
   if(out.role !== null){
     var known = false;
-    for(var i=0;i<D.roles.length;i++) if(D.roles[i].name === out.role) known = true;
+    for(var i=0;i<D.roles.length;i++) if(D.roles[i].id === out.role) known = true;
     if(!known){ out.role = null; out.stats = null; out.roll = null; out.picks = {};
                 out.gear = {}; out.abil = {}; out.rpath = {}; out.sub = {}; }
   }
@@ -124,7 +269,7 @@ function normalise(got){
      since "which preset" has a sane default and "which Role" does not. */
   if(out.statBudget){
     var knownPool = false;
-    for(var p=0;p<D.statPools.length;p++) if(D.statPools[p].name === out.statBudget) knownPool = true;
+    for(var p=0;p<D.statPools.length;p++) if(D.statPools[p].id === out.statBudget) knownPool = true;
     if(!knownPool) out.statBudget = D.statPoolDefault;
   }
   /* A row missing `name`/`price` renders as a blank line with a NaN total; one
@@ -156,6 +301,7 @@ function normalise(got){
                  src: typeof r.src === "string" ? r.src : "",
                  chip: typeof r.chip === "string" ? r.chip : "",
                  href: safeHref(r.href)});
+      if(typeof r.cid === "string" && r.cid) extra.cid = r.cid.slice(0, 80);
       for(var xk in extra) out2[out2.length-1][xk] = extra[xk];
     }
     return out2;
@@ -226,9 +372,11 @@ function normalise(got){
     dice[dk] = roll;
   }
   out.dice = dice;
+  if(!/^[0-9]+$/.test(out.lang)) out.lang = "";
+  if(!/^[0-9]+$/.test(out.harm)) out.harm = "";
   out.sponsor = { active: !!out.sponsor.active,
-                   kind: (D.sponsor.kinds.indexOf(out.sponsor.kind) >= 0) ? out.sponsor.kind : "",
-                   hook: (D.sponsor.hooks.indexOf(out.sponsor.hook) >= 0) ? out.sponsor.hook : "" };
+                   kind: idIn(D.sponsor.kinds, out.sponsor.kind) ? out.sponsor.kind : "",
+                   hook: idIn(D.sponsor.hooks, out.sponsor.hook) ? out.sponsor.hook : "" };
   return out;
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
@@ -255,7 +403,7 @@ function isCalc(){ return S.method === "calc"; }
    than on a screen of minimums. Everything downstream reads levels through here. */
 function lv(sk){
   if(!isEdge()) return sk.level;
-  var v = (S.levels||{})[sk.skill];
+  var v = (S.levels||{})[sk.id];
   return (typeof v === "number") ? v : sk.level;
 }
 function costOf(sk){ return lv(sk) * (sk.x2 ? 2 : 1); }
@@ -289,7 +437,7 @@ function preset(kind){
   var r = role(); if(!r) return;
   if(kind === "role"){ S.levels = {}; return; }
   var out = {}, n = (kind === "min") ? D.skillMin : 4;
-  for(var i=0;i<r.skills.length;i++) out[r.skills[i].skill] = n;
+  for(var i=0;i<r.skills.length;i++) out[r.skills[i].id] = n;
   S.levels = out;
 }
 /* Quotes are escaped as well: this is written into double-quoted attributes
@@ -322,12 +470,12 @@ function pendingSkills(){
      off a different list. */
   if(isCalc()){
     if(!role()) return out;
-    if(skillsLeft3() > 0) out.push(skillsLeft3() + " нераспределённых очков");
+    if(skillsLeft3() > 0) out.push(skillsLeft3() + T("pending_skills.unspent_points"));
     for(var name in D.hints){
       if(!D.hints.hasOwnProperty(name)) continue;
       var cps = copies3(name);
       for(var ci=0;ci<cps.length;ci++)
-        if(skillLevel3(cps[ci]) > 0 && !(S.picks[cps[ci]] || "").trim()) out.push(name);
+        if(skillLevel3(cps[ci]) > 0 && !pickOf(cps[ci])) out.push(skillName(name));
     }
     return out;
   }
@@ -336,16 +484,16 @@ function pendingSkills(){
   /* Under Method #2 the points are the outstanding thing, and they have to be
      visible from step 4 and 5 — the budget bar only exists on step 3. Points left
      over are legal but always a mistake, so they are counted, not blocked. */
-  if(isEdge() && unspent() > 0) out.push(unspent() + " нераспределённых очков");
+  if(isEdge() && unspent() > 0) out.push(unspent() + T("pending_skills.unspent_points"));
   for(var i=0;i<r.skills.length;i++){
     var s = r.skills[i];
-    if(s.pick === "" && !(S.picks[s.skill] || "").trim()) out.push(s.skill);
+    if(s.pick === "" && !(S.picks[s.id] || "").trim()) out.push(s.name);
   }
   return out;
 }
 function pendingLife(){
   var out = [];
-  if(langRow() && !S.lang) out.push("Язык культуры");
+  if(langRow() && !S.lang) out.push(T("pending_life.culture_language"));
   for(var i=0;i<D.life.length;i++){
     var t = D.life[i];
     if(got(t) && !complete(t)) out.push(t.label);
@@ -407,7 +555,7 @@ function diceHtml(text, key, col){
     return '<button type="button" class="cgdice" data-cg="lifedice" data-key="'+key
          + '" data-col="'+col+'" data-c="'+(c||1)+'" data-f="'+f+'"'
          + (op ? ' data-op="'+op+'" data-arg="'+arg+'"' : "")
-         + ' title="Бросить">'+m+(got ? " → <b>"+esc(got.out)+"</b>" : "")+"</button>";
+         + T("dice_html.title_roll")+m+(got ? " → <b>"+esc(got.out)+"</b>" : "")+"</button>";
   });
 }
 
@@ -439,7 +587,7 @@ function plain(text, key, col){
    inline it split "… (1d6/2) friends" in half. */
 function undone(t, col, html){
   if(!needsDice(t, col)) return "";
-  return html ? ' <span class="cgtodoin">— не брошено</span>' : " — не брошено";
+  return html ? T("undone.not_rolled") : T("undone.not_rolled_plain");
 }
 function colLabel(c){ return c.replace(/\s*\((?:выбери|выберите)[^)]*\)\s*$/i, ""); }
 /* On the sheet a column is labelled by its short name; the book's question-form
@@ -480,12 +628,19 @@ function complete(t){
   return true;
 }
 function setDie(t, col, value){
+  /* Re-rolling the origin changes which languages are on offer; the choice is an index, so
+     it follows the LANGUAGE (kept if the new row still offers it, dropped if not). */
+  var keepLang = (t.pickCol !== null) ? langName() : "";
   var g = (S.life[t.key] && typeof S.life[t.key] === "object")
         ? S.life[t.key].slice()
         : (typeof S.life[t.key] === "number" ? [S.life[t.key]] : []);
   while(g.length < dice(t)) g.push(0);
   if(t.perColumn) g[col] = value; else g[0] = value;
   S.life[t.key] = g;
+  if(keepLang){
+    var now = langRow() || [], at = now.indexOf(keepLang);
+    S.lang = at >= 0 ? String(at) : "";
+  }
 }
 
 function langRow(){
@@ -493,6 +648,14 @@ function langRow(){
   var cell = cellOf(t, t.pickCol);
   return cell ? cell.split(/,\s*/) : null;
 }
+/* S.lang and S.harm hold the INDEX of the chosen option, as a string ("0", "3"; "" is not
+   chosen) — never the word, which would be in one language only. The word is read here. */
+function optAt(list, idx){
+  var n = (typeof idx === "string" && /^[0-9]+$/.test(idx)) ? +idx : -1;
+  return (list && n >= 0 && n < list.length) ? list[n] : "";
+}
+function langName(){ return optAt(langRow(), S.lang); }
+function harmName(t){ return optAt(t && t.harm ? t.harm[1] : null, S.harm); }
 /* The culture language belongs to the ORIGIN ROW, not to the character. Re-rolling
    Origin left the old choice standing: a character from Southeast Asia
    kept "Chinese" on the sheet, the value line read as answered while the <select>
@@ -501,8 +664,7 @@ function langRow(){
    lifepath re-checks the choice against what the new row actually offers. */
 function syncLang(){
   if(!S.lang) return;
-  var opts = langRow();
-  if(!opts || opts.indexOf(S.lang) < 0) S.lang = "";
+  if(!optAt(langRow(), S.lang)) S.lang = "";
 }
 /* Every write to S.life goes through here. "Clear" used to skip paintTabs(),
    so the outstanding count sat on the tab describing a lifepath that no longer
@@ -521,14 +683,14 @@ function gearText(item, i){ return gearItem(item, i).text; }
 function ref(href, text){
   if(!href) return text;
   if(href.charAt(0) === "#") return '<a href="' + href + '">' + text + "</a>";
-  return text + ' <span class="cgcite">' + esc(href) + "</span>";
+  return text + ' <span class="cgcite">' + esc(cite(href)) + "</span>";
 }
 function link(key, text){ return ref(D.links[key], text); }
 /* A corebook page the wizard cites at runtime: the host book's "CRB 104" chip, or —
    on the standalone page, whose data says `pageCite` — the same chip ref() writes. */
 function pageChip(n){
-  return D.pageCite ? '<span class="cgcite">' + esc(D.pageCite + n) + "</span>"
-                    : '<span class="p">СТР ' + n + "</span>";
+  return D.pageCite ? '<span class="cgcite">' + esc(cite(D.pageCite + n)) + "</span>"
+                    : T("page_chip.p") + n + "</span>";
 }
 
 /* "Athletics 2" tells a newcomer nothing. What answers the question is what the
@@ -554,8 +716,8 @@ function tier(total){
 var rolls = {};
 function rollCheck(total){
   var d = d10(), extra = 0, kind = "";
-  if(d === 10){ extra = d10(); kind = "крит"; }
-  else if(d === 1){ extra = -d10(); kind = "провал"; }
+  if(d === 10){ extra = d10(); kind = "crit"; }
+  else if(d === 1){ extra = -d10(); kind = "fail"; }
   return {d:d, extra:extra, sum: total + d + extra, kind:kind};
 }
 function rollPop(btn, name, stat, level, total){
@@ -563,28 +725,26 @@ function rollPop(btn, name, stat, level, total){
   var dice = "<span>"+r.d+"</span>";
   if(r.kind) dice += "<span>" + (r.extra<0 ? "−"+(-r.extra) : "+"+r.extra) + "</span>";
   var h = '<div class="g-t">'+esc(name)+"</div>"
-        + '<div class="g-f">'+esc(stat)+" "+(total-level)+" + навык "+level+" + 1d10</div>"
+        + '<div class="g-f">'+esc(stat)+" "+(total-level)+T("roll_pop.skill")+level+" + 1d10</div>"
         + '<div class="g-dice">'+dice+"</div>"
-        + '<div class="g-sum">'+r.sum+" <small>результат</small></div>";
-  if(r.kind === "крит")
-    h += '<div class="g-crit">Натуральная 10 — критический успех: кубик брошен ещё раз и прибавлен.</div>';
-  else if(r.kind === "провал")
-    h += '<div class="g-crit">Натуральная 1 — критический провал: кубик брошен ещё раз и вычтен.</div>';
+        + '<div class="g-sum">'+r.sum+T("roll_pop.result");
+  if(r.kind === "crit")
+    h += T("roll_pop.natural_10_critical_success");
+  else if(r.kind === "fail")
+    h += T("roll_pop.natural_1_critical_failure");
   if(t)
-    h += '<div class="g-d">СЛ '+t.dv+" («"+esc(t.name)+"») — "
-       + (r.sum >= t.dv ? "<b>успех</b>" : "не хватило " + (t.dv - r.sum)) + ".</div>";
+    h += T("roll_pop.dv")+t.dv+T("roll_pop.dv_open")+esc(t.name)+T("roll_pop.dv_close")
+       + (r.sum >= t.dv ? T("roll_pop.success") : T("roll_pop.short") + (t.dv - r.sum)) + ".</div>";
   if(window.CPR_POP) window.CPR_POP(btn, h);
   return r;
 }
 
 function tierChip(total){
   var t = tier(total);
-  if(!t) return '<span class="cgtier t0">ничего надёжно<span class="cgdv">даже СЛ 9 — '
-              + "нужно " + (9 - total) + "+ на 1d10</span></span>";
+  if(!t) return T("tier_chip.nothing_reliably_not_even") + (9 - total) + T("tier_chip.on_d10");
   var idx = D.dv.indexOf(t), need = Math.max(1, t.dv - total);
   return '<span class="cgtier t'+(idx+1)+'" title="'+esc(t.what)+'">'
-       + '<span class="cgtn">'+esc(t.name)+"</span>"
-       + '<span class="cgdv">СЛ '+t.dv+" · нужно "+need+"+ на 1d10</span></span>";
+       + '<span class="cgtn">'+esc(t.name)+T("tier_chip.dv")+t.dv+T("tier_chip.need")+need+T("tier_chip.on_d10");
 }
 function bar(v){
   return '<span class="cgbar"><i style="width:'+Math.min(100, v*10)+'%"></i></span>';
@@ -592,7 +752,7 @@ function bar(v){
 
 function role(){
   if(!S.role) return null;
-  for(var i=0;i<D.roles.length;i++) if(D.roles[i].name===S.role) return D.roles[i];
+  for(var i=0;i<D.roles.length;i++) if(D.roles[i].id===S.role) return D.roles[i];
   return null;
 }
 
@@ -640,7 +800,7 @@ function empDelta(){ var c = cyber(); return c ? c.emp : 0; }
 function eff(code){
   if(!S.stats) return null;
   var v = S.stats[code];
-  return code === "ЭМП" ? Math.max(0, v + empDelta()) : v;
+  return code === "EMP" ? Math.max(0, v + empDelta()) : v;
 }
 function cyberPick(i){ return (S.cyber && S.cyber[i]) || 0; }
 function cyberItem(item, i){ return item.options[cyberPick(i)] || item.options[0]; }
@@ -648,12 +808,12 @@ function cyberItem(item, i){ return item.options[cyberPick(i)] || item.options[0
 /* ---- derived numbers. The formulas are the book's, not restated anywhere else. ---- */
 function derived(){
   if(!S.stats) return null;
-  var body = S.stats["ТЕЛ"], will = S.stats["ВОЛЯ"];
+  var body = S.stats.BODY, will = S.stats.WILL;
   var hp = 10 + 5*Math.ceil((body+will)/2);
-  var c = cyber(), hl = c ? c.hl : 0, base = S.stats["ЭМП"];
+  var c = cyber(), hl = c ? c.hl : 0, base = S.stats.EMP;
   return {hp:hp, serious:Math.ceil(hp/2), death:body,
           hum: base*10 - hl, humBase: base*10, hl: hl,
-          emp: eff("ЭМП"), empBase: base};
+          emp: eff("EMP"), empBase: base};
 }
 
 /* ---- what the Role itself hands over, and what it still asks of the player -----
@@ -676,13 +836,13 @@ function points(){ return (S.abil && S.abil.points) || {}; }
 function ptsOf(name){ var v = points()[name]; return (typeof v === "number") ? v : 0; }
 function ptsSpent(){
   var p = pool(), t = 0; if(!p) return 0;
-  for(var i=0;i<p.opts.length;i++) t += ptsOf(p.opts[i].name);
+  for(var i=0;i<p.opts.length;i++) t += ptsOf(p.opts[i].id);
   return t;
 }
 function ptsLeft(){ var p = pool(); return p ? p.budget - ptsSpent() : 0; }
 function ptsCap(opt){
   var p = pool();
-  var cap = p && p.caps ? p.caps[opt.name] : undefined;
+  var cap = p && p.caps ? p.caps[opt.id] : undefined;
   return (typeof cap === "number") ? cap : p.budget;
 }
 /* What N points in this ability actually DO. Two shapes, and the difference is the
@@ -698,8 +858,8 @@ function ptsCap(opt){
 function ptsPreview(opt){
   var cost = (opt.tiers && opt.tiers.length) ? opt.tiers[0].cost : 1;
   var what = (opt.tiers && opt.tiers.length) ? opt.tiers[0].what : opt.what;
-  return '<span class="cgqual">за ' + cost + " "
-       + (cost === 1 ? "очко" : (cost < 5 ? "очка" : "очков")) + " — " + what + "</span>";
+  return T("pts_preview.for") + cost + " "
+       + Tn(cost, "pts_preview.point_one", "pts_preview.points_few", "pts_preview.points_many") + " — " + what + "</span>";
 }
 function ptsEffect(opt, n){
   if(!n) return "";
@@ -707,7 +867,7 @@ function ptsEffect(opt, n){
     var best = null;
     for(var i=0;i<opt.tiers.length;i++) if(opt.tiers[i].cost <= n) best = opt.tiers[i];
     return best ? best.what
-                : "<i>меньше, чем нужно: первый уровень стоит "+opt.tiers[0].cost+"</i>";
+                : T("pts_effect.less_than_needed_first")+opt.tiers[0].cost+"</i>";
   }
   return opt.what;
 }
@@ -719,11 +879,11 @@ function abilSkills(){
   var p = pool(), out = [], r = role();
   if(p && p.skills){
     for(var i=0;i<p.skills.length;i++){
-      var sp = p.skills[i], n = 0;
-      for(var f=0;f<sp.from.length;f++) n += ptsOf(sp.from[f]);
+      var sp = p.skills[i], n = 0, fromNames = [];
+      for(var f=0;f<sp.from.length;f++){ n += ptsOf(sp.from[f]); fromNames.push(nameOf(p.opts, sp.from[f])); }
       var level = Math.min(sp.max, n * sp.mul);
-      out.push({skill: sp.skill, stat: sp.stat, level: level, what: sp.what,
-                from: sp.from.join(" + "), href: r ? r.abilityHref : "",
+      out.push({id: sp.id, name: sp.name, stat: sp.stat, level: level, what: sp.what,
+                from: fromNames.join(" + "), href: r ? r.abilityHref : "",
                 spec: "", zero: level === 0});
     }
   }
@@ -733,9 +893,9 @@ function abilSkills(){
     /* The culture is the half of this grant that matters at the table — the
        language is what you roll, the culture is what it gets you into — so the
        row names it instead of describing the rule in the abstract. */
-    out.push({skill: pk.skill, stat: pk.stat, level: pk.level, spec: lang,
-              what: cul ? ("«Свой чел»: " + cul + " — их язык и их коды.")
-                        : "«Свой чел»: язык культуры, в которую Фиксер умеет вливаться.",
+    out.push({id: pk.id, name: pk.name, stat: pk.stat, level: pk.level, spec: lang,
+              what: cul ? (T("abil_skills.fitting") + cul + T("abil_skills.their_language_their_codes"))
+                        : T("abil_skills.fitting_language_culture_fixer"),
               from: "", href: r ? r.abilityHref : "", zero: false});
   }
   return out;
@@ -754,12 +914,13 @@ function slotTaken(){
   }
   return out;
 }
+function vehName(id){ var pk = picks(); return pk ? (nameOf(pk.vehicles, id) || id) : id; }
 function slotLabel(v){
   var pk = picks();
   if(!v || !pk) return "";
-  if(v.indexOf("v:") === 0) return v.slice(2);
+  if(v.indexOf("v:") === 0) return vehName(v.slice(2));
   for(var i=0;i<pk.upgrades.length;i++)
-    if(pk.upgrades[i].name === v.slice(2)) return "Улучшение: " + pk.upgrades[i].name;
+    if(pk.upgrades[i].id === v.slice(2)) return T("slot_label.upgrade") + pk.upgrades[i].name;
   return v.slice(2);
 }
 
@@ -798,23 +959,20 @@ function poolBlock(){
   var p = pool(); if(!p) return "";
   var left = ptsLeft();
   var h = '<p class="cgpoolhead"><b>'+p.budget+"</b> "
-        + (p.budget === 1 ? "очко" : (p.budget < 5 ? "очка" : "очков"))
-        + " на ранге "+D.abilityRank
-        + ' <span class="cgbleft'+(left ? " cgbon" : "")+'">осталось <b>'+left
+        + Tn(p.budget, "pts_preview.point_one", "pts_preview.points_few", "pts_preview.points_many")
+        + T("pool_block.rank")+D.abilityRank
+        + ' <span class="cgbleft'+(left ? " cgbon" : "")+T("pool_block.left")+left
         + "</b></span></p>";
   h += '<p class="cglegend">'+p.what+"</p>";
-  h += '<div class="tw"><table class="mx cgpool"><thead><tr><th>Куда</th>'
-     + '<th class="n">Очки</th><th>Что это даёт</th></tr></thead><tbody>';
+  h += T("pool_block.where_points_what_gives");
   for(var i=0;i<p.opts.length;i++){
-    var o = p.opts[i], n = ptsOf(o.name), cap = ptsCap(o);
+    var o = p.opts[i], n = ptsOf(o.id), cap = ptsCap(o);
     h += "<tr><th>"+esc(o.name)+"</th>"
        + '<td class="n"><span class="cgstep">'
-       + '<button type="button" class="cgpm" data-cg="ptdown" data-opt="'+esc(o.name)+'"'
-       + (n <= 0 ? " disabled" : "") + ' title="−1 очко">−</button>'
-       + "<b>"+n+"</b>"
-       + '<button type="button" class="cgpm" data-cg="ptup" data-opt="'+esc(o.name)+'"'
-       + (left <= 0 || n >= cap ? " disabled" : "") + ' title="+1 очко">+</button>'
-       + "</span></td><td>"+(ptsEffect(o, n) || ptsPreview(o))
+       + '<button type="button" class="cgpm" data-cg="ptdown" data-opt="'+esc(o.id)+'"'
+       + (n <= 0 ? " disabled" : "") + T("pool_block.title_1_point")+n+"</b>"
+       + '<button type="button" class="cgpm" data-cg="ptup" data-opt="'+esc(o.id)+'"'
+       + (left <= 0 || n >= cap ? " disabled" : "") + T("pool_block.plus_point_title")+(ptsEffect(o, n) || ptsPreview(o))
        + "</td></tr>";
   }
   h += "</tbody></table></div>";
@@ -829,12 +987,12 @@ function picksBlock(){
     h += '<ul class="cggear cgslots">';
     for(i=0;i<pk.slots;i++){
       h += '<li><select class="cgsel" data-cg="slot" data-slot="'+i+'">'
-         + '<option value=""'+(slotOf(i) ? "" : " selected")+">— решение "+(i+1)+" —</option>";
-      h += '<optgroup label="Транспорт в Автопарк">';
+         + '<option value=""'+(slotOf(i) ? "" : " selected")+T("picks_block.decision")+(i+1)+" —</option>";
+      h += T("picks_block.vehicle_group");
       for(var v=0;v<pk.vehicles.length;v++){
-        var key = "v:"+pk.vehicles[v];
+        var key = "v:"+pk.vehicles[v].id;
         h += '<option value="'+esc(key)+'"'+(slotOf(i)===key ? " selected" : "")+">"
-           + esc(pk.vehicles[v])+"</option>";
+           + esc(pk.vehicles[v].name)+"</option>";
       }
       h += "</optgroup>";
       var band = "";
@@ -843,9 +1001,9 @@ function picksBlock(){
         if(up.group !== band){
           if(band) h += "</optgroup>";
           band = up.group;
-          h += '<optgroup label="Улучшение — '+esc(band)+'">';
+          h += T("picks_block.optgroup_label_upgrade")+esc(band)+'">';
         }
-        var ukey = "u:"+up.name;
+        var ukey = "u:"+up.id;
         h += '<option value="'+esc(ukey)+'"'+(slotOf(i)===ukey ? " selected" : "")+">"
            + esc(up.name)+"</option>";
       }
@@ -859,24 +1017,20 @@ function picksBlock(){
     var have = slotTaken();
     if(have.length){
       var drive = (S.abil && S.abil.drive) || "";
-      h += '<p class="cgrow"><label>Транспорт Семьи на руках: '
-         + '<select class="cgsel" data-cg="drive"><option value="">— не выбран —</option>';
+      h += T("picks_block.family_vehicle_hand_none");
       for(i=0;i<have.length;i++)
         h += '<option value="'+esc(have[i])+'"'+(drive===have[i] ? " selected" : "")+">"
-           + esc(have[i])+"</option>";
+           + esc(vehName(have[i]))+"</option>";
       h += "</select></label></p>";
-      h += '<p class="note">ПЗТ, число мест и боевая СКО каждой машины — '
-         + link("transport", "в Перестрелке") + ".</p>";
+      h += T("picks_block.each_vehicle_s_sdp")
+         + link("transport", T("picks_block.friday_night_firefight")) + ".</p>";
     }
   }
   if(pk.kind === "fixer"){
     h += '<p class="cglegend">'+pk.note+"</p>";
     var cul = (S.abil && S.abil.culture) || "", lng = (S.abil && S.abil.lang) || "";
-    h += '<p class="cgrow"><label>Культура: <input type="text" class="cgtext" '
-       + 'data-cg="culture" value="'+esc(cul)+'" placeholder="чей район ты понимаешь"></label>'
-       + ' <label>Язык: <input type="text" class="cgtext" data-cg="abillang" list="cg-abillang" '
-       + 'value="'+esc(lng)+'" placeholder="и на чём там говорят"></label></p>';
-    var list = (D.hints && D.hints["Язык"]) || [];
+    h += T("picks_block.culture_input_type_text")+esc(cul)+T("picks_block.culture_placeholder")+esc(lng)+T("picks_block.placeholder_what_they_speak");
+    var list = (D.hints && D.hints.language) || [];
     if(list.length){
       h += '<datalist id="cg-abillang">';
       for(i=0;i<list.length;i++) h += '<option value="'+esc(list[i])+'">';
@@ -935,27 +1089,47 @@ function pendingPath(){
   if(!pathStarted()) return out;
   for(var i=0;i<shown.length;i++)
     if(shown[i].fork && forkPick(shown[i].n) < 0)
-      out.push("Ролевой путь: " + shown[i].q);
+      out.push(T("pending_path.role_path") + shown[i].q);
   return out;
 }
 
 function pendingAbil(){
   var out = [], p = pool(), pk = picks();
-  if(p && ptsLeft() > 0) out.push(ptsLeft() + " нераспределённых очков");
+  if(p && ptsLeft() > 0) out.push(ptsLeft() + T("pending_skills.unspent_points"));
   if(pk && pk.kind === "nomad"){
-    for(var i=0;i<pk.slots;i++) if(!slotOf(i)) out.push("Автопарк: решение " + (i+1));
+    for(var i=0;i<pk.slots;i++) if(!slotOf(i)) out.push(T("pending_abil.motor_pool_decision") + (i+1));
     if(slotTaken().length && !((S.abil && S.abil.drive) || ""))
-      out.push("Какой транспорт с собой");
+      out.push(T("pending_abil.which_vehicle"));
   }
   if(pk && pk.kind === "fixer"){
-    if(!((S.abil && S.abil.culture) || "").trim()) out.push("Вторая культура");
-    if(!((S.abil && S.abil.lang) || "").trim()) out.push("Её язык");
+    if(!((S.abil && S.abil.culture) || "").trim()) out.push(T("pending_abil.second_culture"));
+    if(!((S.abil && S.abil.lang) || "").trim()) out.push(T("pending_abil.its_language"));
   }
   return out;
 }
 
 /* ---------------------------------------------------------------- step 1: Role */
+/* The Role cards are drawn here, not exported as markup: their labels follow the
+   language, and so — once the data is translated — will their names. */
+function roleCards(){
+  var h = "";
+  for(var i=0;i<D.roles.length;i++){
+    var r = D.roles[i], cue = "";
+    if(r.starter)
+      cue = '<span class="rcue easy">'+T("role_cards.easy_beginner")+'</span><span class="rwhy">'+esc(r.starter)+"</span>";
+    else if(r.extra)
+      cue = '<span class="rcue more">'+T("role_cards.separate_chapter")+'</span><span class="rwhy">'+esc(r.extra.what)+"</span>";
+    h += '<button type="button" class="rolecard'+(r.starter ? " starter" : "")+'" data-cg="role" data-role="'+esc(r.id)+'">'
+       + '<span class="rname">'+esc(r.name)+'</span><span class="rabil">'+esc(r.ability)+'</span>'
+       + '<span class="rblurb">'+esc(r.blurb)+"</span>"+cue+"</button>";
+  }
+  return h;
+}
 function paintRoles(){
+  var grid = q("rolegrid");
+  if(grid && grid.getAttribute("data-lang") !== LANG){
+    grid.innerHTML = roleCards(); grid.setAttribute("data-lang", LANG);
+  }
   var buttons = root.querySelectorAll('[data-cg="role"]');
   for(var i=0;i<buttons.length;i++)
     buttons[i].classList.toggle("on", buttons[i].getAttribute("data-role")===S.role);
@@ -963,7 +1137,7 @@ function paintRoles(){
 root.addEventListener("click", function(ev){
   var card = ev.target.closest ? ev.target.closest('[data-cg="role"]') : null;
   if(!card) return;
-  var name = card.getAttribute("data-role");
+  var name = card.getAttribute("data-role");   // the Role's id
   /* S.gear goes with the rest. It is keyed by POSITION in the Role's gear list, so
      keeping it across a Role change re-applied the old index to a different item:
      choosing Solo's "Bulletproof Shield" over "Heavy Melee Weapon" (item 2, option 1)
@@ -1037,8 +1211,8 @@ function rolledCount(){
    values, not points spent above the floor — that is what the book's own worked
    example spends (62 points, ten STATs, nothing left over). */
 function statPool(){
-  var name = S.statBudget || D.statPoolDefault;
-  for(var i=0;i<D.statPools.length;i++) if(D.statPools[i].name === name) return D.statPools[i];
+  var id = S.statBudget || D.statPoolDefault;
+  for(var i=0;i<D.statPools.length;i++) if(D.statPools[i].id === id) return D.statPools[i];
   return D.statPools[0];
 }
 function ensureStatAlloc(){
@@ -1064,8 +1238,8 @@ function recalcStats3(){
    old one is no longer meaningful — reset to the floor rather than leaving stray
    points nobody asked for. Same "reset, don't try to convert" rule as the
    method-switch handler uses for STATs and skills generally. */
-function setStatPool(name){
-  S.statBudget = name;
+function setStatPool(id){
+  S.statBudget = id;
   S.statAlloc = {}; ensureStatAlloc();
   recalcStats3(); save(); paintAll();
 }
@@ -1085,8 +1259,8 @@ function paintStatPoolPick(){
   var cur = statPool(), h = "";
   for(var i=0;i<D.statPools.length;i++){
     var p = D.statPools[i];
-    h += '<button type="button" class="cgbtn cgmini'+(p.name===cur.name?" on":"")+'" '
-       + 'data-cg="statpool" data-name="'+esc(p.name)+'">'+esc(p.name)+' — '+p.points+'</button>';
+    h += '<button type="button" class="cgbtn cgmini'+(p.id===cur.id?" on":"")+'" '
+       + 'data-cg="statpool" data-name="'+esc(p.id)+'">'+esc(p.name)+' — '+p.points+'</button>';
   }
   box.innerHTML = h;
 }
@@ -1094,17 +1268,16 @@ function paintStatBudget3(){
   var box = q("statbudget"); if(!box) return;
   ensureStatAlloc();
   var left = statLeft3(), pool = statPool();
-  box.innerHTML = '<span class="cgbleft'+(left ? " cgbon" : "")+'">Осталось <b>'+left
-    + "</b> из "+pool.points+"</span>";
+  box.innerHTML = '<span class="cgbleft'+(left ? " cgbon" : "")+T("stat_budget3.left")+left
+    + T("stat_budget3.of")+pool.points+"</span>";
 }
 function paintStatAlloc(){
   var box = q("statalloc"); if(!box) return;
   ensureStatAlloc();
-  var left = statLeft3(), h = '<div class="tw"><table class="mx"><thead><tr><th>СТАТ</th>'
-        + '<th class="n">Значение</th><th></th></tr></thead><tbody>';
+  var left = statLeft3(), h = T("stat_alloc.stat_value");
   for(var i=0;i<D.stats.length;i++){
     var code = D.stats[i], v = S.statAlloc[code];
-    h += "<tr><th>"+code+' <span class="cgspec">'+esc(D.statFull[code]||"")+"</span>"+statWhat(code)+"</th>"
+    h += "<tr><th>"+sName(code)+' <span class="cgspec">'+esc(D.statFull[code]||"")+"</span>"+statWhat(code)+"</th>"
        + '<td class="n">'+v+bar(v)+"</td>"
        + '<td><span class="cgstep">'
        + '<button type="button" class="cgpm" data-cg="statdown" data-code="'+code+'"'
@@ -1143,18 +1316,16 @@ function paintStatGrid(){
   var grid = q("statgrid"), prog = q("statprog"), r = role();
   if(!grid) return;
   if(!r){ grid.innerHTML = ""; if(prog) prog.textContent = ""; return; }
-  if(prog) prog.textContent = rolledCount() + " из " + D.stats.length;
-  var h = '<div class="tw"><table class="mx"><thead><tr><th>СТАТ</th>'
-        + '<th class="n">1d10</th><th class="n">Значение</th><th></th></tr></thead><tbody>';
+  if(prog) prog.textContent = rolledCount() + T("stat_grid.of") + D.stats.length;
+  var h = T("stat_grid.stat_1d10_value");
   for(var i=0;i<D.stats.length;i++){
     var d = sroll(i), code = D.stats[i];
-    h += "<tr"+(d?"":' class="cgtodo1"')+"><th>"+code
+    h += "<tr"+(d?"":' class="cgtodo1"')+"><th>"+sName(code)
        + ' <span class="cgspec">'+esc(D.statFull[code]||"")+"</span>"+statWhat(code)+"</th>"
        + '<td class="d">'+(d ? d : "—")+"</td>"
        + '<td class="n">'+(d ? "<b>"+r.tpl[d-1][i]+"</b>"+bar(r.tpl[d-1][i]) : "—")+"</td>"
        + '<td><button type="button" class="cgbtn cgmini" data-cg="rollstat1" data-i="'+i+'">1d10</button>'
-       + ' <select class="cgsel cgselnarrow" data-cg="pickstat1" data-i="'+i+'">'
-       + '<option value="">выбрать…</option>';
+       + ' <select class="cgsel cgselnarrow" data-cg="pickstat1" data-i="'+i+T("stat_grid.choose");
     for(var m=1;m<=10;m++)
       h += '<option value="'+m+'"'+(d===m?" selected":"")+">"+m+" → "+r.tpl[m-1][i]+"</option>";
     h += "</select></td></tr>";
@@ -1170,13 +1341,13 @@ function paintStats(){
   var moreBox = tbl && tbl.closest("details");
   if(moreBox) moreBox.hidden = isCalc();
   if(!box) return;
-  if(!r){ box.innerHTML = '<p class="cghint">Сначала выбери Роль.</p>'; if(tbl) tbl.innerHTML=""; return; }
-  if(out) out.textContent = S.roll ? ("выпало " + S.roll) : "";
+  if(!r){ box.innerHTML = T("stats.pick_role_first"); if(tbl) tbl.innerHTML=""; return; }
+  if(out) out.textContent = S.roll ? (T("stats.rolled") + S.roll) : "";
 
   if(!S.stats){ box.innerHTML = '<p class="cghint">'
-    + (isEdge() ? "Каждому СТАТу нужен свой бросок — брось все десять или по одному."
-                : isCalc() ? "Раздели весь пул в таблице выше, пока «Осталось» не дойдёт до 0 — тогда здесь появятся СТАТы и производные."
-                : "Брось кубик — или разверни таблицу и выбери строку.") + "</p>"; }
+    + (isEdge() ? T("stats.each_stat_needs_its")
+                : isCalc() ? T("stats.spend_whole_pool_table")
+                : T("stats.roll_die_open_table")) + "</p>"; }
   else {
     var dv = derived(), h = "";
     /* the bar says "high or low" without inventing words for it — the book only
@@ -1184,44 +1355,42 @@ function paintStats(){
        Only #1 needs this table: #2/#3 already show every STAT, its bar and what it
        is for in the table above, where it was set (see statWhat). */
     if(!isEdge() && !isCalc()){
-      h += '<div class="tw"><table class="mx"><thead><tr><th>СТАТ</th><th class="n">У тебя</th>'
-         + "<th>Группа</th><th>Что это</th></tr></thead><tbody>";
+      h += T("stats.stat_have_group_what");
       for(var s2=0;s2<D.stats.length;s2++){
         var code = D.stats[s2], nfo = D.statNotes[code] || {group:"",what:""};
-        h += "<tr><th>"+code+' <span class="cgspec">'+esc(D.statFull[code]||"")+"</span></th>"
+        h += "<tr><th>"+sName(code)+' <span class="cgspec">'+esc(D.statFull[code]||"")+"</span></th>"
            + '<td class="n"><b>'+S.stats[code]+"</b>"+bar(S.stats[code])+"</td>"
            + "<td>"+esc(nfo.group)+"</td><td>"+esc(nfo.what)+"</td></tr>";
       }
       h += "</tbody></table></div>";
     }
-    h += '<p class="cglegend">Полоска — насколько число велико: обычные СТАТы идут от 1 до 8.</p>';
-    h += '<div class="tw"><table class="mx"><thead><tr><th>Производное</th><th class="n">Значение</th><th>Откуда</th></tr></thead><tbody>';
-    h += '<tr><th>Пункты Здоровья</th><td class="n">'+dv.hp+'</td><td>10 + 5 × (ТЕЛ + ВОЛЯ) ÷ 2, вверх</td></tr>';
-    h += '<tr><th>Порог тяжёлого ранения</th><td class="n">'+dv.serious+'</td><td>половина ПЗ, вверх</td></tr>';
-    h += '<tr><th>Спасбросок от смерти</th><td class="n">'+dv.death+'</td><td>равен ТЕЛ</td></tr>';
+    h += T("stats.bar_shows_how_big");
+    h += T("stats.derived_value_where_comes");
+    h += T("stats.hit_points")+dv.hp+T("stats.hp_formula");
+    h += T("stats.seriously_wounded_threshold")+dv.serious+T("stats.half_hp_rounded_up");
+    h += T("stats.death_save")+dv.death+T("stats.equals_body");
     /* The Role's starting implants are already paid for here, so the "source"
        column has to say so — "EMP × 10" beside a number that is not EMP × 10 is
        the kind of line a reader checks once and stops trusting. */
     /* Where the implants are listed differs by method: #1/#2's fixed package is
        printed on the Sheet, #3's are its own rows on the Gear step. Naming a
        step by number here was wrong for both — the strip renumbers itself. */
-    h += '<tr><th>Человечность</th><td class="n">'+dv.hum+"</td><td>"
-       + (dv.hl ? dv.empBase + " × 10 = " + dv.humBase + ", минус " + dv.hl
-                  + (isCalc() ? " ПЧ за импланты, купленные на шаге «Снаряжение»"
-                              : " ПЧ за стартовые импланты (список — на Листе)")
-                : "ЭМП × 10")
+    h += T("stats.humanity")+dv.hum+"</td><td>"
+       + (dv.hl ? dv.empBase + " × 10 = " + dv.humBase + T("stats.minus") + dv.hl
+                  + (isCalc() ? T("stats.hl_cyberware_bought_gear")
+                              : T("stats.hl_starting_cyberware_list"))
+                : T("stats.humanity_plain"))
        + "</td></tr>";
     if(dv.hl)
-      h += '<tr><th>ЭМП после имплантов</th><td class="n">'+dv.emp+"</td><td>"
-         + dv.hum + " ÷ 10 = " + dv.emp + " — каждый полный десяток Человечности это "
-         + "единица ЭМП; проверки на ЭМП идут от этого числа</td></tr>";
+      h += T("stats.emp_after_cyberware")+dv.emp+"</td><td>"
+         + dv.hum + " ÷ 10 = " + dv.emp + T("stats.every_full_ten_humanity");
     h += '</tbody></table></div>';
     box.innerHTML = h;
   }
 
   if(tbl){
     var t = '<div class="tw"><table class="mx"><thead><tr><th class="n">1d10</th>';
-    for(var k=0;k<D.stats.length;k++) t += '<th class="n">'+D.stats[k]+'</th>';
+    for(var k=0;k<D.stats.length;k++) t += '<th class="n">'+sName(D.stats[k])+'</th>';
     t += '<th></th></tr></thead><tbody>';
     /* The same table serves both methods, but "what is selected" means different
        things in it. Under #1 a whole row is taken, so the row highlights and each
@@ -1234,7 +1403,7 @@ function paintStats(){
       for(var m=0;m<10;m++)
         t += '<td class="n'+(isEdge() && sroll(m)===n+1 ? " cgcell" : "")+'">'+r.tpl[n][m]+'</td>';
       t += "<td>"+(isEdge() ? ""
-        : '<button type="button" class="cgbtn cgmini" data-cg="pickrow" data-row="'+(n+1)+'">взять</button>')
+        : '<button type="button" class="cgbtn cgmini" data-cg="pickrow" data-row="'+(n+1)+T("stats.take"))
         + "</td></tr>";
     }
     tbl.innerHTML = t + "</tbody></table></div>";
@@ -1245,7 +1414,7 @@ root.addEventListener("click", function(ev){
   if(t.getAttribute && t.getAttribute("data-cg")==="roll"){
     ev.preventDefault(); ev.stopPropagation();
     rolls[t.getAttribute("data-key")] = rollPop(t,
-      t.getAttribute("data-key"), t.getAttribute("data-stat"),
+      t.getAttribute("data-key"), sName(t.getAttribute("data-stat")),
       +t.getAttribute("data-level"), +t.getAttribute("data-total"));
   }
   if(t.getAttribute && t.getAttribute("data-cg")==="rollstats"){ setStats(d10()); }
@@ -1290,35 +1459,30 @@ function paintSkills(){
   /* Switching away from #3 live left its 66-skill table standing under this one —
      skills you could see and not buy. paintSkills3 is the only thing that fills it. */
   var box3 = q("skillbox3"); if(box3) box3.innerHTML = "";
-  if(!r){ box.innerHTML = '<p class="cghint">Сначала выбери Роль.</p>'; return; }
-  var h = '<p class="cglegend">Проверка — <b>СТАТ + Навык + 1d10</b> против сложности. '
-        + 'Колонка <b>Обычно берёт</b> — самая трудная задача, которая этому навыку '
-        + 'по силам <b>чаще, чем нет</b>. Число в ней меньше СЛ не случайно: разницу '
-        + 'добирает кубик, поэтому там и написано, сколько нужно выбросить. '
-        + 'Лестница сложностей целиком — ' + link("checks", "в Проверках и Навыках") + ".</p>";
+  if(!r){ box.innerHTML = T("stats.pick_role_first"); return; }
+  var h = T("skills.check_legend") + link("checks", T("skills.checks_skills")) + ".</p>";
   var edge = isEdge(), cols = edge ? 6 : 5;
-  h += '<div class="tw"><table class="rf cgskilltbl">' + skillCols(edge) + '<thead><tr><th>Навык</th>'
-        + '<th class="n">' + (edge ? "Уровень" : "Ур") + "</th>"
-        + (edge ? '<th class="n">Очки</th>' : "")
-        + '<th class="n">СТАТ</th><th class="n">Всего</th><th>Обычно берёт</th></tr></thead><tbody>';
+  h += '<div class="tw"><table class="rf cgskilltbl">' + skillCols(edge) + T("skills.skill") + (edge ? T("skills.level") : T("skills.lv")) + "</th>"
+        + (edge ? T("skills.points") : "")
+        + T("skills.stat_total_usually_beats");
   var group = null;
   for(var i=0;i<r.skills.length;i++){
     var s = r.skills[i];
-    var kind = s.core ? "Основной" : "Профессиональный";
+    var kind = s.core ? T("skills.core") : T("skills.professional");
     if(kind !== group){
       group = kind;
-      h += '<tr class="cathead"><th colspan="'+cols+'">'+kind+(s.core?" — есть у каждого":" — от Роли")+'</th></tr>';
+      h += '<tr class="cathead"><th colspan="'+cols+'">'+kind+(s.core?T("skills.everyone_has_these"):T("skills.from_role"))+'</th></tr>';
     }
     var stat = eff(s.stat);
-    var name = esc(s.skill) + (s.x2 ? ' <span class="x2">×2</span>' : "");
+    var name = esc(s.name) + (s.x2 ? ' <span class="x2">×2</span>' : "");
     if(s.pick !== null && s.pick !== undefined && s.pick === ""){
-      var val = S.picks[s.skill] || "";
-      var list = (D.hints[s.skill]||[]);
-      name += ' <input type="text" class="cgpick" data-cg="pick" data-skill="'+esc(s.skill)+'"'
-            + ' value="'+esc(val)+'" placeholder="выбери 1"'
-            + (list.length ? ' list="cg-'+encodeURIComponent(s.skill)+'"' : "") + '>';
+      var val = S.picks[s.id] || "";
+      var list = (D.hints[s.id]||[]);
+      name += ' <input type="text" class="cgpick" data-cg="pick" data-skill="'+esc(s.id)+'"'
+            + ' value="'+esc(val)+T("skills.pick_placeholder")
+            + (list.length ? ' list="cg-'+encodeURIComponent(s.id)+'"' : "") + '>';
       if(list.length){
-        name += '<datalist id="cg-'+encodeURIComponent(s.skill)+'">';
+        name += '<datalist id="cg-'+encodeURIComponent(s.id)+'">';
         for(var L=0;L<list.length;L++) name += '<option value="'+esc(list[L])+'">';
         name += "</datalist>";
       }
@@ -1331,7 +1495,7 @@ function paintSkills(){
     var level = lv(s), total = (stat===null) ? null : stat + level;
     /* "DEX" alone made the sum look like it came from nowhere: by this step the
        STATs are already rolled, so the column can show the number it contributes. */
-    var statCell = esc(s.stat) + (stat===null ? "" : ' <span class="cgsv">'+stat+"</span>");
+    var statCell = esc(sName(s.stat)) + (stat===null ? "" : ' <span class="cgsv">'+stat+"</span>");
     /* Under Method #2 the level is a control, not a value. "+" is refused when the
        next level costs more than is left, so the budget can never be overspent —
        the rules have no notion of debt, and a counter that can go negative invites
@@ -1340,31 +1504,27 @@ function paintSkills(){
     if(edge){
       var step = s.x2 ? 2 : 1;
       lvCell = '<span class="cgstep">'
-        + '<button type="button" class="cgpm" data-cg="lvdown" data-skill="'+esc(s.skill)+'"'
-        + (level <= D.skillMin ? " disabled" : "") + ' title="−1 уровень">−</button>'
-        + '<b>'+level+"</b>"
-        + '<button type="button" class="cgpm" data-cg="lvup" data-skill="'+esc(s.skill)+'"'
-        + (level >= D.skillMax || unspent() < step ? " disabled" : "") + ' title="+1 уровень">+</button>'
-        + "</span>";
+        + '<button type="button" class="cgpm" data-cg="lvdown" data-skill="'+esc(s.id)+'"'
+        + (level <= D.skillMin ? " disabled" : "") + T("skills.title_1_level")+level+"</b>"
+        + '<button type="button" class="cgpm" data-cg="lvup" data-skill="'+esc(s.id)+'"'
+        + (level >= D.skillMax || unspent() < step ? " disabled" : "") + T("skills.plus_level_title");
     } else lvCell = String(level);
     h += "<tr><th>"+name+'</th><td class="n">'+lvCell+"</td>"
        + (edge ? '<td class="n">'+costOf(s)+"</td>" : "")
        + '<td class="n">'+statCell+"</td>"
        + '<td class="n">'
        + (total===null ? "—"
-          : '<button type="button" class="cgsum" data-cg="roll" data-key="'+esc(s.skill)
+          : '<button type="button" class="cgsum" data-cg="roll" data-key="'+esc(s.name)
             + '" data-stat="'+esc(s.stat)+'" data-level="'+level
-            + '" data-total="'+total+'" title="Бросить проверку">'+total+"</button>")
+            + '" data-total="'+total+T("skills.title_roll_check")+total+"</button>")
        + "</td>"
        + "<td>"+(total===null?"—":tierChip(total))+"</td></tr>";
   }
   h += "</tbody></table></div>";
   h += '<p class="note"><span class="x2">×2</span> — '
-     + (edge ? "навык стоит <b>два очка за уровень</b>, остальные по одному "
-             + "(колонка «Очки» считает это за тебя). Ниже "+D.skillMin+" и выше "
-             + D.skillMax+" правила не пускают."
-             : "навык стоит вдвое дороже при прокачке; на старте это ни на что не "
-             + "влияет. Уровни здесь трогать не нужно: набор Роли книга выдаёт целиком.")
+     + (edge ? T("skills.skill_costs_two_points")+D.skillMin+T("skills.above")
+             + D.skillMax+T("skills.period")
+             : T("skills.skill_costs_double_raise"))
      + "</p>";
   box.innerHTML = h;
   paintBudget();
@@ -1378,15 +1538,9 @@ function paintBudget(){
   if(!r){ box.innerHTML = ""; return; }
   var leftN = unspent();
   var tight = (leftN === 0 && isEdge())
-    ? '<span class="cghint">Все 86 очков уже стоят в наборе Роли, поэтому «+» нигде не нажимается. '
-      + 'Чтобы вложить в другой навык, сначала убери очки у другого («−») или нажми «всё в минимум».</span>' : "";
-  box.innerHTML = '<span class="cgbleft'+(leftN ? " cgbon" : "")+'">Осталось <b>'+leftN
-    + "</b> из "+D.budget+"</span>"
-    + '<span class="cgbpre">'
-    + '<button type="button" class="cgbtn cgmini" data-cg="preset" data-kind="role">набор Роли</button>'
-    + '<button type="button" class="cgbtn cgmini" data-cg="preset" data-kind="four">по 4 в каждый</button>'
-    + '<button type="button" class="cgbtn cgmini" data-cg="preset" data-kind="min">всё в минимум</button>'
-    + "</span>" + tight;
+    ? T("budget.all_86_points_already") : "";
+  box.innerHTML = '<span class="cgbleft'+(leftN ? " cgbon" : "")+T("stat_budget3.left")+leftN
+    + T("stat_budget3.of")+D.budget+T("budget.presets") + tight;
 }
 /* A stepper repaints the table it lives in, so the button under the cursor is a new
    element and has lost focus. The mouse does not notice; the keyboard does, and
@@ -1397,7 +1551,7 @@ function bump(skill, delta){
   var r = role(); if(!r) return;
   for(var i=0;i<r.skills.length;i++){
     var s = r.skills[i];
-    if(s.skill !== skill) continue;
+    if(s.id !== skill) continue;
     var step = s.x2 ? 2 : 1, next = lv(s) + delta;
     if(next < D.skillMin || next > D.skillMax) return;
     if(delta > 0 && unspent() < step) return;
@@ -1414,39 +1568,30 @@ function bump(skill, delta){
 function paintHomebrew(){
   var box = q("hbbox"); if(!box) return;
   if(!hbOn() || !role()){ box.innerHTML = ""; return; }
-  var h = '<p class="cglegend"><b>Свои навыки.</b> Нужен навык, которого нет в списке выше '
-        + '(хомбрю, настройка кампании)? Впиши название, выбери СТАТ и добавь — он тратит те же очки '
-        + 'и попадёт на лист.</p>';
+  var h = T("homebrew.own_skills_need_skill");
   if(S.homebrew.length){
-    h += '<div class="tw"><table class="rf cgskilltbl">' + skillCols(true) + '<thead><tr><th>Свой навык</th><th class="n">Уровень</th>'
-       + '<th class="n">Очки</th><th class="n">СТАТ</th><th class="n">Всего</th><th>Обычно берёт</th></tr></thead><tbody>';
+    h += '<div class="tw"><table class="rf cgskilltbl">' + skillCols(true) + T("homebrew.own_skill_level_points");
     for(var i=0;i<S.homebrew.length;i++){
       var e = S.homebrew[i], step = e.x2 ? 2 : 1, sv = eff(e.stat), tot = (sv===null) ? null : sv + e.level;
       h += "<tr><th>"+esc(e.name)+(e.x2 ? ' <span class="x2">×2</span>' : "")
          + (e.what ? '<span class="itsub">'+esc(e.what)+"</span>" : "")
-         + ' <button type="button" class="cgbtn cgmini" data-cg="hbrm" data-i="'+i+'" title="Убрать навык">✕</button></th>'
-         + '<td class="n"><span class="cgstep">'
-         + '<button type="button" class="cgpm" data-cg="hbdown" data-i="'+i+'"'
-         + (e.level <= 0 ? " disabled" : "") + ' title="−1 уровень">−</button><b>'+e.level+"</b>"
+         + ' <button type="button" class="cgbtn cgmini" data-cg="hbrm" data-i="'+i+T("homebrew.title_remove_skill_button")+i+'"'
+         + (e.level <= 0 ? " disabled" : "") + T("skills.title_1_level")+e.level+"</b>"
          + '<button type="button" class="cgpm" data-cg="hbup" data-i="'+i+'"'
-         + (e.level >= D.skillMax || hbLeft() < step ? " disabled" : "") + ' title="+1 уровень">+</button>'
-         + '</span></td><td class="n">'+hbCost(e)+'</td><td class="n">'+esc(e.stat)
+         + (e.level >= D.skillMax || hbLeft() < step ? " disabled" : "") + T("homebrew.title_1_level")+hbCost(e)+'</td><td class="n">'+esc(sName(e.stat))
          + (sv===null ? "" : ' <span class="cgsv">'+sv+"</span>")+'</td><td class="n">'
          + (tot===null ? "—"
             : '<button type="button" class="cgsum" data-cg="roll" data-key="'+esc(e.name)
               + '" data-stat="'+esc(e.stat)+'" data-level="'+e.level+'" data-total="'+tot
-              + '" title="Бросить проверку">'+tot+"</button>")
+              + T("skills.title_roll_check")+tot+"</button>")
          + "</td><td>"+(tot===null ? "—" : tierChip(tot))+"</td></tr>";
     }
     h += "</tbody></table></div>";
   }
   if(S.homebrew.length < HB_MAX){
-    h += '<p class="cgrow"><input type="text" class="cgpick" data-cg="hbname" maxlength="40" placeholder="Название навыка"> '
-       + '<input type="text" class="cgpick" data-cg="hbwhat" maxlength="200" placeholder="Описание — что позволяет"> '
-       + '<select data-cg="hbstat">';
-    for(var s=0;s<D.stats.length;s++) h += '<option>'+esc(D.stats[s])+"</option>";
-    h += '</select> <label><input type="checkbox" data-cg="hbx2"> ×2</label> '
-       + '<button type="button" class="cgbtn" data-cg="hbadd">Добавить навык</button></p>';
+    h += T("homebrew.add_form");
+    for(var s=0;s<D.stats.length;s++) h += '<option value="'+esc(D.stats[s])+'">'+esc(sName(D.stats[s]))+"</option>";
+    h += T("homebrew.add_button_tail");
   }
   box.innerHTML = h;
 }
@@ -1480,7 +1625,7 @@ root.addEventListener("click", function(ev){
 function bumpPoint(name, delta){
   var p = pool(); if(!p) return;
   var found = null;
-  for(var i=0;i<p.opts.length;i++) if(p.opts[i].name === name) found = p.opts[i];
+  for(var i=0;i<p.opts.length;i++) if(p.opts[i].id === name) found = p.opts[i];
   if(!found) return;
   var next = ptsOf(name) + delta;
   if(next < 0 || next > ptsCap(found)) return;
@@ -1574,7 +1719,20 @@ function basePick(name){
   for(var i=0;i<D.roles.length;i++){
     var sk = D.roles[i].skills;
     for(var j=0;j<sk.length;j++)
-      if(sk[j].core && sk[j].skill === name && sk[j].pick) return sk[j].pick;
+      if(sk[j].core && sk[j].id === name && sk[j].pick) return sk[j].pick;
+  }
+  return "";
+}
+/* What a specialisation field says: what the player typed or picked, and — for the two Basic
+   skills that come with theirs (Language, Local Expert) — the package's own default while the
+   field is empty. The default is READ here, never written into S.picks: it is a word of one
+   language, and a saved character must not hold one. */
+function pickOf(key){
+  var v = (S.picks[key] || "").trim();
+  if(v) return v;
+  if(isCalc() && !isExtra3(key)){
+    var b = skillBase(key);
+    if(D.baseSkills.indexOf(b) >= 0 && D.hints.hasOwnProperty(b)) return basePick(b);
   }
   return "";
 }
@@ -1583,10 +1741,6 @@ function ensureSkills3(){
   for(var i=0;i<D.baseSkills.length;i++){
     var name = D.baseSkills[i];
     if(typeof S.skills3[name] !== "number") S.skills3[name] = D.skillMin;
-    if(D.hints.hasOwnProperty(name) && !(S.picks[name] || "").trim()){
-      var bp = basePick(name);
-      if(bp) S.picks[name] = bp;
-    }
   }
 }
 function bumpSkill3(name, delta){
@@ -1604,8 +1758,8 @@ function bumpSkill3(name, delta){
 function paintBudget3(){
   var box = q("budget3"); if(!box) return;
   var left = skillsLeft3();
-  box.innerHTML = '<span class="cgbleft'+(left ? " cgbon" : "")+'">Осталось <b>'+left
-    + "</b> из "+D.budget+"</span>";
+  box.innerHTML = '<span class="cgbleft'+(left ? " cgbon" : "")+T("stat_budget3.left")+left
+    + T("stat_budget3.of")+D.budget+"</span>";
 }
 var skillFilter3 = "";
 function paintSkills3(){
@@ -1613,13 +1767,11 @@ function paintSkills3(){
   if(!role()){ box.innerHTML = ""; return; }
   ensureSkills3();
   var names = Object.keys(D.skills), q3 = skillFilter3.trim().toLowerCase();
-  var h = '<div class="tw"><table class="rf cgskilltbl">' + skillCols(true) + '<thead><tr><th>Навык</th>'
-        + '<th class="n">Уровень</th><th class="n">Очки</th>'
-        + '<th class="n">СТАТ</th><th class="n">Всего</th><th>Обычно берёт</th></tr></thead><tbody>';
+  var h = '<div class="tw"><table class="rf cgskilltbl">' + skillCols(true) + T("skills3.skill_level_points_stat");
   var group = null, shown = 0;
   for(var i=0;i<names.length;i++){
     var base = names[i], info = D.skills[base];
-    if(q3 && base.toLowerCase().indexOf(q3) === -1) continue;
+    if(q3 && info.name.toLowerCase().indexOf(q3) === -1) continue;
     shown++;
     if(info.cat !== group){
       group = info.cat;
@@ -1629,11 +1781,11 @@ function paintSkills3(){
     for(var cp=0;cp<copies.length;cp++){
     var name = copies[cp], extra = isExtra3(name), last = (cp === copies.length-1);
     var level = skillLevel3(name), min3 = skillMin3(name);
-    var nm = esc(base) + (info.x2 ? ' <span class="x2">×2</span>' : "");
+    var nm = esc(info.name) + (info.x2 ? ' <span class="x2">×2</span>' : "");
     if(multi3(base)){
-      var val = S.picks[name] || "", list = D.hints[base] || [];
+      var val = pickOf(name), list = D.hints[base] || [];
       nm += ' <input type="text" class="cgpick" data-cg="pick" data-skill="'+esc(name)+'"'
-          + ' value="'+esc(val)+'" placeholder="выбери"'
+          + ' value="'+esc(val)+T("skills3.placeholder_pick")
           + (list.length ? ' list="cg-'+encodeURIComponent(base)+'"' : "") + '>';
       if(list.length && cp === 0){
         nm += '<datalist id="cg-'+encodeURIComponent(base)+'">';
@@ -1642,24 +1794,22 @@ function paintSkills3(){
       }
       if(extra)
         nm += ' <button type="button" class="cgbtn cgmini" data-cg="sk3rm" data-skill="'+esc(name)
-            + '" title="Убрать эту специализацию">✕</button>';
+            + T("skills3.title_remove_specialisation");
     }
     if(info.what && !extra) nm += '<span class="itsub">'+esc(info.what)+"</span>";
     /* The way to a second language sits under the LAST copy, so it is always
        right under the list it extends. */
     if(multi3(base) && last)
       nm += '<span class="itsub"><button type="button" class="cglinkbtn" data-cg="sk3add" data-skill="'
-          + esc(base)+'">+ ещё '+esc(base.toLowerCase())+' — другая специализация, свой уровень</button></span>';
+          + esc(base)+T("skills3.another")+esc(info.name.toLowerCase())+T("skills3.different_specialisation_its_own");
     var step = info.x2 ? 2 : 1;
     var lvCell = '<span class="cgstep">'
       + '<button type="button" class="cgpm" data-cg="sk3down" data-skill="'+esc(name)+'"'
-      + (level <= min3 ? " disabled" : "") + ' title="−1 уровень">−</button>'
-      + '<b>'+level+"</b>"
+      + (level <= min3 ? " disabled" : "") + T("skills.title_1_level")+level+"</b>"
       + '<button type="button" class="cgpm" data-cg="sk3up" data-skill="'+esc(name)+'"'
-      + (level >= D.skillMax || skillsLeft3() < step ? " disabled" : "") + ' title="+1 уровень">+</button>'
-      + "</span>";
+      + (level >= D.skillMax || skillsLeft3() < step ? " disabled" : "") + T("skills.plus_level_title");
     var stat = eff(info.stat), total = (stat===null) ? null : stat + level;
-    var statCell = esc(info.stat) + (stat===null ? "" : ' <span class="cgsv">'+stat+"</span>");
+    var statCell = esc(sName(info.stat)) + (stat===null ? "" : ' <span class="cgsv">'+stat+"</span>");
     h += "<tr"+(level < min3 ? ' class="cgtodo1"' : "")+"><th>"+nm+'</th>'
        + '<td class="n">'+lvCell+"</td>"
        + '<td class="n">'+skillCost3(name)+"</td>"
@@ -1667,15 +1817,15 @@ function paintSkills3(){
        + '<td class="n">'
        + (total===null ? "—"
           : '<button type="button" class="cgsum" data-cg="roll" data-key="'
-            + esc(base + ((S.picks[name]||"").trim() ? " ("+S.picks[name].trim()+")" : ""))
+            + esc(info.name + (pickOf(name) ? " ("+pickOf(name)+")" : ""))
             + '" data-stat="'+esc(info.stat)+'" data-level="'+level
-            + '" data-total="'+total+'" title="Бросить проверку">'+total+"</button>")
+            + '" data-total="'+total+T("skills.title_roll_check")+total+"</button>")
        + "</td>"
        + "<td>"+(total===null?"—":tierChip(total))+"</td></tr>";
     }
   }
   h += "</tbody></table></div>";
-  if(!shown) h = '<p class="cghint">Ничего не найдено — попробуй другое слово.</p>';
+  if(!shown) h = T("skills3.nothing_found_try_another");
   box.innerHTML = h;
   paintBudget3();
 }
@@ -1742,14 +1892,18 @@ function ensureDatalist(id){
 }
 function catalogIndex(){
   if(CATALOG_BY_LABEL) return CATALOG_BY_LABEL;
-  CATALOG_BY_LABEL = {};
+  CATALOG_BY_LABEL = {}; CATALOG_BY_ID = {};
   var gearDl = ensureDatalist(CATALOG_DATALIST_GEAR),
       clothDl = ensureDatalist(CATALOG_DATALIST_CLOTHING);
   var gearH = "", clothH = "";
   var items = D.catalog || [];
   for(var i=0;i<items.length;i++){
-    CATALOG_BY_LABEL[items[i].label] = items[i];
-    var opt = '<option value="'+esc(items[i].label)+'">';
+    var lab = items[i].label, dup = 2;
+    while(CATALOG_BY_LABEL[lab]) lab = items[i].label + " #" + (dup++);
+    items[i].label = lab;
+    CATALOG_BY_LABEL[lab] = items[i];
+    if(items[i].id) CATALOG_BY_ID[items[i].id] = items[i];
+    var opt = '<option value="'+esc(lab)+'">';
     if(items[i].kind === "clothing") clothH += opt; else gearH += opt;
   }
   gearDl.innerHTML = gearH;
@@ -1763,14 +1917,24 @@ function catalogIndex(){
    picking again is the only way to change one. */
 /* The book's English name for a catalogue row, as the same .itsub[lang=en] line the
    reference puts under every name — so the player can find it in an English book. */
+/* A row picked from the catalogue knows its item (`cid`), and name, English name and price
+   tier are read from the item in the language of the moment; a typed row, or one saved
+   before the id existed, shows what it holds. */
+function rowItem(row){
+  if(!row.cid) return null;
+  catalogIndex();
+  return CATALOG_BY_ID[row.cid] || null;
+}
+function rowName(row){ var it = rowItem(row); return it ? it.name : row.name; }
 function gearAlt(row){
-  return row.alt ? '<span class="itsub" lang="en">'+esc(row.alt)+"</span>" : "";
+  var it = rowItem(row), alt = it ? it.alt : row.alt;
+  return alt ? '<span class="itsub" lang="en">'+esc(alt)+"</span>" : "";
 }
 function pickFromCatalog(which, item){
   if(!S[which]) S[which] = [];
   S[which].push({name: item.name, price: item.price, qty: 1, cyber: item.cyber, hl: item.hl,
                 locked: true, src: item.src, chip: item.chip, tier: item.tier,
-                href: item.href, alt: item.alt || ""});
+                href: item.href, alt: item.alt || "", cid: item.id || ""});
   save(); paintAll();
 }
 /* A locked row's real page citation — "BC 108", "CRB 108", "CRB 171"…
@@ -1778,8 +1942,8 @@ function pickFromCatalog(which, item){
    source section, same as every other citation chip in the book. */
 function gearChip(row){
   if(!row.chip) return "";
-  return row.href.charAt(0) === "#" ? ' <a href="'+esc(row.href)+'" class="p">'+esc(row.chip)+"</a>"
-                  : ' <span class="p">'+esc(row.chip)+"</span>";
+  return row.href.charAt(0) === "#" ? ' <a href="'+esc(row.href)+'" class="p">'+esc(cite(row.chip))+"</a>"
+                  : ' <span class="p">'+esc(cite(row.chip))+"</span>";
 }
 /* The price-TIER word ("Premium", "Cheap"...), where the source has one —
    a SECOND, separate badge from the citation above: it answers a different
@@ -1791,10 +1955,11 @@ function gearChip(row){
    item's own row — so a word that reads like a quality label also behaved
    like one, landing the reader somewhere that seemed to confirm it. */
 function gearTier(row){
-  if(!row.tier) return "";
+  var it = rowItem(row), tier = it ? it.tier : row.tier;
+  if(!tier) return "";
   var href = D.links && D.links.price_categories;
-  return href && href.charAt(0) === "#" ? ' <a href="'+esc(href)+'" class="p">'+esc(row.tier)+"</a>"
-              : ' <span class="p">'+esc(row.tier)+"</span>";
+  return href && href.charAt(0) === "#" ? ' <a href="'+esc(href)+'" class="p">'+esc(tier)+"</a>"
+              : ' <span class="p">'+esc(tier)+"</span>";
 }
 function bookBudget(which){
   if(which === "buy") return D.calcCash.main;
@@ -1838,13 +2003,13 @@ function gearLeft(which){ return gearBudget(which) - gearSpent(which); }
 function pendingGear(){
   var out = [];
   if(isCalc()){
-    if(gearLeft("buy") < 0) out.push("перерасход по Снаряжению");
-    if(gearLeft("style") < 0) out.push("перерасход по Стилю");
+    if(gearLeft("buy") < 0) out.push(T("pending_gear.overspent_gear"));
+    if(gearLeft("style") < 0) out.push(T("pending_gear.overspent_style"));
     if(S.sponsor && S.sponsor.active){
-      if(!S.sponsor.kind) out.push("работодатель не выбран");
-      if(!S.sponsor.hook) out.push("на крючке — не выбрано");
+      if(!S.sponsor.kind) out.push(T("pending_gear.employer_not_chosen"));
+      if(!S.sponsor.hook) out.push(T("pending_gear.hook_not_chosen"));
     }
-  } else if(gearLeft("start") < 0) out.push("перерасход доп. покупок");
+  } else if(gearLeft("start") < 0) out.push(T("pending_gear.overspent_extra_purchases"));
   return out;
 }
 function paintGearList(which, boxId){
@@ -1856,11 +2021,10 @@ function paintGearList(which, boxId){
      GM-assigned tier table like the STAT pool, but nothing stops a GM handing out
      a different figure, so it is a plain number field rather than a constant.
      Empty clears back to the book's own default. */
-  var h = '<p class="cgrow"><label>Бюджет, eb <input type="number" class="cgnum" min="0" step="1" '
-        + 'data-cg="cashbudget" data-list="'+which+'" value="'+budget+'"></label>'
+  var h = T("gear_list.budget_eb_input_type")+which+'" value="'+budget+'"></label>'
         + (budget !== book
            ? '<button type="button" class="cgbtn cgmini" data-cg="cashreset" data-list="'+which
-             + '">по умолчанию ('+book+')</button>' : "")
+             + T("gear_list.default")+book+')</button>' : "")
         + "</p>";
   /* The catalogue search box: type a real item's name and pick it off the
      <datalist> (catalogIndex()) to add a LOCKED row below — same budget, same
@@ -1875,14 +2039,11 @@ function paintGearList(which, boxId){
      real button: the eye went to the button, and rows got typed by hand off the
      book's price list. So the search is the big, framed control, and manual entry
      is a quiet link under the table for what the catalogue does not have. */
-  h += '<div class="cgcatbox"><label class="cgcat"><span class="cgcatlab">Найти в книге</span>'
-     + '<input type="text" class="cgtext" '
-     + 'data-cg="catalogpick" data-list="'+which+'" list="'+catalogListId(which)+'" '
-     + 'placeholder="'+(which === "style" ? "куртка, ботинки, очки…"
-                                            : "пистолет, патроны, броня, имплант…")+'" autocomplete="off"></label>'
-     + '<span class="cgcathint">Начни печатать и выбери из списка — цена'
-     + (which === "style" ? "" : ", ПЧ")
-     + " и страница подставятся сами.</span></div>";
+  h += T("gear_list.find_book_input_type")+which+'" list="'+catalogListId(which)+'" '
+     + 'placeholder="'+(which === "style" ? T("gear_list.jacket_boots_glasses")
+                                            : T("gear_list.pistol_ammo_armor_implant"))+T("gear_list.autocomplete_off_start_typing")
+     + (which === "style" ? "" : T("gear_list.hl"))
+     + T("gear_list.page_fill_themselves");
   /* table-layout:fixed + a <colgroup>, not the default auto layout: without it,
      toggling one row's Cyberware checkbox swaps the HL cell between "—" and a
      number input, and an auto-layout table re-measures every column's width off
@@ -1891,11 +2052,7 @@ function paintGearList(which, boxId){
      never again. Holds just as well for a locked row swapping an <input> for
      plain text. */
   var tableAt = h.length;
-  h += '<div class="tw"><table class="mx cggeartbl"><colgroup>'
-     + '<col style="width:36%"><col style="width:9%"><col style="width:16%">'
-     + '<col style="width:15%"><col style="width:14%"><col style="width:10%"></colgroup>'
-     + '<thead><tr><th>Название</th><th class="n">Кол-во</th>'
-     + '<th class="n">Цена, eb</th><th>Кибернетика</th><th class="n">ПЧ</th><th></th></tr></thead><tbody>';
+  h += T("gear_list.name_qty_price_eb");
   /* Quantity is a count of how many of this row you bought, not part of what the
      row IS — so it stays editable even on a locked catalogue row (only name/price/
      cyber/hl are frozen to the book's own number). It multiplies both the price
@@ -1907,19 +2064,19 @@ function paintGearList(which, boxId){
     var qtyCell = '<td class="n"><input type="number" class="cgnum" min="1" step="1" data-cg="gearqty" '
        + 'data-list="'+which+'" data-i="'+i+'" value="'+qty+'"></td>';
     if(row.locked){
-      h += '<tr><td>'+esc(row.name)+gearChip(row)+gearTier(row)+gearAlt(row)+"</td>"
+      h += '<tr><td>'+esc(rowName(row))+gearChip(row)+gearTier(row)+gearAlt(row)+"</td>"
          + qtyCell
          + '<td class="n">'+(row.price||0)
          + (qty>1 ? '<span class="itsub">×'+qty+" = "+((row.price||0)*qty)+'eb</span>' : "")+"</td>"
-         + '<td>'+(row.cyber?"да":"—")+"</td>"
+         + '<td>'+(row.cyber?T("gear_list.yes"):"—")+"</td>"
          + '<td class="n">'+(row.cyber?(row.hl||0):"—")
          + (row.cyber && qty>1 ? '<span class="itsub">×'+qty+" = "+((row.hl||0)*qty)+"</span>" : "")+"</td>"
          + '<td><button type="button" class="cgbtn cgmini" data-cg="gearrm" data-list="'+which
-         + '" data-i="'+i+'" title="Удалить строку">✕</button></td></tr>';
+         + '" data-i="'+i+T("gear_list.title_delete_row");
       continue;
     }
     h += '<tr><td><input type="text" class="cgtext" data-cg="gearname" data-list="'+which
-       + '" data-i="'+i+'" value="'+esc(row.name)+'" placeholder="что купил"></td>'
+       + '" data-i="'+i+'" value="'+esc(row.name)+T("gear_list.placeholder_what_bought")
        + qtyCell
        + '<td class="n"><input type="number" class="cgnum" min="0" step="1" data-cg="gearprice" '
        + 'data-list="'+which+'" data-i="'+i+'" value="'+(row.price||0)+'">'
@@ -1932,29 +2089,28 @@ function paintGearList(which, boxId){
             + (qty>1 ? '<span class="itsub">×'+qty+" = "+((row.hl||0)*qty)+"</span>" : "")
           : "—")+"</td>"
        + '<td><button type="button" class="cgbtn cgmini" data-cg="gearrm" data-list="'+which
-       + '" data-i="'+i+'" title="Удалить строку">✕</button></td></tr>';
+       + '" data-i="'+i+T("gear_list.title_delete_row");
   }
   h += "</tbody></table></div>";
   /* An empty list printed a header row over nothing; it now says where rows
      come from. */
   if(!rows.length)
-    h = h.slice(0, tableAt) + '<p class="cghint">Пока ничего не куплено — найди предмет в поле выше.</p>';
+    h = h.slice(0, tableAt) + T("gear_list.nothing_bought_yet_find");
   h += '<p class="cgrow">'
-     + (left < 0 ? "" : '<span class="cgbleft">Останется: <b>'+left+"</b>eb"
-        + (which === "buy" ? " — идёт в стартовые деньги"
-           : which === "style" ? " — сгорает, не переносится"
-           : " — остаётся у тебя как деньги на старте")
+     + (left < 0 ? "" : T("gear_list.left_over")+left+"</b>eb"
+        + (which === "buy" ? T("gear_list.goes_into_starting_cash")
+           : which === "style" ? T("gear_list.burns_does_not_carry")
+           : T("gear_list.stays_starting_cash"))
         + "</span>")
-     + '<span class="cgmanual">Нет в книге? <button type="button" class="cglinkbtn" data-cg="gearadd" data-list="'
-     + which + '">Вписать вручную</button></span>'
-     + "</p>";
+     + T("gear_list.not_book_button_type")
+     + which + T("gear_list.enter_hand");
   /* Its own full-width callout, not folded into the row above — see .cgover.
      The fate note above ("goes into starting cash"…) describes what happens
      to money left OVER, so it drops out entirely once there is none. */
   if(left < 0){
-    var overWhat = which === "buy" ? "по Снаряжению"
-                 : which === "style" ? "по Стилю" : "доп. покупок на старте";
-    h += '<p class="cgover"><b>⚠ Перерасход '+overWhat+': '+(-left)+"eb</b> сверх бюджета в "
+    var overWhat = which === "buy" ? T("gear_list.gear")
+                 : which === "style" ? T("gear_list.style") : T("gear_list.extra_starting_purchases");
+    h += T("gear_list.overspent")+overWhat+': '+(-left)+T("gear_list.eb_beyond_budget")
        + budget+"eb.</p>";
   }
   box.innerHTML = h;
@@ -1982,14 +2138,12 @@ function paintStartKit(){
   var box = q("startkit"); if(!box) return;
   var r = role();
   if(!r){ box.innerHTML = ""; return; }
-  var h = '<div class="cgkit"><h4>Уже есть — стартовый набор Роли</h4>'
-        + '<p class="cglegend">Это книга выдаёт бесплатно; ниже — только то, что '
-        + "покупаешь сверх. Где предложен выбор, выбери здесь или на Листе — это одно и то же.</p>"
+  var h = T("start_kit.already_yours_role_s")
         + kitGearList(r);
   var cy = cyber();
   if(cy && cy.items && cy.items.length)
-    h += '<h4>Импланты — уже установлены</h4>' + kitCyberList(cy);
-  box.innerHTML = h + "</div><h4>Докупить сверх набора</h4>";
+    h += T("start_kit.cyberware_already_installed") + kitCyberList(cy);
+  box.innerHTML = h + T("start_kit.buy_top_kit");
 }
 function paintGearPane(){
   if(isCalc()){
@@ -2014,18 +2168,16 @@ function paintSponsor(){
   var box = q("sponsorbox"); if(!box) return;
   var sp = S.sponsor || {active:false,kind:"",hook:""};
   var h = '<p class="cgrow"><label><input type="checkbox" data-cg="sponsoron"'
-        + (sp.active?" checked":"")+'> Продался за +'+D.sponsor.bonus+'eb на кибернетику</label>';
-  h += '<label>Кому: <select class="cgsel" data-cg="sponsorkind"'+(sp.active?"":" disabled")+'>'
-     + '<option value="">не выбрано</option>';
+        + (sp.active?" checked":"")+T("sponsor.sold_out")+D.sponsor.bonus+T("sponsor.eb_cyberware");
+  h += T("sponsor.whom_select_class_cgsel")+(sp.active?"":" disabled")+T("sponsor.not_chosen");
   for(var i=0;i<D.sponsor.kinds.length;i++)
-    h += '<option value="'+esc(D.sponsor.kinds[i])+'"'+(sp.kind===D.sponsor.kinds[i]?" selected":"")+'>'
-       + esc(D.sponsor.kinds[i])+"</option>";
+    h += '<option value="'+esc(D.sponsor.kinds[i].id)+'"'+(sp.kind===D.sponsor.kinds[i].id?" selected":"")+'>'
+       + esc(D.sponsor.kinds[i].name)+"</option>";
   h += '</select></label>';
-  h += '<label>На крючке: <select class="cgsel" data-cg="sponsorhook"'+(sp.active?"":" disabled")+'>'
-     + '<option value="">не выбрано</option>';
+  h += T("sponsor.hook_select_class_cgsel")+(sp.active?"":" disabled")+T("sponsor.not_chosen");
   for(var j=0;j<D.sponsor.hooks.length;j++)
-    h += '<option value="'+esc(D.sponsor.hooks[j])+'"'+(sp.hook===D.sponsor.hooks[j]?" selected":"")+'>'
-       + esc(D.sponsor.hooks[j])+"</option>";
+    h += '<option value="'+esc(D.sponsor.hooks[j].id)+'"'+(sp.hook===D.sponsor.hooks[j].id?" selected":"")+'>'
+       + esc(D.sponsor.hooks[j].name)+"</option>";
   h += "</select></label></p>";
   box.innerHTML = h;
 }
@@ -2053,23 +2205,23 @@ function gearSheetHtml(which, label, fate){
   var rows = gearRows(which), budget = gearBudget(which), spent = gearSpent(which),
       left = gearLeft(which);
   var h = "<h4>"+esc(label)+" — "+budget+"eb</h4>";
-  if(!rows.length){ h += '<p class="cghint">Пока ничего не куплено.</p>'; }
+  if(!rows.length){ h += T("gear_sheet_html.nothing_bought_yet"); }
   else {
     h += '<ul class="cggear">';
     for(var i=0;i<rows.length;i++){
       var row = rows[i], qty = row.qty || 1;
-      h += "<li>"+esc(row.name || "без названия")+(qty>1 ? " ×"+qty : "")+gearAlt(row)
+      h += "<li>"+esc(rowName(row) || T("gear_sheet_html.unnamed"))+(qty>1 ? " ×"+qty : "")+gearAlt(row)
          + " — <b>"+((row.price||0)*qty)+"eb</b>"
          + (qty>1 ? ' <span class="itsub">'+(row.price||0)+"eb × "+qty+"</span>" : "")
-         + (row.cyber ? ' <span class="x2">'+((row.hl||0)*qty)+" ПЧ</span>" : "")
+         + (row.cyber ? ' <span class="x2">'+((row.hl||0)*qty)+T("gear_sheet_html.hl") : "")
          + (row.locked && row.chip ? gearChip(row) : "") + "</li>";
     }
     h += "</ul>";
   }
   h += left < 0
-     ? '<p class="cgover">Потрачено '+spent+" из "+budget+"eb — <b>⚠ перерасход "
+     ? T("gear_sheet_html.spent")+spent+T("stat_grid.of")+budget+T("gear_sheet_html.eb_over")
        +(-left)+"eb</b>.</p>"
-     : '<p class="note">Потрачено <b>'+spent+"</b> из "+budget+"eb. Останется <b>"+left
+     : T("gear_sheet_html.spent_b")+spent+T("stat_budget3.of")+budget+T("gear_sheet_html.eb_left")+left
        +"</b>eb"+fate+"</p>";
   return h;
 }
@@ -2236,14 +2388,13 @@ function paintLife(){
      line and removes the whole question. */
   function rollHint(t, col){
     return needsDice(t, col)
-      ? ' <span class="cgrollme">← нажми на кубик: книга не говорит, сколько их — это решает бросок</span>'
+      ? T("roll_hint.click_die_book_does")
       : "";
   }
   function picker(t, col, chosen){
     var h = '<button type="button" class="cgbtn cgmini" data-cg="rollone" data-key="'
           + t.key+'" data-col="'+col+'">1d10</button>'
-          + '<select class="cgsel" data-cg="pickone" data-key="'+t.key+'" data-col="'+col+'">'
-          + '<option value="">выбрать из таблицы…</option>';
+          + '<select class="cgsel" data-cg="pickone" data-key="'+t.key+'" data-col="'+col+T("picker.pick_from_table");
     for(var m=1;m<=10;m++){
       var lab = t.rows[m-1][col];
       if(lab.length > 44) lab = lab.slice(0,42) + "…";
@@ -2258,7 +2409,7 @@ function paintLife(){
 
     if(!t.perColumn){
       var val;
-      if(!g) val = '<span class="cghint">не брошено</span>';
+      if(!g) val = T("picker.not_rolled");
       else {
         var parts = [];
         for(var c=0;c<t.cols.length;c++){
@@ -2277,7 +2428,7 @@ function paintLife(){
         h += row(c2 === 0 ? esc(t.label) : "",
                  esc(shortCol(t, c2)),
                  v ? ('<span class="cgd">'+g[c2]+"</span> "+diceHtml(v, t.key, c2)+rollHint(t, c2))
-                   : '<span class="cghint">не брошено</span>',
+                   : T("picker.not_rolled"),
                  picker(t, c2, g ? g[c2] : 0),
                  c2 === 0 ? "first" : "cont");
       }
@@ -2287,21 +2438,21 @@ function paintLife(){
        the book asks for, so both are rows like everything else */
     if(t.pickCol !== null && cellOf(t, t.pickCol)){
       var opts = cellOf(t, t.pickCol).split(/,\s*/), sel =
-        '<select class="cgsel" data-cg="lang"><option value="">выбрать…</option>';
+        T("picker.choose");
       for(var o=0;o<opts.length;o++)
-        sel += "<option"+(S.lang===opts[o]?" selected":"")+">"+esc(opts[o])+"</option>";
+        sel += '<option value="'+o+'"'+(S.lang===String(o)?" selected":"")+">"+esc(opts[o])+"</option>";
       sel += "</select>";
       h += row("", esc(t.pickLabel), S.lang
-                 ? esc(S.lang)+' <span class="cgor">+4 уровня бесплатно</span>'
-                 : '<span class="cgtodoin">не выбран</span>', sel, "cont");
+                 ? esc(langName())+T("picker.language_bonus")
+                 : T("picker.not_chosen"), sel, "cont");
     }
     if(harmable(t)){
-      var hs = '<select class="cgsel" data-cg="harm"><option value="">выбрать…</option>';
+      var hs = T("picker.choose_b");
       for(var o2=0;o2<t.harm[1].length;o2++)
-        hs += "<option"+(S.harm===t.harm[1][o2]?" selected":"")+">"+esc(t.harm[1][o2])+"</option>";
+        hs += '<option value="'+o2+'"'+(S.harm===String(o2)?" selected":"")+">"+esc(t.harm[1][o2])+"</option>";
       hs += "</select>";
-      h += row("", esc(t.harm[0]), S.harm ? esc(S.harm)
-                 : '<span class="cgtodoin">не выбрано</span>', hs, "cont");
+      h += row("", esc(t.harm[0]), S.harm ? esc(harmName(t))
+                 : T("picker.not_chosen_b"), hs, "cont");
     }
   }
 
@@ -2312,31 +2463,27 @@ function paintLife(){
   var rp = pathSpec();
   if(rp){
     var shown = pathShown();
-    h += '<h4 class="cgpathh">Ролевой путь — ' + esc(role().name) + "</h4>";
-    h += '<p class="cglegend">Своя таблица на каждую Роль: кто ты в профессии, где '
-       + 'работаешь и кто за тобой охотится. <b>Развилка</b> — это выбор, а не '
-       + 'бросок: пока на неё не ответишь, шаги за ней не появятся. '
-       + ref(rp.href, "Полные таблицы") + ".</p>";
+    h += T("picker.role_path") + esc(role().name) + "</h4>";
+    h += T("picker.each_role_has_its")
+       + ref(rp.href, T("picker.full_tables")) + ".</p>";
     for(var s=0;s<shown.length;s++){
       var st = shown[s], num = '<span class="cgstepn">'+st.n+"</span> ";
       if(st.fork){
         var pick = forkPick(st.n);
-        var fs = '<select class="cgsel" data-cg="fork" data-step="'+st.n+'">'
-               + '<option value="">выбрать…</option>';
+        var fs = '<select class="cgsel" data-cg="fork" data-step="'+st.n+T("stat_grid.choose");
         for(var f=0;f<st.fork.length;f++)
           fs += '<option value="'+f+'"'+(pick===f?" selected":"")+">"
               + esc(st.fork[f].label)+"</option>";
         fs += "</select>";
-        h += row(num+esc(st.q), "развилка",
+        h += row(num+esc(st.q), T("picker.fork"),
                  pick >= 0 ? esc(st.fork[pick].label)
-                           : '<span class="cgtodoin">не выбрано</span>',
+                           : T("picker.not_chosen_b"),
                  fs, "cont");
       } else {
         var got_ = pathRoll(st.n), max = +st.die.slice(2);
         var ps = '<button type="button" class="cgbtn cgmini" data-cg="rollpath" '
                + 'data-step="'+st.n+'" data-die="'+max+'">'+esc(st.die)+"</button>"
-               + '<select class="cgsel" data-cg="pickpath" data-step="'+st.n+'">'
-               + '<option value="">выбрать из таблицы…</option>';
+               + '<select class="cgsel" data-cg="pickpath" data-step="'+st.n+T("picker.pick_from_table");
         for(var m=1;m<=max;m++){
           var lab = st.rows[m-1];
           if(lab.length > 44) lab = lab.slice(0,42) + "…";
@@ -2346,7 +2493,7 @@ function paintLife(){
         ps += "</select>";
         h += row(num+esc(st.q), "",
                  got_ ? '<span class="cgd">'+got_+"</span> "+esc(st.rows[got_-1])
-                      : '<span class="cghint">не брошено</span>',
+                      : T("picker.not_rolled"),
                  ps, "cont");
       }
     }
@@ -2366,10 +2513,10 @@ root.addEventListener("click", function(ev){
     var lbl = c + "d" + f + (op ? " " + op + " " + arg : "");
     var body = '<div class="g-t">'+lbl+"</div>"
              + '<div class="g-dice">'+res.vals.map(function(v){return "<span>"+v+"</span>";}).join("")+"</div>"
-             + '<div class="g-sum">'+res.out+" <small>результат</small></div>";
+             + '<div class="g-sum">'+res.out+T("roll_pop.result");
     if(op === "/")
       body += '<div class="g-d">'+res.sum+" ÷ "+arg+" = "+(res.sum/arg)
-            + ", округляя вверх — <b>"+res.out+"</b>. Меньше одного не бывает.</div>";
+            + T("picker.rounded_up")+res.out+T("picker.never_goes_below_one");
     else if(op)
       body += '<div class="g-d">'+res.sum+" "+op+" "+arg+" = <b>"+res.out+"</b>.</div>";
     /* CPR_POP anchors to `t`, so it has to run BEFORE the repaint detaches it.
@@ -2526,48 +2673,48 @@ function mdSkillRows(r){
   if(isCalc()){
     var keys = boughtKeys3();
     for(i=0;i<keys.length;i++){
-      var nm = skillBase(keys[i]);
-      if(multi3(nm)) nm += " ("+(S.picks[keys[i]]||"выбери")+")";
+      var nm = skillName(keys[i]);
+      if(multi3(skillBase(keys[i]))) nm += " ("+(pickOf(keys[i])||T("add.pick"))+")";
       add(nm, D.skills[skillBase(keys[i])].stat, skillLevel3(keys[i]));
     }
   } else {
     for(i=0;i<r.skills.length;i++){
-      var sk = r.skills[i], n2 = sk.skill;
-      if(sk.pick === "") n2 += " ("+(S.picks[sk.skill]||"выбери 1")+")";
+      var sk = r.skills[i], n2 = sk.name;
+      if(sk.pick === "") n2 += " ("+(S.picks[sk.id]||T("add.pick_one"))+")";
       else if(sk.pick) n2 += " ("+sk.pick+")";
       add(n2, sk.stat, lv(sk));
     }
   }
-  if(langRow()) add("Язык ("+(S.lang||"не выбран")+")", "ИНТ", 4);
+  if(langRow()) add(T("add.language")+(langName()||T("add.not_chosen"))+")", "INT", 4);
   var hbm = hbBought();
   for(i=0;i<hbm.length;i++) add(hbm[i].name, hbm[i].stat, hbm[i].level);
   var ex = abilSkills();
-  for(i=0;i<ex.length;i++) add(ex[i].skill+(ex[i].spec ? " ("+ex[i].spec+")" : ""), ex[i].stat, ex[i].level);
+  for(i=0;i<ex.length;i++) add(ex[i].name+(ex[i].spec ? " ("+ex[i].spec+")" : ""), ex[i].stat, ex[i].level);
   rows.sort(function(a, b){ return (b.roll == null ? b.lvl : b.roll) - (a.roll == null ? a.lvl : a.roll); });
   return rows;
 }
 function mdGearRows(rows){
   return rows.map(function(row){
     var qty = row.qty || 1;
-    return [(row.name||"без названия")+(qty>1 ? " ×"+qty : "")+(row.cyber ? " ["+((row.hl||0)*qty)+" ПЧ]" : ""),
-            row.locked && row.chip ? row.chip : "", ((row.price||0)*qty)+"eb"];
+    return [(rowName(row)||T("gear_sheet_html.unnamed"))+(qty>1 ? " ×"+qty : "")+(row.cyber ? " ["+((row.hl||0)*qty)+T("md_gear_rows.hl") : ""),
+            row.locked && row.chip ? cite(row.chip) : "", ((row.price||0)*qty)+"eb"];
   });
 }
 function sheetMarkdown(){
   var r = role(), dv = derived(), out = [];
-  out.push("# "+(S.name || "Безымянный")+" — "+(r ? r.name : "?")+(r ? ", ранг "+D.abilityRank : ""));
+  out.push("# "+(S.name || T("sheet_markdown.unnamed"))+" — "+(r ? r.name : "?")+(r ? T("sheet_markdown.rank")+D.abilityRank : ""));
   out.push("");
   if(dv){
-    out.push("**ПЗ "+dv.hp+" | Тяж. ранение "+dv.serious+" | Спасбросок "+dv.death+" | Человечность "+dv.hum
-             +(dv.hl ? " (ЭМП "+dv.empBase+" → "+dv.emp+", −"+dv.hl+" ПЧ за хром)" : "")+"**");
+    out.push(T("sheet_markdown.hp")+dv.hp+T("sheet_markdown.seriously_wounded")+dv.serious+T("sheet_markdown.death_save")+dv.death+T("sheet_markdown.humanity")+dv.hum
+             +(dv.hl ? T("sheet_markdown.emp")+dv.empBase+" → "+dv.emp+", −"+dv.hl+T("sheet_markdown.hl_from_chrome") : "")+"**");
     out.push("");
-    out = out.concat(mdTable(D.stats, [D.stats.map(function(s){ return eff(s); })]));
+    out = out.concat(mdTable(D.stats.map(sName), [D.stats.map(function(s){ return eff(s); })]));
     out.push("");
   }
   if(!r) return out.join("\n")+"\n";
-  out.push("## Ролевая способность");
+  out.push(T("sheet_markdown.role_ability"));
   out.push("");
-  out.push("**"+r.ability+", ранг "+D.abilityRank+"**");
+  out.push("**"+r.ability+T("sheet_markdown.rank")+D.abilityRank+"**");
   var k4 = rank4();
   if(k4){
     out.push("");
@@ -2578,77 +2725,77 @@ function sheetMarkdown(){
     if(pk && pk.kind === "nomad"){
       var taken = [];
       for(var sl=0;sl<pk.slots;sl++) if(slotOf(sl)) taken.push(slotLabel(slotOf(sl)));
-      if(taken.length) out.push("- Автопарк Семьи: "+taken.join(", "));
-      if(S.abil && S.abil.drive) out.push("- С собой: "+S.abil.drive);
+      if(taken.length) out.push(T("sheet_markdown.family_motor_pool")+taken.join(", "));
+      if(S.abil && S.abil.drive) out.push(T("sheet_markdown.hand")+vehName(S.abil.drive));
     }
     if(pk && pk.kind === "fixer" && S.abil && (S.abil.culture || S.abil.lang))
-      out.push("- Свой чел: "+(S.abil.culture||"культура не выбрана")+" / "+(S.abil.lang||"язык не выбран"));
+      out.push(T("sheet_markdown.fitting")+(S.abil.culture||T("sheet_markdown.culture_not_chosen"))+" / "+(S.abil.lang||T("sheet_markdown.language_not_chosen")));
     var pl = pool();
     if(pl){
       var pr = [];
-      for(var po=0;po<pl.opts.length;po++) if(ptsOf(pl.opts[po].name)) pr.push([pl.opts[po].name, ptsOf(pl.opts[po].name)]);
+      for(var po=0;po<pl.opts.length;po++) if(ptsOf(pl.opts[po].id)) pr.push([pl.opts[po].name, ptsOf(pl.opts[po].id)]);
       if(pr.length){
         out.push("");
-        out.push("Очки ("+pl.budget+", осталось "+ptsLeft()+"):");
+        out.push(T("sheet_markdown.points")+pl.budget+T("sheet_markdown.left")+ptsLeft()+"):");
         out.push("");
-        out = out.concat(mdTable(["Способность","Очки"], pr));
+        out = out.concat(mdTable([T("sheet_markdown.ability"),T("sheet_markdown.points_b")], pr));
       }
     }
   }
   out.push("");
-  out.push("## Навыки");
+  out.push(T("sheet_markdown.skills"));
   out.push("");
-  out.push("Бросок = СТАТ + Уровень (+ 1d10). Отсортировано по броску.");
+  out.push(T("sheet_markdown.roll_note"));
   out.push("");
-  out = out.concat(mdTable(["Навык","Ур","СТАТ","Бросок"], mdSkillRows(r).map(function(s){
-    return [s.name, s.lvl, s.stat+(S.stats ? " "+eff(s.stat) : ""), s.roll == null ? "" : s.roll];
+  out = out.concat(mdTable([T("sheet_markdown.skill"),T("skills.lv"),T("sheet_markdown.stat"),T("sheet_markdown.roll")], mdSkillRows(r).map(function(s){
+    return [s.name, s.lvl, sName(s.stat)+(S.stats ? " "+eff(s.stat) : ""), s.roll == null ? "" : s.roll];
   })));
   out.push("");
-  out.push("## Снаряжение");
+  out.push(T("sheet_markdown.gear"));
   out.push("");
   if(isCalc()){
-    var lists = [["buy","Снаряжение"],["style","Стиль"]];
+    var lists = [["buy",T("sheet_markdown.gear_b")],["style",T("sheet_markdown.style")]];
     for(var li=0;li<lists.length;li++){
       var rows = gearRows(lists[li][0]);
-      out.push("**"+lists[li][1]+"** (потрачено "+gearSpent(lists[li][0])+" из "+gearBudget(lists[li][0])+"eb)");
+      out.push("**"+lists[li][1]+T("sheet_markdown.spent")+gearSpent(lists[li][0])+T("stat_grid.of")+gearBudget(lists[li][0])+"eb)");
       out.push("");
-      if(rows.length){ out = out.concat(mdTable(["Предмет","Источник","Цена"], mdGearRows(rows))); out.push(""); }
+      if(rows.length){ out = out.concat(mdTable([T("sheet_markdown.item"),T("sheet_markdown.source"),T("sheet_markdown.price")], mdGearRows(rows))); out.push(""); }
     }
     if(S.sponsor && S.sponsor.active){
-      out.push("Продан за +"+D.sponsor.bonus+"eb на кибернетику — "+(S.sponsor.kind||"работодатель не выбран")
-               +", на крючке: "+(S.sponsor.hook||"не выбрано"));
+      out.push(T("sheet_markdown.sold_out")+D.sponsor.bonus+T("sheet_markdown.eb_cyberware")+(nameOf(D.sponsor.kinds, S.sponsor.kind)||T("pending_gear.employer_not_chosen"))
+               +T("sheet_markdown.hook")+(nameOf(D.sponsor.hooks, S.sponsor.hook)||T("sheet_markdown.not_chosen")));
       out.push("");
     }
   } else {
-    out = out.concat(mdTable(["Предмет","Коротко"], r.gear.map(function(_, g){
+    out = out.concat(mdTable([T("sheet_markdown.item"),T("sheet_markdown.short")], r.gear.map(function(_, g){
       var gi = gearItem(r.gear[g], g);
       return [gi.text, gi.short || ""];
     })));
     out.push("");
     var sr = gearRows("start");
     if(sr.length){
-      out.push("**Доп. покупки** (потрачено "+gearSpent("start")+" из "+gearBudget("start")+"eb)");
+      out.push(T("sheet_markdown.extra_purchases_spent")+gearSpent("start")+T("stat_grid.of")+gearBudget("start")+"eb)");
       out.push("");
-      out = out.concat(mdTable(["Предмет","Источник","Цена"], mdGearRows(sr)));
+      out = out.concat(mdTable([T("sheet_markdown.item"),T("sheet_markdown.source"),T("sheet_markdown.price")], mdGearRows(sr)));
       out.push("");
     }
   }
   var cyt = cyber();
   if(cyt && cyt.items && !isCalc()){
-    out.push("## Кибернетика");
+    out.push(T("sheet_markdown.cyberware"));
     out.push("");
-    out = out.concat(mdTable(["Имплант","ПЧ"], cyt.items.map(function(it, i){
+    out = out.concat(mdTable([T("sheet_markdown.implant"),T("sheet_markdown.hl")], cyt.items.map(function(it, i){
       return [cyberItem(it, i).text, it.hl];
     })));
     out.push("");
-    out.push("Всего "+cyt.hl+" ПЧ.");
+    out.push(T("sheet_markdown.total")+cyt.hl+T("sheet_markdown.hl_b"));
     out.push("");
   } else if(cyt && cyt.hl){
-    out.push("Кибернетика: всего "+cyt.hl+" ПЧ (см. строки снаряжения и стиля).");
+    out.push(T("sheet_markdown.cyberware_total")+cyt.hl+T("sheet_markdown.hl_see_gear_style"));
     out.push("");
   }
-  out.push("**Деньги: "+Math.max(0, isCalc() ? gearLeft("buy") : gearLeft("start"))+"eb**"
-           +(r.income ? " · между заказами 1d6 в неделю, "+r.income.low+"–"+r.income.high+"eb (колонка Ранг 1–4)" : ""));
+  out.push(T("sheet_markdown.money")+Math.max(0, isCalc() ? gearLeft("buy") : gearLeft("start"))+"eb**"
+           +(r.income ? T("sheet_markdown.between_gigs_1d6_per")+r.income.low+"–"+r.income.high+T("sheet_markdown.money_rank") : ""));
   out.push("");
   var life = [];
   for(var L=0;L<D.life.length;L++){
@@ -2660,7 +2807,7 @@ function sheetMarkdown(){
       var cell = cellOf(t, c);
       if(!cell) continue;
       var line = plain((t.harm && c === 1 && S.harm && harmable(t)) ? unstop(cell) : cell, t.key, c);
-      if(t.harm && c === 1 && S.harm && harmable(t)) line += " — " + S.harm;
+      if(t.harm && c === 1 && S.harm && harmable(t)) line += " — " + harmName(t);
       line += undone(t, c, false);
       parts.push(shownCols(t) > 1 ? shortCol(t, c)+": "+line : line);
     }
@@ -2671,40 +2818,40 @@ function sheetMarkdown(){
   var anyLife = false;
   for(var L2=0;L2<D.life.length;L2++) if(got(D.life[L2])){ anyLife = true; break; }
   if(!anyLife)
-    life.push("- Жизненный путь **не заполнен** — ни одна таблица не брошена (в том числе Враг, Друг и Цель).");
+    life.push(T("sheet_markdown.lifepath_not_filled_no"));
   var shown = pathShown(), pathRows = 0;
   for(var sp=0;sp<shown.length;sp++){
     var st = shown[sp];
     if(st.fork){ if(forkPick(st.n) >= 0){ life.push("- "+st.q+" "+st.fork[forkPick(st.n)].label); pathRows++; } }
     else if(pathRoll(st.n)){ life.push("- "+st.q+" "+st.rows[pathRoll(st.n)-1]); pathRows++; }
   }
-  if(shown.length && !pathRows) life.push("- Ролевой путь **не заполнен** — ни один шаг не брошен.");
-  if(life.length){ out.push("## Жизненный путь"); out.push(""); out = out.concat(life); out.push(""); }
+  if(shown.length && !pathRows) life.push(T("sheet_markdown.role_path_not_filled"));
+  if(life.length){ out.push(T("sheet_markdown.lifepath")); out.push(""); out = out.concat(life); out.push(""); }
   var subT = subType(), subS = subStats();
   if(subT && subS){
     var sd = subDerived();
-    out.push("## Подчинённый");
+    out.push(T("sheet_markdown.subordinate"));
     out.push("");
-    out.push("**"+((S.sub && S.sub.name) || "Без имени")+"** — "+subT.name+" (прикрытие: "+subT.cover+")");
+    out.push("**"+((S.sub && S.sub.name) || T("sheet_markdown.no_name"))+"** — "+subT.name+T("sheet_markdown.cover")+subT.cover+")");
     out.push("");
-    out = out.concat(mdTable(subT.stats, [subT.stats.map(function(s){ return subS[s]; })]));
+    out = out.concat(mdTable(subT.stats.map(sName), [subT.stats.map(function(s){ return subS[s]; })]));
     out.push("");
-    out.push("ПЗ "+sd.hp+" | Тяж. ранение "+sd.serious+" | Спасбросок "+sd.death+" | Лояльность "+D.subord.loyalty);
+    out.push(T("sheet_markdown.hp_b")+sd.hp+T("sheet_markdown.seriously_wounded")+sd.serious+T("sheet_markdown.death_save")+sd.death+T("sheet_markdown.loyalty")+D.subord.loyalty);
     out.push("");
-    out.push("Навыки: "+subT.skills.map(function(s){ return s.skill+" "+s.level; }).join(", "));
+    out.push(T("sheet_markdown.skills_b")+subT.skills.map(function(s){ return s.skill+" "+s.level; }).join(", "));
     out.push("");
-    out.push("Хром: "+subT.cyber+". Снаряжение: "+subT.gear+".");
+    out.push(T("sheet_markdown.chrome")+subT.cyber+T("sheet_markdown.gear_c")+subT.gear+".");
     out.push("");
-    if(((S.sub && S.sub.note) || "").trim()){ out.push("Кто он: "+S.sub.note.trim()); out.push(""); }
+    if(((S.sub && S.sub.note) || "").trim()){ out.push(T("sheet_markdown.who_he")+S.sub.note.trim()); out.push(""); }
   }
-  out.push("## Характер / GM-заметки");
+  out.push(T("sheet_markdown.character_gm_notes"));
   out.push("");
   var wrote = 0;
   for(var f=0;f<D.notes.length;f++){
     var val = (S.notes[D.notes[f].key]||"").trim();
     if(val){ out.push("**"+D.notes[f].label+":** "+val); out.push(""); wrote++; }
   }
-  if(!wrote){ out.push("- Быт:"); out.push("- Крючок:"); out.push("- Для ГМа:"); out.push(""); }
+  if(!wrote){ out.push(T("sheet_markdown.daily_life")); out.push(T("sheet_markdown.hook_b")); out.push(T("sheet_markdown.gm")); out.push(""); }
   return out.join("\n");
 }
 
@@ -2721,7 +2868,7 @@ function downloadFile(name, mime, text){
   }catch(e){ return false; }
 }
 function fileStem(){
-  return ((S.name || "").replace(/[\\\/:*?"<>|]+/g, " ").replace(/\s+/g, " ").trim()) || "Безымянный";
+  return ((S.name || "").replace(/[\\\/:*?"<>|]+/g, " ").replace(/\s+/g, " ").trim()) || T("sheet_markdown.unnamed");
 }
 var FORMAT = "cpr-character";
 /* An export is the state plus a marker, so import can refuse a file that is not
@@ -2733,9 +2880,9 @@ function exportJson(){
 }
 function importJson(text){
   var parsed;
-  try{ parsed = JSON.parse(text); }catch(e){ return "Файл не разобрался: это не JSON."; }
+  try{ parsed = JSON.parse(text); }catch(e){ return T("import_json.could_not_parse_file"); }
   if(!parsed || typeof parsed !== "object" || parsed instanceof Array || parsed[FORMAT] !== 1)
-    return "Это не сохранение персонажа из этого генератора.";
+    return T("import_json.not_character_saved_generator");
   var prev = S;
   S = normalise(parsed);
   try{
@@ -2744,7 +2891,7 @@ function importJson(text){
     /* normalise() checks the top level and a few nested lists; a value deeper down
        of the wrong type throws inside the paint. Put the old character back. */
     S = prev; save(); paintAll(); go(S.role ? (S.stats ? 5 : 2) : 1);
-    return "Файл повреждён: персонаж из него не открывается. Текущий остался как был.";
+    return T("import_json.file_damaged_character_cannot");
   }
   return "";
 }
@@ -2764,12 +2911,12 @@ function kitGearList(r){
         h += '<option value="'+o+'"'+(gearPick(g)===o?" selected":"")+">"+esc(op.text)
            + (op.short ? esc(" — " + op.short) : "") + "</option>";
       }
-      h += '</select> <span class="cgor">выбери одно из '+item.options.length+"</span>";
+      h += T("kit_gear_list.pick_one")+item.options.length+"</span>";
     } else {
       h += "<li>"+esc(chosen.text);
     }
     h += '<span class="itsub">'+esc(chosen.note)
-       + " " + ref(chosen.href, "подробнее") + "</span></li>";
+       + " " + ref(chosen.href, T("kit_gear_list.details")) + "</span></li>";
   }
   h += "</ul>";
   return h;
@@ -2787,7 +2934,7 @@ function kitCyberList(cy){
       for(var co=0;co<cit.options.length;co++)
         h += '<option value="'+co+'"'+(cyberPick(ci)===co?" selected":"")+">"
            + esc(cit.options[co].text)+"</option>";
-      h += '</select> <span class="cgor">выбери одно из '+cit.options.length+"</span>";
+      h += T("kit_gear_list.pick_one")+cit.options.length+"</span>";
     } else {
       h += "<li>"+esc(cch.text);
     }
@@ -2795,9 +2942,9 @@ function kitCyberList(cy){
        "Total 14 HL" with nothing on the page to add up to it — which is the same
        defect as a tier chip naming a difficulty without printing the DV: the
        reader cannot check it, so they stop trusting it. */
-    h += ' <span class="x2">'+cit.hl+" ПЧ</span>";
+    h += ' <span class="x2">'+cit.hl+T("gear_sheet_html.hl");
     h += '<span class="itsub">'+esc(cch.note)
-       + " " + ref(cch.href, "подробнее") + "</span></li>";
+       + " " + ref(cch.href, T("kit_gear_list.details")) + "</span></li>";
   }
   h += "</ul>";
   return h;
@@ -2806,18 +2953,18 @@ function kitCyberList(cy){
 function paintSheet(){
   var box = q("sheet"); if(!box) return;
   var r = role(), dv = derived();
-  if(!r){ box.innerHTML = '<p class="cghint">Лист появится, когда будет выбрана Роль.</p>'; return; }
-  var h = '<div class="cghead"><span class="cgwho">'+esc(S.name||"Безымянный")+"</span>"
+  if(!r){ box.innerHTML = T("sheet.sheet_appears_once_role"); return; }
+  var h = '<div class="cghead"><span class="cgwho">'+esc(S.name||T("sheet_markdown.unnamed"))+"</span>"
         + '<span class="cgrole">'+esc(r.name)+"</span></div>";
 
   if(dv){
     h += '<div class="tw"><table class="mx"><thead><tr>';
-    for(var i=0;i<D.stats.length;i++) h += '<th class="n">'+D.stats[i]+"</th>";
+    for(var i=0;i<D.stats.length;i++) h += '<th class="n">'+sName(D.stats[i])+"</th>";
     h += '</tr></thead><tbody><tr>';
     for(var j=0;j<D.stats.length;j++) h += '<td class="n">'+eff(D.stats[j])+"</td>";
     h += "</tr></tbody></table></div>";
-    h += '<div class="cgderived"><span><b>ПЗ</b> '+dv.hp+"</span><span><b>Тяжёлое ранение</b> "
-       + dv.serious+"</span><span><b>Спасбросок</b> "+dv.death+"</span><span><b>Человечность</b> "+dv.hum+"</span></div>";
+    h += T("sheet.hp")+dv.hp+T("sheet.seriously_wounded")
+       + dv.serious+T("sheet.death_save")+dv.death+T("sheet.humanity")+dv.hum+"</span></div>";
     /* Two of these numbers are not what the template rolled, and a sheet that does
        not say so reads as an arithmetic error — "Humanity 40" under "EMP 6"
        looks simply wrong. The chapter's own rule: show the arithmetic. */
@@ -2827,76 +2974,75 @@ function paintSheet(){
        under Gear/Style for #3. */
     if(dv.hl){
       var cyx = cyber();
-      h += '<p class="note">ЭМП <b>'+dv.empBase+" → "+dv.emp+"</b> и Человечность <b>"
-         + dv.humBase+" → "+dv.hum+"</b> — это "
-         + (isCalc() ? "купленные импланты"
-                     : (cyx && cyx.extraHl ? "стартовые импланты и купленные сверх них"
-                                           : "стартовые импланты"))
-         + ": они стоят " + dv.hl + " ПЧ, и книга велит вычесть их сразу. Разбор — "
-         + (isCalc() ? "под Снаряжением и Стилем ниже. "
-                     : "в «Киберимплантах» ниже. " + link("chrome", "Стартовый хром по Ролям") + ". ")
+      h += T("sheet.emp")+dv.empBase+" → "+dv.emp+T("sheet.humanity_b")
+         + dv.humBase+" → "+dv.hum+T("sheet.down")
+         + (isCalc() ? T("sheet.implants_bought")
+                     : (cyx && cyx.extraHl ? T("sheet.starting_implants_those_bought")
+                                           : T("sheet.starting_implants")))
+         + T("sheet.they_cost") + dv.hl + T("sheet.hl_book_says_subtract")
+         + (isCalc() ? T("sheet.under_gear_style_below")
+                     : T("sheet.cyberware_below") + link("chrome", T("sheet.starting_chrome_role")) + ". ")
          + "</p>";
     }
-    h += '<p class="note">Откуда эти числа — ' + link("derived_stats", "Производные характеристики")
-       + ". Что происходит, когда ПЗ кончаются — " + link("wounds", "Урон и раны")
-       + " и " + link("trauma_team", "Trauma Team") + ".</p>";
+    h += T("sheet.where_these_numbers_come") + link("derived_stats", T("sheet.derived_stats"))
+       + T("sheet.what_happens_when_hp") + link("wounds", T("sheet.damage_wounds"))
+       + T("sheet.and") + link("trauma_team", "Trauma Team") + ".</p>";
   } else {
-    h += '<p class="cghint">СТАТы ещё не брошены — шаг 2.</p>';
+    h += T("sheet.stats_not_rolled_yet");
   }
 
-  h += "<h4>Ролевая способность</h4><p><b>"+esc(r.ability)+"</b>, ранг "+D.abilityRank
-     + ' — стартовый ранг для нового персонажа.</p>'
+  h += T("sheet.role_ability")+esc(r.ability)+T("sheet.rank")+D.abilityRank
+     + T("sheet.starting_rank_new_character")
      + (r.abilityWhat ? '<p class="cgability">'+esc(r.abilityWhat)+"</p>" : "");
   h += rank4Block();
-  h += '<p class="note">Ранги, очки и подробности — '
-     + ref(r.abilityHref, esc(r.name)+" в Ролевых способностях") + ".</p>";
+  h += T("sheet.ranks_points_details")
+     + ref(r.abilityHref, esc(r.name)+T("sheet.role_abilities")) + ".</p>";
 
-  h += "<h4>Навыки</h4>";
+  h += T("sheet.skills");
   /* A sheet is read by the GM, who did not watch it being built — so every table
      on it names its own columns. Without a thead these were four bare columns of
      numbers. */
-  h += '<div class="tw"><table class="mx"><thead><tr><th>Навык</th><th class="n">Ур</th>'
-     + '<th class="n">Бросок</th><th>Обычно берёт</th></tr></thead><tbody>';
+  h += T("sheet.skill_lv_roll_usually");
   if(isCalc()){
     /* Only the bought ones: printing all 66 at mostly-zero on a finished sheet
        would bury the ones that matter under the ones that don't. */
     var names3 = boughtKeys3();
     for(var s3=0;s3<names3.length;s3++){
       var key3 = names3[s3], nm3 = skillBase(key3), info3 = D.skills[nm3];
-      var label3 = esc(nm3) + (info3.x2 ? ' <span class="x2">×2</span>' : "");
+      var label3 = esc(info3.name) + (info3.x2 ? ' <span class="x2">×2</span>' : "");
       if(multi3(nm3))
-        label3 += (S.picks[key3] || "").trim()
-          ? ' <span class="cgspec">('+esc(S.picks[key3])+")</span>"
-          : ' <span class="cgtodoin">не выбрано</span>';
+        label3 += pickOf(key3)
+          ? ' <span class="cgspec">('+esc(pickOf(key3))+")</span>"
+          : T("sheet.not_chosen");
       var lvl3 = skillLevel3(key3), sv3 = eff(info3.stat), tot3 = (sv3===null) ? null : sv3 + lvl3;
       h += "<tr><th>"+label3+'</th><td class="n">'+lvl3+'</td><td class="n">'
-         + (tot3===null ? esc(info3.stat)
-                        : esc(info3.stat)+" "+sv3+" + "+lvl3+" = <b>"+tot3+"</b>")
+         + (tot3===null ? esc(sName(info3.stat))
+                        : esc(sName(info3.stat))+" "+sv3+" + "+lvl3+" = <b>"+tot3+"</b>")
          + "</td><td>"+(tot3===null ? "" : tierChip(tot3))+"</td></tr>";
     }
   } else {
     for(var s=0;s<r.skills.length;s++){
-      var sk = r.skills[s], nm = esc(sk.skill);
+      var sk = r.skills[s], nm = esc(sk.name);
       if(sk.pick === "")
-        nm += (S.picks[sk.skill] || "").trim()
-            ? ' <span class="cgspec">('+esc(S.picks[sk.skill])+")</span>"
-            : ' <span class="cgtodoin">не выбрано</span>';
+        nm += (S.picks[sk.id] || "").trim()
+            ? ' <span class="cgspec">('+esc(S.picks[sk.id])+")</span>"
+            : T("sheet.not_chosen");
       else if(sk.pick) nm += ' <span class="cgspec">('+esc(sk.pick)+")</span>";
       var shl = lv(sk), sv = eff(sk.stat), tot = (sv===null) ? null : sv + shl;
       h += "<tr><th>"+nm+'</th><td class="n">'+shl+'</td><td class="n">'
-         + (tot===null ? esc(sk.stat)
-                       : esc(sk.stat)+" "+sv+" + "+shl+" = <b>"+tot+"</b>")
+         + (tot===null ? esc(sName(sk.stat))
+                       : esc(sName(sk.stat))+" "+sv+" + "+shl+" = <b>"+tot+"</b>")
          + "</td><td>"+(tot===null ? "" : tierChip(tot))+"</td></tr>";
     }
   }
   /* The language of the character's culture, 4 levels, granted by the Lifepath rather than by the Role package — the book tells you twice not to forget
      it, and it belongs on the sheet with the other skills, not in the lifepath. */
   if(langRow()){
-    var lt = S.stats ? eff("ИНТ") + 4 : null;
-    h += '<tr><th>Язык '+(S.lang ? '<span class="cgspec">('+esc(S.lang)+")</span>"
-                                 : '<span class="cgtodoin">не выбран</span>')
+    var lt = S.stats ? eff("INT") + 4 : null;
+    h += T("sheet.language")+(langName() ? '<span class="cgspec">('+esc(langName())+")</span>"
+                                 : T("picker.not_chosen"))
        + '</th><td class="n">4</td><td class="n">'
-       + (lt===null ? "ИНТ" : "ИНТ "+eff("ИНТ")+" + 4 = <b>"+lt+"</b>") + "</td><td>"
+       + (lt===null ? sName("INT") : sName("INT")+" "+eff("INT")+" + 4 = <b>"+lt+"</b>") + "</td><td>"
        + (lt===null ? "" : tierChip(lt)) + "</td></tr>";
   }
   /* Skills that exist only because of the Role ability. The Medtech's two are the
@@ -2908,8 +3054,8 @@ function paintSheet(){
   for(var hi=0;hi<hbs.length;hi++){
     var hv = eff(hbs[hi].stat), ht = (hv===null) ? null : hv + hbs[hi].level;
     h += "<tr><th>"+esc(hbs[hi].name)+(hbs[hi].x2 ? ' <span class="x2">×2</span>' : "")
-       + '<span class="itsub">'+esc(hbs[hi].what || "Свой навык.")+'</span></th><td class="n">'+hbs[hi].level+'</td><td class="n">'
-       + (ht===null ? esc(hbs[hi].stat) : esc(hbs[hi].stat)+" "+hv+" + "+hbs[hi].level+" = <b>"+ht+"</b>")
+       + '<span class="itsub">'+esc(hbs[hi].what || T("sheet.own_skill"))+'</span></th><td class="n">'+hbs[hi].level+'</td><td class="n">'
+       + (ht===null ? esc(sName(hbs[hi].stat)) : esc(sName(hbs[hi].stat))+" "+hv+" + "+hbs[hi].level+" = <b>"+ht+"</b>")
        + "</td><td>"+(ht===null ? "" : tierChip(ht))+"</td></tr>";
   }
   var extra = abilSkills();
@@ -2917,22 +3063,22 @@ function paintSheet(){
     var ex = extra[e];
     /* The Fixer's language is "Language (Highway Speak)" once he has said which; until
        then it is an unanswered field and says so, exactly like "pick 1". */
-    var enm = esc(ex.skill)
+    var enm = esc(ex.name)
             + (ex.spec ? ' <span class="cgspec">('+esc(ex.spec)+")</span>"
-                       : (ex.from ? "" : ' <span class="cgtodoin">не выбран</span>'))
+                       : (ex.from ? "" : T("sheet.not_chosen_b")))
             + '<span class="itsub">'+esc(ex.what)
-            + (ex.from ? " Уровень — из очков: "+esc(ex.from)+"." : "")
-            + " " + ref(ex.href, "подробнее") + "</span>";
+            + (ex.from ? T("sheet.level_from_points")+esc(ex.from)+"." : "")
+            + " " + ref(ex.href, T("kit_gear_list.details")) + "</span>";
     var ev = eff(ex.stat), et = (ev===null) ? null : ev + ex.level;
     h += "<tr><th>"+enm+'</th><td class="n">'
        + (ex.zero ? '<span class="cgtodoin">0</span>' : ex.level)+'</td><td class="n">'
-       + (et===null ? esc(ex.stat) : esc(ex.stat)+" "+ev+" + "+ex.level+" = <b>"+et+"</b>")
+       + (et===null ? esc(sName(ex.stat)) : esc(sName(ex.stat))+" "+ev+" + "+ex.level+" = <b>"+et+"</b>")
        + "</td><td>"+(et===null || ex.zero ? "" : tierChip(et))+"</td></tr>";
   }
   h += "</tbody></table></div>";
-  h += '<p class="note">Третья колонка — то, что прибавляется к 1d10: '
-     + link("checks", "СТАТ + Навык + 1d10 против СЛ") + '. Что делает каждый навык — '
-     + link("skills", "список всех 66") + ".</p>";
+  h += T("sheet.third_column_what_gets")
+     + link("checks", T("sheet.stat_skill_1d10_against")) + T("sheet.what_each_skill_does")
+     + link("skills", T("sheet.list_all_skills")) + ".</p>";
 
   /* "or" is a choice, so it is rendered as one. Once per destination, not per
      item: six links to Fight in a six-line list is wallpaper. */
@@ -2949,13 +3095,13 @@ function paintSheet(){
     /* Method #3 has no fixed package to print — it bought its own, on its own
        Gear pane, and the sheet just totals what ended up in the two lists. */
     if(S.sponsor && S.sponsor.active)
-      h += '<p class="note"><b>Продан за +'+D.sponsor.bonus+'eb на кибернетику</b> — '
-         + esc(S.sponsor.kind || "работодатель не выбран") + ", на крючке: "
-         + esc(S.sponsor.hook || "не выбрано") + '. ' + pageChip(D.sponsor.page) + "</p>";
-    h += gearSheetHtml("buy", "Снаряжение", " — идёт в стартовые деньги.");
-    h += gearSheetHtml("style", "Стиль", " — сгорает.");
+      h += T("sheet.sold_out")+D.sponsor.bonus+T("sheet.eb_cyberware")
+         + esc(nameOf(D.sponsor.kinds, S.sponsor.kind) || T("pending_gear.employer_not_chosen")) + T("sheet_markdown.hook")
+         + esc(nameOf(D.sponsor.hooks, S.sponsor.hook) || T("sheet_markdown.not_chosen")) + '. ' + pageChip(D.sponsor.page) + "</p>";
+    h += gearSheetHtml("buy", T("sheet_markdown.gear_b"), T("sheet.goes_into_starting_cash"));
+    h += gearSheetHtml("style", T("sheet_markdown.style"), T("sheet.burns"));
   } else {
-  h += "<h4>Стартовое снаряжение</h4>" + kitGearList(r);
+  h += T("sheet.starting_gear") + kitGearList(r);
   /* Each line now links itself, so this note carries only what the per-item links
      do not: where to buy the rest, and the cyberware a starting character has.
      Repeating "Ranged · Melee · Armor" underneath seven "details"
@@ -2963,7 +3109,7 @@ function paintSheet(){
      The per-item links deliberately break that rule's letter (three destinations,
      seven links): the destination repeats but the ITEM does not, and a beginner
      reading line six should not have to scroll back to line one to find the way in. */
-  h += '<p class="note">Цены и всё остальное снаряжение — ' + link("prices", "Ночные Рынки") + ".</p>";
+  h += T("sheet.prices_all_other_gear") + link("prices", T("sheet.night_markets")) + ".</p>";
   }
 
   /* Starting cyberware. The book hands it over the same way it hands over the gear
@@ -2974,19 +3120,18 @@ function paintSheet(){
      it gets only the chain note below, not a second implant list. */
   var cy = cyber();
   if(cy && isCalc() && cy.hl){
-    h += '<p class="note"><b>ПЧ</b> от Кибернетики в Снаряжении и Стиле: <b>'+cy.hl+"</b>."
-       + (dv ? " <b>Человечность</b>: ЭМП " + dv.empBase + " × 10 = " + dv.humBase
-             + ", минус " + cy.hl + " = <b>" + dv.hum + "</b>."
-             + " <b>ЭМП</b>: " + dv.hum + " ÷ 10 = <b>" + dv.emp
-             + "</b> — каждый полный десяток Человечности это единица ЭМП."
+    h += T("sheet.hl_from_cyberware_gear")+cy.hl+"</b>."
+       + (dv ? T("sheet.humanity_emp") + dv.empBase + " × 10 = " + dv.humBase
+             + T("stats.minus") + cy.hl + " = <b>" + dv.hum + T("sheet.emp_b") + dv.hum + " ÷ 10 = <b>" + dv.emp
+             + T("sheet.every_full_ten_humanity")
            : "")
-       + " Про Человечность и киберпсихоз — " + link("chrome", "Киберимпланты") + ".</p>";
+       + T("sheet.humanity_cyberpsychosis") + link("chrome", T("sheet.cyberware")) + ".</p>";
   }
   if(cy && !isCalc()){
     /* Its own list class, not .cggear: the two lists look alike but their checks
        are different — a gear line carries a generated stats gloss, an implant line
        carries the catalogue's "what it gives". */
-    h += "<h4>Киберимпланты</h4>" + kitCyberList(cy);
+    h += T("sheet.cyberware_b") + kitCyberList(cy);
     /* …and the whole chain, one step per line, each starting from the number above
        it: the sum, then Humanity, then EMP. "Why exactly 26" has to be
        answerable without opening the book. */
@@ -2996,20 +3141,18 @@ function paintSheet(){
        fixed package's "installation already included" price, so it gets its own
        term in the sum rather than silently padding the package's own number —
        the reader has to be able to trace every HL back to a purchase. */
-    if(cy.extraHl) sum.push(cy.extraHl + " (доп. покупки)");
+    if(cy.extraHl) sum.push(cy.extraHl + T("sheet.extra_purchases"));
     h += '<p class="note">'
        + (cy.extraHl
-          ? "Установка стартовых имплантов уже включена в цену; за купленное сверх "
-            + "них на доп. eb — отдельно: " + installLine() + ". "
-          : "Установка уже включена в цену. ")
-       + "<b>ПЧ</b>: " + sum.join(" + ") + " = <b>" + cy.hl + "</b>."
-       + (dv ? " <b>Человечность</b>: ЭМП " + dv.empBase + " × 10 = " + dv.humBase
-             + ", минус " + cy.hl + " = <b>" + dv.hum + "</b>."
-             + " <b>ЭМП</b>: " + dv.hum + " ÷ 10 = <b>" + dv.emp
-             + "</b> — каждый полный десяток Человечности это единица ЭМП."
+          ? T("sheet.installation_starting_implants_already") + installLine() + ". "
+          : T("sheet.installation_already_price"))
+       + T("sheet.hl") + sum.join(" + ") + " = <b>" + cy.hl + "</b>."
+       + (dv ? T("sheet.humanity_emp") + dv.empBase + " × 10 = " + dv.humBase
+             + T("stats.minus") + cy.hl + " = <b>" + dv.hum + T("sheet.emp_b") + dv.hum + " ÷ 10 = <b>" + dv.emp
+             + T("sheet.every_full_ten_humanity")
            : "")
-       + " Что делает каждый имплант — " + link("cyberware_catalogue", "каталог в Киберимплантах")
-       + ", про Человечность и киберпсихоз — " + link("chrome", "там же") + ".</p>";
+       + T("sheet.what_each_implant_does") + link("cyberware_catalogue", T("sheet.catalogue_cyberware"))
+       + T("sheet.humanity_cyberpsychosis_b") + link("chrome", T("sheet.same_place")) + ".</p>";
   }
 
   /* The subordinate has his own tab, but the printed sheet is what gets handed to
@@ -3017,26 +3160,21 @@ function paintSheet(){
      The full block, with his skills and kit, is on his own step. */
   var subT = subType(), subS = subStats();
   if(subSpec()){
-    h += "<h4>Подчинённый</h4>";
+    h += T("sheet.subordinate");
     if(!subT || !subS){
-      h += '<p class="cghint">Корпорат уже получил первого подчинённого на 3 ранге '
-         + '— его осталось нанять на отдельной вкладке.</p>';
+      h += T("sheet.exec_has_already_been");
     } else {
       var sdv = subDerived(), line = [];
       for(var ss=0;ss<subT.stats.length;ss++)
-        line.push(subT.stats[ss] + " " + subS[subT.stats[ss]]);
-      h += '<div class="tw"><table class="mx cgfacts"><tbody>'
-         + "<tr><th>Кто</th><td><b>"+esc((S.sub && S.sub.name) || "Без имени")
-         + "</b> — "+esc(subT.name)+", прикрытие: "+esc(subT.cover)+"</td></tr>"
-         + "<tr><th>СТАТы</th><td>"+esc(line.join(" · "))+"</td></tr>"
-         + "<tr><th>ПЗ</th><td>"+sdv.hp+" · тяжёлое ранение "+sdv.serious
-         + " · спасбросок "+sdv.death+" · Лояльность "+D.subord.loyalty+"</td></tr>"
-         + "<tr><th>Снаряжение</th><td>"+esc(subT.gear)+"</td></tr>"
+        line.push(sName(subT.stats[ss]) + " " + subS[subT.stats[ss]]);
+      h += T("sheet.who")+esc((S.sub && S.sub.name) || T("sheet_markdown.no_name"))
+         + "</b> — "+esc(subT.name)+T("sheet.cover")+esc(subT.cover)+T("sheet.stats")+esc(line.join(" · "))+T("sheet.hp_b")+sdv.hp+T("sheet.seriously_wounded_b")+sdv.serious
+         + T("sheet.death_save_b")+sdv.death+T("sheet.loyalty")+D.subord.loyalty+T("sheet.gear")+esc(subT.gear)+"</td></tr>"
          /* The one line here nobody generated. It is dropped when empty rather
             than printed as a blank row — an unfilled optional field is not a
             fact about the character. */
          + (((S.sub && S.sub.note) || "").trim()
-             ? "<tr><th>Кто он</th><td>"+esc(S.sub.note)+"</td></tr>" : "")
+             ? T("sheet.who_he")+esc(S.sub.note)+"</td></tr>" : "")
          + "</tbody></table></div>";
     }
   }
@@ -3050,76 +3188,63 @@ function paintSheet(){
      always "Rank 1–4". Both numbers are per-Role facts a GM asks about in the
      first session. */
   if(D.cash && r.income){
-    h += "<h4>Деньги</h4>";
+    h += T("sheet.money");
     /* "500eb, can be spent right away" answers nothing on its own — on WHAT, and is
        that a lot? CP:RED prices in eight fixed steps, so the answer is exact and
        it comes out of the book's own ladder: 500eb is one item of a named category,
        and the category lists what is in it. Then the four places that sell
        something, because a price with no way in is the same dead end. */
-    h += '<div class="tw"><table class="mx cgfacts"><tbody>'
-       + "<tr><th>На старте</th><td>"
+    h += T("sheet.start")
        + (isCalc()
-          ? "<b>"+Math.max(0, gearLeft("buy"))+"eb</b> — то, что осталось от "
-            + gearBudget("buy")+"eb на Снаряжение после покупок на шаге «Снаряжение» "
+          ? "<b>"+Math.max(0, gearLeft("buy"))+T("sheet.eb_what_left")
+            + gearBudget("buy")+T("sheet.eb_gear_after_purchases")
             + (gearBudget("buy") !== D.calcCash.main
-               ? " (бюджет задан ГМом; по умолчанию книга даёт "+D.calcCash.main+"eb)" : "")
-            + " (книга: «всё, что ты не потратил, остаётся у тебя»). Несожжённое из "
-            + gearBudget("style")+"eb на Стиль"
+               ? T("sheet.budget_set_gm_default")+D.calcCash.main+"eb)" : "")
+            + T("sheet.book_whatever_don_t")
+            + gearBudget("style")+T("sheet.eb_style")
             + (gearBudget("style") !== D.calcCash.style
-               ? " (тоже задано ГМом; по умолчанию "+D.calcCash.style+"eb)" : "")
-            + " сюда <b>не</b> идёт — оно «сгорает». "
+               ? T("sheet.also_set_gm_default")+D.calcCash.style+"eb)" : "")
+            + T("sheet.does_not_go_here")
             + pageChip(D.calcCash.mainPage) + " " + pageChip(D.calcCash.stylePage)
-          : "<b>"+Math.max(0, gearLeft("start"))+"eb</b> из "+gearBudget("start")+"eb "
+          : "<b>"+Math.max(0, gearLeft("start"))+T("sheet.eb")+gearBudget("start")+"eb "
             + (gearBudget("start") !== D.cash.start
-               ? "(бюджет задан ГМом; по умолчанию " : "(")
-            + "книга даёт "+D.cash.start+"eb сверх снаряжения обоим быстрым методам). "
+               ? T("sheet.budget_set_gm_default_b") : "(")
+            + T("sheet.book_gives")+D.cash.start+T("sheet.eb_top_gear_both")
             /* The ladder comparison is a fact about the book's 500eb only: with a
                GM's own figure it named a category the money no longer matched. */
             + (gearBudget("start") === D.cash.start
-               ? "По ценовой лестнице "+D.cash.start+"eb — это <b>ровно один</b> предмет "
-                 + "категории «" + esc(D.cash.tier.name) + "» ("
-                 + esc(D.cash.tier.like.replace(/\.$/, "")) + ") — или несколько дешевле, "
-                 + "или можно потратить на шаге «Снаряжение» и оставить сдачу себе. "
-               : "Потратить можно на шаге «Снаряжение», остаток остаётся у тебя. ")
+               ? T("sheet.price_ladder")+D.cash.start+T("sheet.eb_exactly_one_item") + esc(D.cash.tier.name) + T("sheet.close_quote_paren")
+                 + esc(D.cash.tier.like.replace(/\.$/, "")) + T("sheet.several_cheaper_ones_can")
+               : T("sheet.can_spend_gear_step"))
             + pageChip(D.cash.page))
-       + "</td></tr>"
-       + "<tr><th>Куда потратить</th><td>"
-       + link("price_categories", "ценовые категории") + " · "
-       + link("prices", "Ночные Рынки") + " · "
-       + link("gear", "общее снаряжение") + " · "
-       + link("weapons", "оружие") + " и " + link("armor", "броня") + " · "
-       + link("ammo", "боеприпасы и обвес") + " · "
-       + link("cyberware_catalogue", "киберимпланты") + " · "
-       + link("housing", "жильё") + ".</td></tr>"
-       + "<tr><th>Про хром</th><td>"
+       + T("sheet.where_spend")
+       + link("price_categories", T("sheet.price_categories")) + " · "
+       + link("prices", T("sheet.night_markets")) + " · "
+       + link("gear", T("sheet.general_gear")) + " · "
+       + link("weapons", T("sheet.weapons")) + T("sheet.and") + link("armor", T("sheet.armor")) + " · "
+       + link("ammo", T("sheet.ammo_attachments")) + " · "
+       + link("cyberware_catalogue", T("sheet.cyberware_c")) + " · "
+       + link("housing", T("sheet.housing")) + T("sheet.about_chrome")
        + (isCalc()
-          ? "Полный пакет покупает импланты за те же eb, что и всё остальное "
-            + "снаряжение — цена в строке уже должна включать установку, как и у "
-            + "любой другой покупки на Ночных Рынках. "
-          : "В цену стартовых имплантов установка уже включена, а вот за купленный "
-            + "потом придётся заплатить отдельно: " + installLine() + ". ")
-       + link("installation", "Где что ставят") + ".</td></tr>"
-       + "<tr><th>Между заказами</th><td><b>1d6</b> в неделю по таблице своей Роли, "
-       + "колонка <b>Ранг 1–4</b>: от <b>"+r.income.low+"eb</b> до <b>"
-       + r.income.high+"eb</b>. " + link("income", "Таблица своей Роли") + ".</td></tr>"
-       + "<tr><th>Расходы</th><td>Стиль жизни платится <b>каждый месяц</b>, и самый "
-       + "дешёвый — «" + esc(D.cash.lifestyle.name) + "» за <b>"
-       + D.cash.lifestyle.eb + "eb</b>; жильё сверх того. "
-       + link("housing", "Образ жизни и жильё") + ".</td></tr>"
+          ? T("sheet.full_package_buys_implants")
+          : T("sheet.installation_already_price_starting") + installLine() + ". ")
+       + link("installation", T("sheet.where_things_installed")) + T("sheet.between_gigs_1d6_per")+r.income.low+T("sheet.eb_b")
+       + r.income.high+"eb</b>. " + link("income", T("sheet.role_s_table")) + T("sheet.expenses_lifestyle_paid_every") + esc(D.cash.lifestyle.name) + T("sheet.costs")
+       + D.cash.lifestyle.eb + T("sheet.eb_housing_top")
+       + link("housing", T("sheet.lifestyle_housing")) + ".</td></tr>"
        + "</tbody></table></div>";
     /* The 500eb used to be a bare number in the row above with nowhere to spend
        it on the sheet itself — printed 98 explicitly allows spending it right
        away, not just banking it, so it gets the same itemised list Method #3's
        own purchases get, off the same "start" list painted on this pane. */
-    if(!isCalc()) h += gearSheetHtml("start", "Доп. покупки", " — остаётся у тебя как деньги.");
+    if(!isCalc()) h += gearSheetHtml("start", T("sheet.extra_purchases_b"), T("sheet.stays_cash"));
   }
 
   var any = false;
   for(var L2=0;L2<D.life.length;L2++) if(got(D.life[L2])){ any = true; break; }
   if(any){
-    h += "<h4>Жизненный путь</h4>";
-    h += '<div class="tw"><table class="mx"><thead><tr><th>Что</th><th class="n">1d10</th>'
-       + "<th>Выпало</th></tr></thead><tbody>";
+    h += T("sheet.lifepath");
+    h += T("sheet.what_1d10_result");
     for(var L=0;L<D.life.length;L++){
       var t = D.life[L], g = got(t);
       if(!g) continue;
@@ -3135,7 +3260,7 @@ function paintSheet(){
         /* "who was hurt" is a qualifier on the outcome, not a fact of its own:
            as its own entry it read "Who was hurt: You were hurt — because of him". */
         if(t.harm && c === 1 && S.harm && harmable(t))
-          line += ' <span class="cgqual">— '+esc(S.harm)+"</span>";
+          line += ' <span class="cgqual">— '+esc(harmName(t))+"</span>";
         line += undone(t, c, true);
         vals.push(shownCols(t) > 1
           ? '<span class="lpl"><span class="lpk">'+esc(shortCol(t, c))+"</span>"+line+"</span>"
@@ -3146,7 +3271,7 @@ function paintSheet(){
          + vals.join("")+"</td></tr>";
     }
     h += "</tbody></table></div>";
-    h += '<p class="note">Полные таблицы — ' + link("lifepath", "Жизненный путь") + ".</p>";
+    h += T("sheet.full_tables") + link("lifepath", T("sheet.lifepath_b")) + ".</p>";
   } else {
     /* An unrolled Lifepath used to vanish — no heading on the sheet, nothing
        in the .md, nothing in the print — so a GM was handed a sheet that
@@ -3156,11 +3281,8 @@ function paintSheet(){
        "not chosen" rather than printing the instruction as if it were the answer.
        The step-4 tab badge is deliberately NOT touched. That counter is for a
        half-finished answer, and "Clear" is a decision, not an oversight. */
-    h += "<h4>Жизненный путь</h4>";
-    h += '<p class="note"><span class="cgtodoin">Не заполнен</span> — ни одна '
-       + "таблица не брошена. Для ГМа это самая нужная часть листа: <b>Враг</b>, "
-       + "<b>Друг</b> и <b>Цель</b> — из них вырастают сцены. Заполняется на шаге "
-       + "«Жизненный путь».</p>";
+    h += T("sheet.lifepath");
+    h += T("sheet.not_filled_no_table");
   }
 
   /* The Role's own path, on the sheet as its own table: it answers different
@@ -3177,24 +3299,21 @@ function paintSheet(){
     }
   }
   if(rowsP.length){
-    h += "<h4>Ролевой путь</h4>";
-    h += '<div class="tw"><table class="mx"><thead><tr><th>Что</th>'
-       + '<th class="n">Бросок</th><th>Выпало</th></tr></thead><tbody>';
+    h += T("sheet.role_path");
+    h += T("sheet.what_roll_result");
     for(var rp2=0;rp2<rowsP.length;rp2++)
       h += "<tr><th>"+esc(rowsP[rp2][0])+'</th><td class="d">'
          + (rowsP[rp2][1] || "—")+"</td><td>"+rowsP[rp2][2]+"</td></tr>";
     h += "</tbody></table></div>";
     var rpl = pathSpec();
-    if(rpl) h += '<p class="note">Полная таблица этой Роли — '
-               + ref(rpl.href, "в Жизненном пути") + ".</p>";
+    if(rpl) h += T("sheet.role_s_full_table")
+               + ref(rpl.href, T("sheet.lifepath_c")) + ".</p>";
   } else if(shownP.length){
     /* Same rule as the common path above: a Role that HAS a path and has answered
        none of it says so, rather than dropping the heading and reading as a Role
        that never had one. */
-    h += "<h4>Ролевой путь</h4>";
-    h += '<p class="note"><span class="cgtodoin">Не заполнен</span> — ни один шаг '
-       + "не брошен: чем персонаж занят в профессии, где работает и кто за ним "
-       + "охотится.</p>";
+    h += T("sheet.role_path");
+    h += T("sheet.not_filled_no_step");
   }
   /* No read-only copy of "About the character" here: the fields themselves sit directly
      under this sheet and print with it, so echoing them was the same text twice. */
@@ -3212,7 +3331,7 @@ function paintSheet(){
 function subType(){
   var sp = subSpec(); if(!sp) return null;
   var key = (S.sub && S.sub.type) || "";
-  for(var i=0;i<sp.types.length;i++) if(sp.types[i].name === key) return sp.types[i];
+  for(var i=0;i<sp.types.length;i++) if(sp.types[i].id === key) return sp.types[i];
   return null;
 }
 function subRoll(){ return (S.sub && S.sub.roll) || 0; }
@@ -3225,14 +3344,14 @@ function subStats(){
 }
 function subDerived(){
   var st = subStats(); if(!st) return null;
-  var hp = 10 + 5*Math.ceil((st["ТЕЛ"] + st["ВОЛЯ"])/2);
-  return {hp:hp, serious:Math.ceil(hp/2), death:st["ТЕЛ"]};
+  var hp = 10 + 5*Math.ceil((st.BODY + st.WILL)/2);
+  return {hp:hp, serious:Math.ceil(hp/2), death:st.BODY};
 }
 function pendingSub(){
   var sp = subSpec(), out = [];
   if(!sp) return out;
-  if(!subType()) out.push("Кем он работает");
-  else if(!subRoll()) out.push("Бросок на его СТАТы");
+  if(!subType()) out.push(T("pending_sub.what_he_does"));
+  else if(!subRoll()) out.push(T("pending_sub.roll_his_stats"));
   return out;
 }
 function paintSub(){
@@ -3241,68 +3360,54 @@ function paintSub(){
   if(!sp){ box.innerHTML = ""; return; }
   var t = subType(), n = subRoll(), h = "";
 
-  h += '<p class="cgrow"><label>Кем он работает: '
-     + '<select class="cgsel" data-cg="subtype"><option value="">— выбери тип —</option>';
+  h += T("sub.what_he_does_pick");
   for(var i=0;i<sp.types.length;i++)
-    h += '<option value="'+esc(sp.types[i].name)+'"'
-       + ((t && t.name===sp.types[i].name) ? " selected" : "") + ">"
+    h += '<option value="'+esc(sp.types[i].id)+'"'
+       + ((t && t.id===sp.types[i].id) ? " selected" : "") + ">"
        + esc(sp.types[i].name) + " — " + esc(sp.types[i].job) + "</option>";
   h += "</select></label></p>";
 
   if(!t){
-    h += '<p class="cghint">Пять типов, и они отличаются не только СТАТами: у '
-       + 'каждого свои навыки, хром и снаряжение от компании.</p>';
+    h += T("sub.five_types_they_differ");
     box.innerHTML = h; return;
   }
 
-  h += '<p class="cglegend"><b>Прикрытие:</b> '+esc(t.cover)
-     + ". <b>Истинная работа:</b> "+esc(t.job)+"</p>";
-  h += '<p class="cgrow"><label class="cgname">Имя <input type="text" data-cg="subname" '
-     + 'value="'+esc((S.sub && S.sub.name) || "")+'" placeholder="как его зовут"></label>'
-     + ' <button type="button" class="cgbtn cgprim" data-cg="rollsub">'
-     + (n ? "Перебросить 1d6" : "Бросить 1d6") + "</button></p>";
+  h += T("sub.cover")+esc(t.cover)
+     + T("sub.real_job")+esc(t.job)+"</p>";
+  h += T("sub.name_input_type_text")+esc((S.sub && S.sub.name) || "")+T("sub.placeholder_what_he_called")
+     + (n ? T("sub.re_roll_1d_f") : T("sub.roll_1d_f")) + "</button></p>";
 
   if(!n){
-    h += '<p class="cghint">Тип выбран — осталось узнать, кого пришлёт отдел кадров.</p>';
+    h += T("sub.type_chosen_now_find");
   } else {
     var st = subStats(), dv = subDerived();
-    h += '<p class="cgsubroll">Выпало <span class="cgd">'+n+"</span> — строка "+n
-       + " таблицы «"+esc(t.name)+"».</p>";
+    h += T("sub.rolled")+n+T("sub.row")+n
+       + T("sub.of_the")+esc(t.name)+T("sub.close_quote_end");
     h += '<div class="tw"><table class="mx"><thead><tr>';
-    for(var s=0;s<t.stats.length;s++) h += '<th class="n">'+t.stats[s]+"</th>";
+    for(var s=0;s<t.stats.length;s++) h += '<th class="n">'+sName(t.stats[s])+"</th>";
     h += "</tr></thead><tbody><tr>";
     for(var s2=0;s2<t.stats.length;s2++) h += '<td class="n">'+st[t.stats[s2]]+"</td>";
     h += "</tr></tbody></table></div>";
     /* Nine STATs, no Luck: like every NPC in this reference, and the sheet says so
        rather than leaving a reader to wonder which column went missing. */
-    h += '<div class="cgderived"><span><b>ПЗ</b> '+dv.hp+"</span>"
-       + "<span><b>Тяжёлое ранение</b> "+dv.serious+"</span>"
-       + "<span><b>Спасбросок</b> "+dv.death+"</span>"
-       + '<span><b>Лояльность</b> '+sp.loyalty+"</span></div>";
-    h += '<p class="note">У подчинённого <b>девять</b> СТАТов — Удача остаётся '
-       + 'персонажам игроков. ЭМП за импланты снижать не нужно, книга это уже '
-       + 'учла. ПЗ и порог считаются как у всех — ' + link("derived_stats", "формулы")
+    h += T("sheet.hp")+dv.hp+T("sheet.seriously_wounded")+dv.serious+T("sheet.death_save")+dv.death+T("sub.loyalty")+sp.loyalty+"</span></div>";
+    h += T("sub.subordinate_has_nine_stats") + link("derived_stats", T("sub.formulas"))
        + ".</p>";
 
-    h += "<h4>Навыки</h4>";
-    h += '<div class="tw"><table class="mx"><thead><tr><th>Навык</th>'
-       + '<th class="n">Уровень</th></tr></thead><tbody>';
+    h += T("sheet.skills");
+    h += T("sub.skill_level");
     for(var k=0;k<t.skills.length;k++)
       h += "<tr><th>"+esc(t.skills[k].skill)+'</th><td class="n">'
          + t.skills[k].level+"</td></tr>";
     h += "</tbody></table></div>";
-    h += '<p class="note">Это уровни навыков, к ним прибавляется его СТАТ и 1d10. '
-       + '<b>Повышать их нельзя</b> — политика компании. Список всех навыков — '
-       + link("skills", "в Проверках и Навыках") + ".</p>";
+    h += T("sub.these_skill_levels_his")
+       + link("skills", T("skills.checks_skills")) + ".</p>";
 
-    h += "<h4>Хром и снаряжение</h4>";
-    h += '<div class="tw"><table class="mx cgfacts"><tbody>'
-       + "<tr><th>Киберимпланты</th><td>"+esc(t.cyber)+"</td></tr>"
-       + "<tr><th>Снаряжение</th><td>"+esc(t.gear)+"</td></tr>"
+    h += T("sub.chrome_gear");
+    h += T("sub.cyberware")+esc(t.cyber)+T("sheet.gear")+esc(t.gear)+"</td></tr>"
        + "</tbody></table></div>";
-    h += '<p class="note">Из брони он носит <b>только Лёгкий бронекостюм</b>. '
-       + "Что делает каждый имплант — " + link("cyberware_catalogue", "каталог")
-       + ", оружие — " + link("weapons", "Перестрелка") + ".</p>";
+    h += T("sub.only_armor_he_wears") + link("cyberware_catalogue", T("sub.catalogue"))
+       + T("sub.weapons") + link("weapons", T("sub.friday_night_firefight")) + ".</p>";
   }
   /* Optional, and last, for the same reason "About the character" sits under the sheet:
      you write the person once the numbers are in front of you. The book hands the
@@ -3313,13 +3418,7 @@ function paintSub(){
   if(t){
     var snote = (S.sub && S.sub.note) || "";
     h += '<div class="cgnotes'+(snote.trim() ? "" : " empty")
-       + '"><h4 class="cgnoteh">Кто он такой</h4>'
-       + '<p class="cgnotehint">По желанию. Отдел кадров прислал СТАТы — характер, '
-       + 'манеры и то, чего он на самом деле хочет, придумываешь ты. '
-       + 'Печатается вместе с листом.</p>'
-       + '<div class="cgnote'+(snote.trim() ? "" : " empty")+'">'
-       + '<textarea rows="2" data-cg="subnote" placeholder="кто он, как себя ведёт, '
-       + 'чего хочет — и почему он всё ещё работает на тебя">'+esc(snote)+"</textarea>"
+       + T("sub.who_he_optional_hr")+(snote.trim() ? "" : " empty")+T("sub.note_placeholder")+esc(snote)+"</textarea>"
        + "</div></div>";
   }
   box.innerHTML = h;
@@ -3355,10 +3454,7 @@ function paintNotes(){
   var anyNote = false;
   for(var n0=0;n0<D.notes.length;n0++)
     if((S.notes[D.notes[n0].key]||"").trim()){ anyNote = true; break; }
-  var h = '<div class="cgnotes'+(anyNote ? "" : " empty")+'">'
-        + '<h4 class="cgnoteh">О персонаже</h4>'
-        + '<p class="cgnotehint">По желанию — но именно это ГМ прочитает про твоего '
-        + "персонажа. Печатается вместе с листом.</p>";
+  var h = '<div class="cgnotes'+(anyNote ? "" : " empty")+T("notes.about_character_optional_but");
   for(var i=0;i<D.notes.length;i++){
     var f = D.notes[i];
     var filled = (S.notes[f.key]||"").trim();
@@ -3412,7 +3508,7 @@ function paintMode(){
 }
 function paintMethods(){
   var box = q("methods"); if(!box) return;
-  var h = '<span class="cgmlab">Метод</span>';
+  var h = T("methods.method");
   for(var i=0;i<D.methods.length;i++){
     var m = D.methods[i], on = (m.key === S.method);
     h += '<button type="button" class="cgm'+(on?" on":"")+'" data-cg="method" data-key="'+m.key+'"'
@@ -3423,8 +3519,21 @@ function paintMethods(){
   }
   var cur = methodOf(S.method);
   box.innerHTML = h + (cur ? '<span class="cgmwhat">'+esc(cur.what)
-                           + " " + pageChip(cur.page) + "</span>" : "");
+                           + " " + pageChip(cur.page) + "</span>" : "") + langButtons();
 }
+function langButtons(){
+  if(LANGS.length < 2) return "";
+  var h = '<span class="cglang" role="group" aria-label="Language">';
+  for(var i=0;i<LANGS.length;i++)
+    h += '<button type="button" class="cgbtn cgmini'+(LANGS[i] === LANG ? " on" : "")+'" data-cg="uilang" '
+       + 'data-l="'+LANGS[i]+'"'+(LANGS[i] === LANG ? ' aria-pressed="true"' : ' aria-pressed="false"')+'>'
+       + LANGS[i].toUpperCase()+"</button>";
+  return h + "</span>";
+}
+root.addEventListener("click", function(ev){
+  var b = ev.target.closest ? ev.target.closest('[data-cg="uilang"]') : null;
+  if(b) setLang(b.getAttribute("data-l"));
+});
 root.addEventListener("click", function(ev){
   var b = ev.target.closest ? ev.target.closest('[data-cg="method"]') : null;
   if(!b) return;
@@ -3453,10 +3562,7 @@ root.addEventListener("click", function(ev){
   var hasStartState = (S.start||[]).length || typeof S.startBudget === "number";
   if((S.stats || S.roll || rolledCount() || Object.keys(S.levels||{}).length || hasCalcState
       || (hasStartState && ((key === "calc") !== (S.method === "calc"))))
-     && !window.confirm("Сменить метод на «" + methodOf(key).name + "»?\n\n"
-        + "СТАТы придётся получить заново, а навыки и снаряжение вернутся к "
-        + "исходным: методы получают их по-разному.\n\n"
-        + "Роль, Жизненный путь, имя и записи о персонаже останутся.")) return;
+     && !window.confirm(T("lang_buttons.switch_method") + methodOf(key).name + T("lang_buttons.will_have_get_stats"))) return;
   /* #1/#2's own 500eb (S.start/startBudget) is the ONE piece of gear state that
      is not calc-only — it belongs to the fast-method PAIR, not to either method
      alone, the same way Role and Lifepath do. So it survives a #1<->#2
@@ -3491,18 +3597,18 @@ root.addEventListener("click", function(ev){
    `steps()` is therefore the single source of order, and everything that walks the
    wizard — the tabs, "Next", "Back", ready() — reads it rather than a literal. */
 var PANES = [
-  {id:1, name:"Роль"},
-  {id:2, name:"СТАТы"},
-  {id:3, name:"Навыки"},
-  {id:4, name:"Жизненный путь"},
+  {id:1, get name(){ return T("lang_buttons.role"); }},
+  {id:2, get name(){ return T("lang_buttons.stats"); }},
+  {id:3, get name(){ return T("lang_buttons.skills"); }},
+  {id:4, get name(){ return T("sheet.lifepath_b"); }},
   /* Every method has something to spend here now: Method #3 buys its whole kit
      (Gear + Style), #1/#2 have their own 500eb (printed 98) on top of the
      fixed package the sheet still prints. The pane itself never varies by
      method — paintGearPane() decides which list(s) to paint — so it is always
      on the strip, unlike Subordinate below. */
-  {id:7, name:"Снаряжение"},
-  {id:6, name:"Подчинённый", when:function(){ return !!subSpec(); }},
-  {id:5, name:"Лист"}
+  {id:7, get name(){ return T("sheet_markdown.gear_b"); }},
+  {id:6, get name(){ return T("lang_buttons.subordinate"); }, when:function(){ return !!subSpec(); }},
+  {id:5, get name(){ return T("lang_buttons.sheet"); }}
 ];
 function steps(){
   var out = [];
@@ -3554,9 +3660,7 @@ function ready(n){
    you what to do next, and a wizard whose only navigation is its own breadcrumb
    reads as a form, not as a path. Each button names its destination, and a blocked
    one says what is missing instead of just being dead. */
-var BLOCKED = {2:"Сначала выбери Роль", 3:"Сначала брось СТАТы",
-               4:"Сначала брось СТАТы", 5:"Сначала брось СТАТы",
-               6:"Сначала брось СТАТы", 7:"Сначала брось СТАТы"};
+function blockedMsg(id){ return id === 2 ? T("blocked_msg.pick_role_first") : T("blocked_msg.roll_stats_first"); }
 /* The outstanding-field count belongs to the step that OWNS the field: "pick 1"
    to Skills, the culture language to Lifepath, the Role's own points and its
    Role path to the step each is painted on. One shared total on every tab sent
@@ -3587,14 +3691,14 @@ function paintFeet(){
     if(i < order.length-1){
       var nxt = order[i+1], can = ready(nxt.id);
       h += '<button type="button" class="cgbtn cgprim cgnext" data-cg="tab" data-step="'+nxt.id+'"'
-         + (can ? "" : " disabled") + ">Дальше: " + nxt.name + " →</button>";
+         + (can ? "" : " disabled") + T("feet.next") + nxt.name + " →</button>";
       /* Method #3 does not roll its STATs, it spends a pool — "roll" sent the
          reader looking for a die that is not on the screen. */
       if(!can) h += '<span class="cghint">'
-                  + (nxt.id >= 3 && isCalc() ? "Сначала распредели пул СТАТов" : BLOCKED[nxt.id])
+                  + (nxt.id >= 3 && isCalc() ? T("feet.spend_stat_pool_first") : blockedMsg(nxt.id))
                   + "</span>";
     } else {
-      h += '<span class="cghint">Готово — лист выше можно распечатать.</span>';
+      h += T("feet.done_sheet_above_can");
     }
     foot.innerHTML = h;
   }
@@ -3611,7 +3715,7 @@ function paintTabs(){
     h += '<button type="button" class="cgtab'+(id===cur?" on":"")+(ok?"":" off")
        + '" data-cg="tab" data-step="'+id+'"'+(ok?"":" disabled")+">"
        + '<span class="cgnum">'+(i+1)+"</span>"+order[i].name
-       + (todo ? '<span class="cgtodo" title="осталось заполнить">'+todo+"</span>" : "")
+       + (todo ? T("tabs.todo_badge")+todo+"</span>" : "")
        + "</button>";
   }
   nav.innerHTML = h;
@@ -3636,11 +3740,11 @@ root.addEventListener("click", function(ev){
     /* The browser proposes the page title as the PDF file name. */
     if(savedTitle === null) savedTitle = document.title;
     var fname = (S.name || "").replace(/[\\\/:*?"<>|]+/g, " ").replace(/\s+/g, " ").trim();
-    document.title = fname || "Безымянный";
+    document.title = fname || T("sheet_markdown.unnamed");
     window.print();
   }
   if(a==="reset"){
-    if(!window.confirm("Стереть персонажа и начать заново?")) return;
+    if(!window.confirm(T("tabs.erase_character_start_over"))) return;
     S = blank(); save(); paintAll(); go(1);
   }
   if(a==="savemd"){
@@ -3664,19 +3768,19 @@ root.addEventListener("change", function(ev){
   var rd = new FileReader();
   rd.onload = function(){
     var started = !!(S.role || S.name);
-    if(started && !window.confirm("Заменить текущего персонажа загруженным?")) return;
+    if(started && !window.confirm(T("tabs.replace_current_character_loaded"))) return;
     var err = importJson(String(rd.result));
     if(err) window.alert(err);
   };
-  rd.onerror = function(){ window.alert("Файл не прочитался."); };
+  rd.onerror = function(){ window.alert(T("tabs.file_could_not_read")); };
   rd.readAsText(t.files[0]);
 });
 function fallbackCopy(text, btn){
   var ta = document.createElement("textarea"), ok = false;
   ta.value = text; ta.style.position="fixed"; ta.style.opacity="0";
   document.body.appendChild(ta); ta.select();
-  try{ document.execCommand("copy"); btn.textContent = "Copied"; ok = true; }
-  catch(e){ btn.textContent = "Failed — select it by hand"; }
+  try{ document.execCommand("copy"); btn.textContent = T("fallback_copy.copied"); ok = true; }
+  catch(e){ btn.textContent = T("fallback_copy.failed_select_hand"); }
   document.body.removeChild(ta);
   return ok;
 }
@@ -3700,6 +3804,7 @@ window.addEventListener("afterprint", function(){
    back with those keys at their defaults, and one written by a future version
    loses only the keys this build does not know. */
 S = load();
+setLang(pickLang(), true);
 try{
   paintAll();
   go(S.role ? (S.stats ? 5 : 2) : 1);
