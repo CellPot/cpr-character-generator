@@ -19,10 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-This license covers the code in src/ and build.py only. Cyberpunk RED, its rules,
-game terms and other game material belong to R. Talsorian Games; Cyberpunk is a
-registered trademark of CD PROJEKT S.A. The Play font embedded in src/base.css is
-licensed under the SIL Open Font License 1.1.
