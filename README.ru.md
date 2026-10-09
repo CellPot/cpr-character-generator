@@ -8,7 +8,7 @@
 **[▶ Открыть онлайн](https://cellpot.github.io/cpr-character-generator/)** или скачать
 `generator.html` и открыть в браузере.
 
-<p align="center"><img src="img/roles.png" alt="Шаг 1: десять Ролей на выбор"></p>
+<p align="center"><a href="https://cellpot.github.io/cpr-character-generator/"><img src="img/roles.png" alt="Шаг 1: десять Ролей на выбор"></a></p>
 
 - Все три метода создания из корбука, с бросками или вручную.
 - Производные числа, каталог снаряжения с ценами, страница книги у каждого правила.

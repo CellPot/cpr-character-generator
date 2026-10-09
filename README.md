@@ -8,7 +8,7 @@ English and Russian.
 **[▶ Open online](https://cellpot.github.io/cpr-character-generator/)**, or download
 `generator.html` and open it in a browser.
 
-<p align="center"><img src="img/roles.png" alt="Step 1: ten Roles to choose from"></p>
+<p align="center"><a href="https://cellpot.github.io/cpr-character-generator/"><img src="img/roles.png" alt="Step 1: ten Roles to choose from"></a></p>
 
 - All three creation methods of the Core Rulebook, with dice or by hand.
 - Derived numbers, a priced gear catalogue, a book page next to every rule.
