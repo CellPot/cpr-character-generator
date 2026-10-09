@@ -141,6 +141,12 @@ function normalise(got){
     for(var i=0;i<rows.length;i++){
       var r = rows[i];
       if(!r || typeof r !== "object") continue;
+      /* `tier` and `alt` are written by pickFromCatalog and printed on the row; they
+         were not copied here, so the price-tier badge and the English name were lost on
+         every reload and on every save→open of a file. Kept only when non-empty. */
+      var extra = {};
+      if(typeof r.tier === "string" && r.tier) extra.tier = r.tier.slice(0, 40);
+      if(typeof r.alt === "string" && r.alt) extra.alt = r.alt.slice(0, 120);
       out2.push({name: typeof r.name === "string" ? r.name : "",
                  price: typeof r.price === "number" ? r.price : 0,
                  qty: (typeof r.qty === "number" && r.qty >= 1) ? Math.round(r.qty) : 1,
@@ -149,9 +155,18 @@ function normalise(got){
                  locked: !!r.locked,
                  src: typeof r.src === "string" ? r.src : "",
                  chip: typeof r.chip === "string" ? r.chip : "",
-                 href: typeof r.href === "string" ? r.href : ""});
+                 href: safeHref(r.href)});
+      for(var xk in extra) out2[out2.length-1][xk] = extra[xk];
     }
     return out2;
+  }
+  /* An anchor of ours looks like "#c11-snaryazhenie"; a leading # with anything else
+     after it is not one, and this value is written into an href, so it is dropped
+     rather than repaired. A page citation ("CRB 171") is only ever printed as text. */
+  function safeHref(h){
+    if(typeof h !== "string") return "";
+    if(h.charAt(0) === "#") return /^#[A-Za-z0-9_.:-]{1,60}$/.test(h) ? h : "";
+    return h.slice(0, 40);
   }
   /* Homebrew skills are typed by the player, so every field is checked: a name that
      is not a short string, a STAT this build does not have, or a level outside the
@@ -179,6 +194,24 @@ function normalise(got){
   if(typeof out.startBudget === "number" && out.startBudget < 0) out.startBudget = null;
   /* Same shape-before-content check as statBudget/role above: a kind or hook this
      build doesn't offer would otherwise sit selected-but-invisible in the <select>. */
+  /* A stored roll is read for its `out` alone, and that is written into the page, so
+     it must be a number — "<img …>" in a file's `out` was markup. The other fields are
+     kept (a save must round-trip unchanged) but only if they are what rollExpr writes. */
+  var dice = {}, fin = function(x){ return typeof x === "number" && isFinite(x); };
+  for(var dk in out.dice){
+    if(!out.dice.hasOwnProperty(dk)) continue;
+    var de = out.dice[dk];
+    if(!de || typeof de !== "object" || !fin(de.out)) continue;
+    var roll = {};
+    if(de.vals instanceof Array)
+      roll.vals = de.vals.filter(fin).slice(0, 20);
+    if(fin(de.sum)) roll.sum = de.sum;
+    if(de.op === null || de.op === "+" || de.op === "-" || de.op === "/") roll.op = de.op;
+    if(fin(de.arg)) roll.arg = de.arg;
+    roll.out = de.out;
+    dice[dk] = roll;
+  }
+  out.dice = dice;
   out.sponsor = { active: !!out.sponsor.active,
                    kind: (D.sponsor.kinds.indexOf(out.sponsor.kind) >= 0) ? out.sponsor.kind : "",
                    hook: (D.sponsor.hooks.indexOf(out.sponsor.hook) >= 0) ? out.sponsor.hook : "" };
@@ -245,7 +278,14 @@ function preset(kind){
   for(var i=0;i<r.skills.length;i++) out[r.skills[i].skill] = n;
   S.levels = out;
 }
-function esc(t){ return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+/* Quotes are escaped as well: this is written into double-quoted attributes
+   (value="…", href="…", data-skill="…") with strings that can come out of an imported
+   file, and without them a quote closed the attribute and the rest of the string was
+   markup — a saved character could carry an onmouseover/onfocus into the page. */
+function esc(t){
+  return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;")
+                  .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
 /* The rank-4 facts arrive as the book's own cells with its <b> on the mechanics kept.
    That is right on screen and wrong in the .md export, which is plain text — so
    the tags come off, and the entities they were escaped as go back to being
@@ -353,7 +393,7 @@ function diceHtml(text, key, col){
     return '<button type="button" class="cgdice" data-cg="lifedice" data-key="'+key
          + '" data-col="'+col+'" data-c="'+(c||1)+'" data-f="'+f+'"'
          + (op ? ' data-op="'+op+'" data-arg="'+arg+'"' : "")
-         + ' title="Бросить">'+m+(got ? " → <b>"+got.out+"</b>" : "")+"</button>";
+         + ' title="Бросить">'+m+(got ? " → <b>"+esc(got.out)+"</b>" : "")+"</button>";
   });
 }
 
@@ -371,7 +411,7 @@ function needsDice(t, col){
 function resolved(text, key, col){
   var got = (S.dice||{})[diceKey(key, col)];
   return esc(text).replace(DICE_RE, function(m){
-    return got ? m+" → <b>"+got.out+"</b>" : m;
+    return got ? m+" → <b>"+esc(got.out)+"</b>" : m;
   });
 }
 function plain(text, key, col){
@@ -2682,8 +2722,16 @@ function importJson(text){
   try{ parsed = JSON.parse(text); }catch(e){ return "Файл не разобрался: это не JSON."; }
   if(!parsed || typeof parsed !== "object" || parsed instanceof Array || parsed[FORMAT] !== 1)
     return "Это не сохранение персонажа из этого генератора.";
+  var prev = S;
   S = normalise(parsed);
-  save(); paintAll(); go(S.role ? (S.stats ? 5 : 2) : 1);
+  try{
+    save(); paintAll(); go(S.role ? (S.stats ? 5 : 2) : 1);
+  }catch(e){
+    /* normalise() checks the top level and a few nested lists; a value deeper down
+       of the wrong type throws inside the paint. Put the old character back. */
+    S = prev; save(); paintAll(); go(S.role ? (S.stats ? 5 : 2) : 1);
+    return "Файл повреждён: персонаж из него не открывается. Текущий остался как был.";
+  }
   return "";
 }
 
@@ -3638,6 +3686,15 @@ window.addEventListener("afterprint", function(){
    back with those keys at their defaults, and one written by a future version
    loses only the keys this build does not know. */
 S = load();
-paintAll();
-go(S.role ? (S.stats ? 5 : 2) : 1);
+try{
+  paintAll();
+  go(S.role ? (S.stats ? 5 : 2) : 1);
+}catch(e){
+  /* A stored character that throws on the first paint left a wizard with no controls,
+     and because it was stored it did so on every load, until localStorage was cleared
+     by hand. The offender is kept under another key, not thrown away, and the page
+     starts blank. */
+  try{ localStorage.setItem(KEY + "-unreadable", JSON.stringify(S)); }catch(e2){}
+  S = blank(); save(); paintAll(); go(1);
+}
 })();
