@@ -80,8 +80,14 @@ var TYPE = {method:"string", role:"string", stats:"object", roll:"number",
             lang:"string", harm:"string",
             dice:"object", notes:"object", name:"string"};
 function load(){
-  var out = blank(), got = null;
+  var got = null;
   try{ var raw = localStorage.getItem(KEY); if(raw) got = JSON.parse(raw); }catch(e){}
+  return normalise(got);
+}
+/* The merge-and-validate half of load(), shared with the file import: a saved file
+   is exactly as untrusted as localStorage. */
+function normalise(got){
+  var out = blank();
   if(!got || typeof got !== "object" || got instanceof Array) return out;
   for(var k in out){
     if(!out.hasOwnProperty(k)) continue;
@@ -2562,6 +2568,216 @@ function sheetText(){
   return out.join("\n");
 }
 
+/* The same sheet as a Markdown note, for a campaign folder: tables rather than
+   aligned columns, skills ordered by their roll, and an empty block at the end for
+   the GM's own notes. Portable on purpose — no wiki links, no image embeds. */
+function mdCell(s){ return String(s == null ? "" : s).replace(/\|/g, "/").replace(/\s*\n\s*/g, " "); }
+function mdTable(head, rows){
+  var out = ["| "+head.join(" | ")+" |", "|"+head.map(function(){ return "---"; }).join("|")+"|"];
+  for(var i=0;i<rows.length;i++) out.push("| "+rows[i].map(mdCell).join(" | ")+" |");
+  return out;
+}
+function mdSkillRows(r){
+  var rows = [], i;
+  function add(name, stat, level){
+    rows.push({name:name, lvl:level, stat:stat, roll: S.stats ? eff(stat)+level : null});
+  }
+  if(isCalc()){
+    var keys = boughtKeys3();
+    for(i=0;i<keys.length;i++){
+      var nm = skillBase(keys[i]);
+      if(multi3(nm)) nm += " ("+(S.picks[keys[i]]||"выбери")+")";
+      add(nm, D.skills[skillBase(keys[i])].stat, skillLevel3(keys[i]));
+    }
+  } else {
+    for(i=0;i<r.skills.length;i++){
+      var sk = r.skills[i], n2 = sk.skill;
+      if(sk.pick === "") n2 += " ("+(S.picks[sk.skill]||"выбери 1")+")";
+      else if(sk.pick) n2 += " ("+sk.pick+")";
+      add(n2, sk.stat, lv(sk));
+    }
+  }
+  if(langRow()) add("Язык ("+(S.lang||"не выбран")+")", "ИНТ", 4);
+  var ex = abilSkills();
+  for(i=0;i<ex.length;i++) add(ex[i].skill+(ex[i].spec ? " ("+ex[i].spec+")" : ""), ex[i].stat, ex[i].level);
+  rows.sort(function(a, b){ return (b.roll == null ? b.lvl : b.roll) - (a.roll == null ? a.lvl : a.roll); });
+  return rows;
+}
+function mdGearRows(rows){
+  return rows.map(function(row){
+    var qty = row.qty || 1;
+    return [(row.name||"без названия")+(qty>1 ? " ×"+qty : "")+(row.cyber ? " ["+((row.hl||0)*qty)+" ПЧ]" : ""),
+            row.locked && row.chip ? row.chip : "", ((row.price||0)*qty)+"eb"];
+  });
+}
+function sheetMarkdown(){
+  var r = role(), dv = derived(), out = [];
+  out.push("# "+(S.name || "Безымянный")+" — "+(r ? r.name : "?")+(r ? ", ранг "+D.abilityRank : ""));
+  out.push("");
+  if(dv){
+    out.push("**ПЗ "+dv.hp+" | Тяж. ранение "+dv.serious+" | Спасбросок "+dv.death+" | Человечность "+dv.hum
+             +(dv.hl ? " (ЭМП "+dv.empBase+" → "+dv.emp+", −"+dv.hl+" ПЧ за хром)" : "")+"**");
+    out.push("");
+    out = out.concat(mdTable(D.stats, [D.stats.map(function(s){ return eff(s); })]));
+    out.push("");
+  }
+  if(!r) return out.join("\n")+"\n";
+  out.push("## Ролевая способность");
+  out.push("");
+  out.push("**"+r.ability+", ранг "+D.abilityRank+"**");
+  var k4 = rank4();
+  if(k4){
+    out.push("");
+    for(var kf=0;kf<k4.facts.length;kf++) out.push("- "+k4.facts[kf].k+": "+plainText(k4.facts[kf].v));
+    var pl = pool();
+    if(pl){
+      var pr = [];
+      for(var po=0;po<pl.opts.length;po++) if(ptsOf(pl.opts[po].name)) pr.push([pl.opts[po].name, ptsOf(pl.opts[po].name)]);
+      if(pr.length){
+        out.push("");
+        out.push("Очки ("+pl.budget+", осталось "+ptsLeft()+"):");
+        out.push("");
+        out = out.concat(mdTable(["Способность","Очки"], pr));
+      }
+    }
+  }
+  out.push("");
+  out.push("## Навыки");
+  out.push("");
+  out.push("Бросок = СТАТ + Уровень (+ 1d10). Отсортировано по броску.");
+  out.push("");
+  out = out.concat(mdTable(["Навык","Ур","СТАТ","Бросок"], mdSkillRows(r).map(function(s){
+    return [s.name, s.lvl, s.stat+(S.stats ? " "+eff(s.stat) : ""), s.roll == null ? "" : s.roll];
+  })));
+  out.push("");
+  out.push("## Снаряжение");
+  out.push("");
+  if(isCalc()){
+    var lists = [["buy","Снаряжение"],["style","Стиль"]];
+    for(var li=0;li<lists.length;li++){
+      var rows = gearRows(lists[li][0]);
+      out.push("**"+lists[li][1]+"** (потрачено "+gearSpent(lists[li][0])+" из "+gearBudget(lists[li][0])+"eb)");
+      out.push("");
+      if(rows.length){ out = out.concat(mdTable(["Предмет","Источник","Цена"], mdGearRows(rows))); out.push(""); }
+    }
+    if(S.sponsor && S.sponsor.active){
+      out.push("Продан за +"+D.sponsor.bonus+"eb на кибернетику — "+(S.sponsor.kind||"работодатель не выбран")
+               +", на крючке: "+(S.sponsor.hook||"не выбрано"));
+      out.push("");
+    }
+  } else {
+    out = out.concat(mdTable(["Предмет","Коротко"], r.gear.map(function(_, g){
+      var gi = gearItem(r.gear[g], g);
+      return [gi.text, gi.short || ""];
+    })));
+    out.push("");
+    var sr = gearRows("start");
+    if(sr.length){
+      out.push("**Доп. покупки** (потрачено "+gearSpent("start")+" из "+gearBudget("start")+"eb)");
+      out.push("");
+      out = out.concat(mdTable(["Предмет","Источник","Цена"], mdGearRows(sr)));
+      out.push("");
+    }
+  }
+  var cyt = cyber();
+  if(cyt && cyt.items && !isCalc()){
+    out.push("## Кибернетика");
+    out.push("");
+    out = out.concat(mdTable(["Имплант","ПЧ"], cyt.items.map(function(it, i){
+      return [cyberItem(it, i).text, it.hl];
+    })));
+    out.push("");
+    out.push("Всего "+cyt.hl+" ПЧ.");
+    out.push("");
+  } else if(cyt && cyt.hl){
+    out.push("Кибернетика: всего "+cyt.hl+" ПЧ (см. строки снаряжения и стиля).");
+    out.push("");
+  }
+  out.push("**Деньги: "+Math.max(0, isCalc() ? gearLeft("buy") : gearLeft("start"))+"eb**");
+  out.push("");
+  var life = [];
+  for(var L=0;L<D.life.length;L++){
+    var t = D.life[L];
+    if(!got(t)) continue;
+    var parts = [];
+    for(var c=0;c<t.cols.length;c++){
+      if(c === t.pickCol) continue;
+      var cell = cellOf(t, c);
+      if(!cell) continue;
+      var line = plain((t.harm && c === 1 && S.harm && harmable(t)) ? unstop(cell) : cell, t.key, c);
+      if(t.harm && c === 1 && S.harm && harmable(t)) line += " — " + S.harm;
+      line += undone(t, c, false);
+      parts.push(shownCols(t) > 1 ? shortCol(t, c)+": "+line : line);
+    }
+    if(parts.length) life.push("- **"+t.label+":** "+parts.join("; "));
+  }
+  var shown = pathShown();
+  for(var sp=0;sp<shown.length;sp++){
+    var st = shown[sp];
+    if(st.fork){ if(forkPick(st.n) >= 0) life.push("- "+st.q+" "+st.fork[forkPick(st.n)].label); }
+    else if(pathRoll(st.n)) life.push("- "+st.q+" "+st.rows[pathRoll(st.n)-1]);
+  }
+  if(life.length){ out.push("## Жизненный путь"); out.push(""); out = out.concat(life); out.push(""); }
+  var subT = subType(), subS = subStats();
+  if(subT && subS){
+    var sd = subDerived();
+    out.push("## Подчинённый");
+    out.push("");
+    out.push("**"+((S.sub && S.sub.name) || "Без имени")+"** — "+subT.name+" (прикрытие: "+subT.cover+")");
+    out.push("");
+    out = out.concat(mdTable(subT.stats, [subT.stats.map(function(s){ return subS[s]; })]));
+    out.push("");
+    out.push("ПЗ "+sd.hp+" | Тяж. ранение "+sd.serious+" | Спасбросок "+sd.death+" | Лояльность "+D.subord.loyalty);
+    out.push("");
+    out.push("Навыки: "+subT.skills.map(function(s){ return s.skill+" "+s.level; }).join(", "));
+    out.push("");
+    out.push("Хром: "+subT.cyber+". Снаряжение: "+subT.gear+".");
+    out.push("");
+  }
+  out.push("## Характер / GM-заметки");
+  out.push("");
+  var wrote = 0;
+  for(var f=0;f<D.notes.length;f++){
+    var val = (S.notes[D.notes[f].key]||"").trim();
+    if(val){ out.push("**"+D.notes[f].label+":** "+val); out.push(""); wrote++; }
+  }
+  if(!wrote){ out.push("- Быт:"); out.push("- Крючок:"); out.push("- Для ГМа:"); out.push(""); }
+  return out.join("\n");
+}
+
+/* Save to disk: Blob + a throwaway link. If the page is sandboxed and the browser
+   refuses, the text goes to the clipboard path instead. */
+function downloadFile(name, mime, text){
+  try{
+    var url = URL.createObjectURL(new Blob([text], {type: mime+";charset=utf-8"}));
+    var a = document.createElement("a");
+    a.href = url; a.download = name; a.style.display = "none";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+    return true;
+  }catch(e){ return false; }
+}
+function fileStem(){
+  return ((S.name || "").replace(/[\\\/:*?"<>|]+/g, " ").replace(/\s+/g, " ").trim()) || "Безымянный";
+}
+var FORMAT = "cpr-character";
+/* An export is the state plus a marker, so import can refuse a file that is not
+   ours before touching anything. */
+function exportJson(){
+  var o = {}; o[FORMAT] = 1;
+  for(var k in S) if(S.hasOwnProperty(k)) o[k] = S[k];
+  return JSON.stringify(o, null, 1);
+}
+function importJson(text){
+  var parsed;
+  try{ parsed = JSON.parse(text); }catch(e){ return "Файл не разобрался: это не JSON."; }
+  if(!parsed || typeof parsed !== "object" || parsed instanceof Array || parsed[FORMAT] !== 1)
+    return "Это не сохранение персонажа из этого генератора.";
+  S = normalise(parsed);
+  save(); paintAll(); go(S.role ? (S.stats ? 5 : 2) : 1);
+  return "";
+}
+
 /* The fixed starting kit of #1/#2 — gear and implants, each with its chooser
    where the book offers "one of". Drawn in TWO places by the same code: on the
    sheet, and at the top of the Gear step, where the 500eb is spent — without
@@ -3448,6 +3664,18 @@ root.addEventListener("click", function(ev){
     if(!window.confirm("Стереть персонажа и начать заново?")) return;
     S = blank(); save(); paintAll(); go(1);
   }
+  if(a==="savemd"){
+    var md = sheetMarkdown();
+    if(!downloadFile(fileStem()+".md", "text/markdown", md)) fallbackCopy(md, t);
+  }
+  if(a==="savejson"){
+    var js = exportJson();
+    if(!downloadFile(fileStem()+".json", "application/json", js)) fallbackCopy(js, t);
+  }
+  if(a==="loadjson"){
+    var fi = q("importfile");
+    if(fi){ fi.value = ""; fi.click(); }
+  }
   if(a==="copy"){
     var text = sheetText();
     /* "Copied" is worth clearing after a moment; "Failed — select it by hand"
@@ -3460,6 +3688,21 @@ root.addEventListener("click", function(ev){
         function(){ if(fallbackCopy(text, t)) back(); });
     } else if(fallbackCopy(text, t)) back();
   }
+});
+/* Import: read the chosen file, confirm over a character that is already there,
+   and let normalise() decide what survives. */
+root.addEventListener("change", function(ev){
+  var t = ev.target;
+  if(!t.getAttribute || t.getAttribute("data-cg") !== "importfile" || !t.files || !t.files[0]) return;
+  var rd = new FileReader();
+  rd.onload = function(){
+    var started = !!(S.role || S.name);
+    if(started && !window.confirm("Заменить текущего персонажа загруженным?")) return;
+    var err = importJson(String(rd.result));
+    if(err) window.alert(err);
+  };
+  rd.onerror = function(){ window.alert("Файл не прочитался."); };
+  rd.readAsText(t.files[0]);
 });
 function fallbackCopy(text, btn){
   var ta = document.createElement("textarea"), ok = false;
