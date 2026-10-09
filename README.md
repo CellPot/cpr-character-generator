@@ -83,10 +83,10 @@ Contributions: issues welcome, PRs are not accepted.
 python build.py        # → generator.html; Python 3 standard library only
 ```
 
-`generator.html` is committed already built. `build.py` rebuilds it from `src/`, `data/` and
-`texts/` in this repository only; it does not regenerate `data/`.
+`generator.html` is the finished page; it is kept in the repository so you can download it
+and use it as is. `build.py` rebuilds it from `src/`, `data/` and `texts/`.
 
-`data/` — the wizard's data (STAT templates, skill sets, tables, the catalogue) — is
-**exported** from a separate working project where it is extracted and checked against the
-books; it is not edited by hand. `texts/summaries.json` holds our own short wording that
-replaces the book's text.
+`data/` (STAT templates, skill sets, tables, the gear catalogue) is exported from a separate
+private project, where it is extracted and checked against the books, so it is not edited by
+hand here and `build.py` does not regenerate it. `texts/summaries.json` holds our own short
+wording that replaces the book's text.
