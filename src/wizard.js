@@ -1233,6 +1233,9 @@ function paintSkills(){
      function and its own div (skillbox3) rather than a branch threaded through
      this one. */
   if(isCalc()){ box.innerHTML = ""; paintSkills3(); return; }
+  /* Switching away from #3 live left its 66-skill table standing under this one —
+     skills you could see and not buy. paintSkills3 is the only thing that fills it. */
+  var box3 = q("skillbox3"); if(box3) box3.innerHTML = "";
   if(!r){ box.innerHTML = '<p class="cghint">Сначала выбери Роль.</p>'; return; }
   var h = '<p class="cglegend">Проверка — <b>СТАТ + Навык + 1d10</b> против сложности. '
         + 'Колонка <b>Обычно берёт</b> — самая трудная задача, которая этому навыку '
