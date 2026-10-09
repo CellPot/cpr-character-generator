@@ -1653,7 +1653,8 @@ root.addEventListener("click", function(ev){
    single SKILL_MIN applied to a fixed list. D.skills is canonical_skills()'s own
    dict (name -> {stat, cat, x2, what}), already in the book's category order —
    nothing new was mined for this. */
-/* Skills with a specialisation (Language, Local Expert, Science, Play Instrument — the ones D.hints names) are bought separately for each one: you must pick a specific language each time you raise this skill
+/* Skills with a specialisation (Language, Local Expert, Science, Play Instrument — the ones D.hints names) are bought separately for each one: you
+   must pick a specific language each time you raise this skill
    (printed 135). So #3 lets a player hold several of them. The first copy is keyed
    by the plain name, as before, so older saves read unchanged; each further copy
    is "Language #2", "Language #3"…, keyed the same way in S.skills3 and S.picks. A further
@@ -1864,7 +1865,7 @@ function gearRows(which){ return S[which] || []; }
    literal `id="..."` in its markup (`cNN-...`), and a
    JS-created element is invisible to that rewrite — the same reason the
    per-skill hint fields build their own <datalist> in JS (see paintSkills3).
-   TWO lists, split by `item.kind` (see the export): Style (printed
+   TWO lists, split by `item.kind` (see the catalogue export): Style (printed
    104–105) is its own budget for clothing, not a second Gear — a Style
    search must never suggest a rifle, and a Gear search must never
    suggest a pair of boots. `catalogListId()` routes the Style field to the

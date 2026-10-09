@@ -63,11 +63,7 @@ body{
   margin:0; background:var(--ground); color:var(--ink);
   font:400 16px/1.55 "Segoe UI",system-ui,-apple-system,"Noto Sans",sans-serif;
   -webkit-font-smoothing:antialiased;
-}
-.disp{font-weight:800;letter-spacing:.055em;text-transform:uppercase;text-wrap:balance}
-.mono{font-family:Consolas,"SF Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
-
-/* ---------- sections ---------- */
+}/* ---------- sections ---------- */
 section{margin-top:38px;scroll-margin-top:14px}
 h2.sec{
   font-size:1.16rem;margin:0 0 14px;padding:7px 12px;color:var(--ground);background:var(--ink);
@@ -75,20 +71,7 @@ h2.sec{
 }
 h2.sec::after{
   content:"";position:absolute;left:0;bottom:-4px;width:64px;height:4px;background:var(--red);
-}
-/* "In full" — added to a result's heading while searching. A filtered section is
-   a fragment: rows are hidden and the sections around it are gone. This opens
-   that one section in the whole book without clearing the query, so finding a
-   place and reading it are no longer two opposite actions. */
-h2.sec .ctxb{
-  position:absolute;right:9px;top:50%;transform:translateY(-50%);
-  background:none;border:1px solid var(--ground);color:var(--ground);border-radius:2px;
-  font:inherit;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  padding:2px 8px;cursor:pointer;opacity:.7;
-}
-h2.sec .ctxb:hover{opacity:1;background:var(--red);border-color:var(--red);color:var(--on-accent)}
-h2.sec .ctxb:focus-visible{outline:2px solid var(--red);outline-offset:2px;opacity:1}
-h2.sec.withctx{padding-right:110px}
+}h2.sec.withctx{padding-right:110px}
 h3{font-size:.95rem;margin:26px 0 8px;color:var(--red-text);letter-spacing:.05em;text-transform:uppercase;font-weight:800}
 h4{font-size:.88rem;margin:18px 0 6px;color:var(--ink);font-weight:700}
 p{margin:0 0 10px;max-width:68ch}
@@ -117,19 +100,7 @@ a.p:focus-visible{outline:2px solid var(--red);outline-offset:1px}
    keeps its own look: a.p is a class selector and outranks this. */
 main a{color:var(--red-text);font-weight:700;text-decoration:none;border-bottom:1px solid transparent}
 main a:hover{border-bottom-color:currentColor}
-main a:focus-visible{outline:2px solid var(--red);outline-offset:2px}
-
-/* ---------- formula ---------- */
-.formula{
-  background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--red);
-  padding:12px 16px;margin:0 0 14px;box-shadow:var(--shadow);
-}
-.formula .lbl{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--red-text);font-weight:800;margin-bottom:5px}
-.formula .eq{font-family:Consolas,ui-monospace,monospace;font-size:.94rem;line-height:1.75;font-weight:600}
-.formula .vs{color:var(--red-text);font-weight:800;padding:0 2px}
-.formula .note{font-size:.78rem;color:var(--steel);margin-top:6px;max-width:64ch}
-
-/* ---------- callouts ---------- */
+main a:focus-visible{outline:2px solid var(--red);outline-offset:2px}/* ---------- callouts ---------- */
 .rule{
   border:1px solid var(--red);background:var(--red-soft);padding:10px 14px;margin:0 0 14px;
 }
@@ -138,47 +109,18 @@ main a:focus-visible{outline:2px solid var(--red);outline-offset:2px}
 .note{
   border-left:3px solid var(--line);padding:2px 0 2px 12px;margin:0 0 14px;
   color:var(--steel);font-size:.86rem;max-width:64ch;
-}
-/* Narrative colour, not a rule — who the Role is, before what it does. Italic
-   and ink-2 (not --steel, that's .note's "aside" grey) keep it visually a
-   different kind of text, not a quieter version of the same one. */
-.flavor{
-  font-style:italic;color:var(--ink-2);border-left:3px solid var(--steel);
-  padding:2px 0 2px 12px;margin:0 0 14px;max-width:70ch;
-}
-.flavor b{font-style:normal}
-
-/* ---------- skills table ---------- */
+}/* ---------- skills table ---------- */
 tbody tr.cathead th{
   background:var(--ink);color:var(--ground);font-size:.7rem;letter-spacing:.09em;
   text-transform:uppercase;font-weight:800;padding:6px 10px;border-right:0;
-}
-tbody tr.cathead th .cnt{opacity:.55;font-weight:700;margin-left:6px}
-.x2{
+}.x2{
   display:inline-block;font-family:Consolas,ui-monospace,monospace;font-size:.68rem;
   font-weight:800;background:var(--red);color:var(--on-accent);padding:0 4px;border-radius:2px;
   margin-left:5px;vertical-align:.08em;
-}
-/* Quiet inline qualifier — e.g. a short "against Programs" after a table value.
-   .x2 is a solid red badge sized for two characters; anything longer than that
-   needs to recede, not shout. Not a citation, so the page script ignores it. */
-.ann{display:inline-block;font-size:.72rem;font-weight:600;color:var(--steel);margin-left:5px}
-/* A cross-book back-reference (the book's "Atlas B8") sitting after the name in a
-   table cell: on one line with the name it reads as part of the title, so .nl
-   drops it to its own line under it. */
-.ann.nl{display:block;margin:3px 0 0}
-/* A section that spans a dozen printed pages has to cite every one of them or
+}/* A section that spans a dozen printed pages has to cite every one of them or
    the index leaves them unresolved; .src parks that run of chips on a quiet
    line under the heading instead of wedging it into the heading itself. */
-.note.src{border:0;padding:0;margin:-2px 0 10px;font-size:.72rem;opacity:.75}
-/* A nested sub-roll inside a table cell: the d100 entry says "roll 1d10" and
-   then lists outcomes. Run together they are a wall of text, so give the
-   branches their own indented block. */
-.roll-branch{margin-top:5px;padding-left:10px;border-left:2px solid var(--line);color:var(--ink-2);font-size:.94em}
-.roll-branch b{color:var(--red-text);font-family:Consolas,ui-monospace,monospace}
-/* the GM's "reuse this stat block" aside is meta, not fiction */
-td .ann{display:block;margin:6px 0 0;font-style:italic}
-table.enc td:first-child{white-space:nowrap}
+.note.src{border:0;padding:0;margin:-2px 0 10px;font-size:.72rem;opacity:.75}table.enc td:first-child{white-space:nowrap}
 table.enc tbody th{min-width:130px;white-space:normal}
 table.skills tbody th{white-space:normal;min-width:170px}
 
@@ -277,12 +219,6 @@ table.sqplan tbody th{width:1%;vertical-align:top}
 table.sqplan td>b+ul.inl{margin-top:3px;font-size:.8rem}
 table.sqplan td a{font-weight:600}
 table.sqplan td{white-space:normal}
-.skl{
-  display:inline-block;background:var(--sunken);border:1px solid var(--line);
-  border-radius:3px;padding:1px 7px;margin:2px 4px 2px 0;
-  font-size:.78rem;white-space:nowrap;
-}
-
 /* ---------- figures ----------
    Pictures are inlined as base64 by the host page build. A plain block, never grid/flex: the glossary
    walker injects <button> into body text and a flex parent would promote each
@@ -306,56 +242,9 @@ table.balance td.rown,table.balance thead th.rown{width:3.5%}
 td.pw{text-align:right;font-variant-numeric:tabular-nums}
 figure.map{margin:0 0 18px}
 figure.map img{display:block;width:100%;height:auto;border:1px solid var(--line);box-shadow:var(--shadow)}
-figure.map figcaption{margin-top:7px;color:var(--steel);font-size:.85rem;line-height:1.45}
-/* the district labels on the Atlas overview are links. An inline SVG with
-   the image's own 1000x893 viewBox sits exactly on top of it, one <rect> per
-   label; transparent until hovered or focused. The border moves to the wrapper
-   so the SVG box and the picture box are the same box. */
-.atlas-map{position:relative;border:1px solid var(--line);box-shadow:var(--shadow)}
-figure.map .atlas-map img{border:0;box-shadow:none}
-.atlas-map svg{position:absolute;inset:0;width:100%;height:100%}
-.atlas-map rect{fill:transparent;stroke:transparent;stroke-width:3}
-.atlas-map a:hover rect:not(.box),.atlas-map a:focus rect:not(.box){fill:var(--red-soft);stroke:var(--red)}
-/* rect.box, the full-map rectangle every district link carries for the scroll
-   (see below): never painted, never hovered, never the yellow :target frame. */
-.atlas-map rect.box{fill:none;stroke:none;pointer-events:none;animation:none}
-.atlas-map a:focus{outline:none}
-/* The Russian name over each label: white on a dark halo, like the map's own
-   labels, faint until its district is hovered, focused or targeted. */
-.atlas-map text{font:700 13px/1 var(--font-disp);text-anchor:middle;fill:#fff;
-  stroke:#0b0d14;stroke-width:3.5px;stroke-linejoin:round;paint-order:stroke;opacity:.42;
-  transition:opacity .15s;pointer-events:none}
-.atlas-map text.l{text-anchor:end}
-.atlas-map text.r{text-anchor:start}
-.atlas-map a:hover text,.atlas-map a:focus text,.atlas-map a:target text{opacity:1}
-/* A district heading's name links here: the browser scrolls to the <a> in the
-   SVG and :target lights it up. Where it stops is set by the anchor's own box,
-   which is the bounding box of its children - so every district link carries an
-   invisible rect over the whole picture (rect.box, written by the export) and
-   the browser lands on the top edge of the map whichever district was asked for.
-   Two earlier tries both stopped the page ABOVE the map: a flat scroll-margin of
-   38vh (it counts from the label, and a label near the top edge of the picture
-   pushes the stop above it) and a per-label margin in cqw (1cqw is 1% of the
-   map's width only while .atlas-map is a size container - where it is not, the
-   browser falls back to 1% of the window and overshoots again). The box needs no
-   units and no measurement. */
-.atlas-map a{scroll-margin:12px 0}
-.atlas-map a:target rect:not(.box){fill:rgba(255,214,0,.22);stroke:#FFD600;stroke-width:4;
-  animation:atlas-ping 1.2s ease-out 2}
-@keyframes atlas-ping{0%{stroke-width:14}100%{stroke-width:4}}
-@media (prefers-reduced-motion:reduce){.atlas-map a:target rect:not(.box){animation:none}}
-/* a.pt is one of the 156 locations (MARK in the export). 156 dots painted
-   at once would speckle the map, so a dot only glimmers (opacity:.2) until its
-   "Mark" link is followed (:target, with the same two pings as a district) or
-   the pointer finds it — a dot takes the mouse at any opacity, so the map
-   answers a hover with the dot under it and its <title>. */
-.atlas-map a.pt circle{fill:#FFD600;stroke:#0b0d14;stroke-width:1.5;opacity:.2;
-  transition:opacity .15s}
-.atlas-map a.pt:hover circle,.atlas-map a.pt:focus circle{opacity:1}
-.atlas-map a.pt:target circle{opacity:1;stroke:#FFD600;stroke-opacity:.55;stroke-width:4;
-  animation:atlas-dot 1.2s ease-out 2}
-@keyframes atlas-dot{0%{stroke-width:16}100%{stroke-width:4}}
-@media (prefers-reduced-motion:reduce){.atlas-map a.pt:target circle{animation:none}}
+figure.map figcaption{margin-top:7px;color:var(--steel);font-size:.85rem;line-height:1.45}@keyframes atlas-ping{0%{stroke-width:14}100%{stroke-width:4}}
+@media (prefers-reduced-motion:reduce){}@keyframes atlas-dot{0%{stroke-width:16}100%{stroke-width:4}}
+@media (prefers-reduced-motion:reduce){}
 main h3 a.na-karte{color:inherit;text-decoration:underline dotted;text-underline-offset:4px}
 main h3 a.na-karte:hover{text-decoration-style:solid}
 /* The same link in a "Mark" cell: the code stays a code, not a red link. */
@@ -462,19 +351,8 @@ table.dv tbody tr.cathead:nth-child(even):hover th{background:var(--ink)}
 
 /* ---------- style blocks (martial arts) ---------- */
 .style{border:1px solid var(--line);background:var(--surface);padding:12px 14px;margin-bottom:12px;box-shadow:var(--shadow)}
-.style > h4{margin-top:0;color:var(--red-text);text-transform:uppercase;letter-spacing:.05em;font-size:.84rem}
-.style .flavour{font-style:italic;color:var(--steel);font-size:.82rem;margin-bottom:10px;max-width:64ch}
-.move{border-top:1px solid var(--line);padding-top:9px;margin-top:9px}
-.move:first-of-type{border-top:0;padding-top:0;margin-top:0}
-.move .mn{font-weight:800;font-size:.86rem}
-.move .cond{font-size:.76rem;color:var(--red-text);font-weight:700;margin:2px 0 4px}
-.move p{font-size:.85rem;margin-bottom:6px}
-
-.railhead{
-  margin:18px 0 5px;font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;
-  font-weight:800;color:var(--steel);border-top:1px solid var(--line);padding-top:12px;
-}
-
+.style > h4{margin-top:0;color:var(--red-text);text-transform:uppercase;letter-spacing:.05em;font-size:.84rem}.move{border-top:1px solid var(--line);padding-top:9px;margin-top:9px}
+.move:first-of-type{border-top:0;padding-top:0;margin-top:0}.move p{font-size:.85rem;margin-bottom:6px}
 /* An item's rules text under its name, in a catalogue row. A sentence or two is
    too much for its own column — as one it squeezed the Black Chrome weapon table
    into 240px-tall rows and pushed the numbers off screen. Under the name it gets
@@ -496,25 +374,9 @@ table.dv tbody tr.cathead:nth-child(even):hover th{background:var(--ink)}
    nowrap stays price-only. A mode label ("heavy pistol") is free to wrap
    onto two lines; forcing it onto one was what pushed those columns wide
    enough to starve the name column next to them. */
-td.pr{white-space:nowrap}
-td.pr .prc{white-space:nowrap}
-/* white-space:normal is explicit, not just "unset" -- td.n forces nowrap on
-   every descendant by inheritance, and a mode label sitting inside a td.n
-   combo cell (ROF, Hands) needs to opt back out of that to wrap. */
-.prc{display:block;font-size:.72rem;color:var(--steel);white-space:normal}
-/* A combo cell stacks 2-3 of these value+label pairs; separate them a touch
+td.pr{white-space:nowrap}/* A combo cell stacks 2-3 of these value+label pairs; separate them a touch
    so they don't read as one run-on block. */
-td.d>div+div,td.n>div+div{margin-top:5px}
-
-/* ---------- glossary ---------- */
-.ab{
-  border:0;border-bottom:1px dotted color-mix(in srgb,var(--red) 65%,transparent);
-  cursor:help;text-decoration:none;color:inherit;background:none;padding:0 .5px;
-  font:inherit;line-height:inherit;margin:0;border-radius:0;-webkit-appearance:none;appearance:none;
-}
-.ab:hover{background:var(--red-soft);border-bottom-color:var(--red)}
-.ab:focus-visible{outline:2px solid var(--red);outline-offset:1px}
-#gloss{
+td.d>div+div,td.n>div+div{margin-top:5px}#gloss{
   position:fixed;z-index:60;max-width:290px;background:var(--surface);color:var(--ink);
   border:1px solid var(--red);border-top:3px solid var(--red);padding:9px 12px;
   box-shadow:0 6px 28px rgba(0,0,0,.28);font-size:.83rem;line-height:1.45;
@@ -570,23 +432,14 @@ thead .die:focus-visible,tr.cathead .die:focus-visible{outline:2px solid var(--o
 
 mark{background:var(--red);color:var(--on-accent);padding:0 2px;border-radius:1px}
 .hidden{display:none !important}
-#nores{color:var(--steel);font-size:.9rem;padding:20px 0}
-
 a.up{position:fixed;right:18px;bottom:18px;background:var(--red);color:var(--on-accent);text-decoration:none;
   width:42px;height:42px;display:grid;place-items:center;border-radius:2px;font-size:1.1rem;box-shadow:var(--shadow);z-index:20}
 a.up:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 
 @media (max-width:900px){
-  .shell{grid-template-columns:1fr}
-  /* no viewport-height column here, so nothing is pinned and nothing clips —
-     the rail is an ordinary block that scrolls with the page */
-  .rail{position:static;height:auto;display:block;overflow:visible;
-        padding-bottom:16px;border-right:0;border-bottom:1px solid var(--line)}
-  /* the tree keeps its accordion here, but chapter rows go two-up so twelve of
+  .shell{grid-template-columns:1fr}  /* the tree keeps its accordion here, but chapter rows go two-up so twelve of
      them don't push the text off the first screen */
-       overflow:visible;min-height:0}
-  .navch.open{grid-column:1/-1}
-  main{padding:22px 16px 90px}
+       overflow:visible;min-height:0}  main{padding:22px 16px 90px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important;scroll-behavior:auto !important}}
 @media print{
@@ -3081,7 +2934,8 @@ root.addEventListener("click", function(ev){
    single SKILL_MIN applied to a fixed list. D.skills is canonical_skills()'s own
    dict (name -> {stat, cat, x2, what}), already in the book's category order —
    nothing new was mined for this. */
-/* Skills with a specialisation (Language, Local Expert, Science, Play Instrument — the ones D.hints names) are bought separately for each one: you must pick a specific language each time you raise this skill
+/* Skills with a specialisation (Language, Local Expert, Science, Play Instrument — the ones D.hints names) are bought separately for each one: you
+   must pick a specific language each time you raise this skill
    (printed 135). So #3 lets a player hold several of them. The first copy is keyed
    by the plain name, as before, so older saves read unchanged; each further copy
    is "Language #2", "Language #3"…, keyed the same way in S.skills3 and S.picks. A further
@@ -3292,7 +3146,7 @@ function gearRows(which){ return S[which] || []; }
    literal `id="..."` in its markup (`cNN-...`), and a
    JS-created element is invisible to that rewrite — the same reason the
    per-skill hint fields build their own <datalist> in JS (see paintSkills3).
-   TWO lists, split by `item.kind` (see the export): Style (printed
+   TWO lists, split by `item.kind` (see the catalogue export): Style (printed
    104–105) is its own budget for clothing, not a second Gear — a Style
    search must never suggest a rifle, and a Gear search must never
    suggest a pair of boots. `catalogListId()` routes the Style field to the
