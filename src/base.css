@@ -379,16 +379,16 @@ td.d>div+div,td.n>div+div{margin-top:5px}#gloss{
 #gloss .g-f{font-weight:700;margin-bottom:2px}
 #gloss .g-d{color:var(--ink-2)}
 
-/* ---------- theme toggle ---------- */
-.themer{display:flex;gap:0;margin:0 0 14px;border:1px solid var(--line);background:var(--surface)}
-.themer button{
+/* ---------- theme toggle (and the language switch, which looks the same) ---------- */
+.themer,.langer{display:flex;gap:0;margin:0 0 14px;border:1px solid var(--line);background:var(--surface)}
+.themer button,.langer button{
   flex:1;padding:5px 4px;font:inherit;font-size:.72rem;font-weight:700;letter-spacing:.03em;
   background:none;border:0;color:var(--steel);cursor:pointer;border-right:1px solid var(--line);
 }
-.themer button:last-child{border-right:0}
-.themer button:hover{background:var(--red-soft);color:var(--ink)}
-.themer button[aria-pressed="true"]{background:var(--red);color:var(--on-accent)}
-.themer button:focus-visible{outline:2px solid var(--red);outline-offset:-2px}
+.themer button:last-child,.langer button:last-child{border-right:0}
+.themer button:hover,.langer button:hover{background:var(--red-soft);color:var(--ink)}
+.themer button[aria-pressed="true"],.langer button[aria-pressed="true"]{background:var(--red);color:var(--on-accent)}
+.themer button:focus-visible,.langer button:focus-visible{outline:2px solid var(--red);outline-offset:-2px}
 
 /* ---------- dice ---------- */
 .die{

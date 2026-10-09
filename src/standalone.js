@@ -50,6 +50,22 @@
   window.addEventListener("resize", close);
 })();
 
+/* ---------- language switch ----------
+   The wizard owns the language: the buttons ask it (CPR_SETLANG) and follow its "cpr-lang". */
+(function(){
+  var btns = Array.prototype.slice.call(document.querySelectorAll(".langer button"));
+  function paint(l){
+    btns.forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.lang === l)); });
+  }
+  btns.forEach(function(b){
+    b.addEventListener("click", function(){
+      if(window.CPR_SETLANG) window.CPR_SETLANG(b.dataset.lang);
+    });
+  });
+  document.addEventListener("cpr-lang", function(e){ paint(e.detail); });
+})();
+
+
 /* ---------- language of the frame ----------
    The wizard owns the language (it dispatches "cpr-lang"); the page around it — the
    top bar, the theme buttons, the footer, the tab title — is written in English (the

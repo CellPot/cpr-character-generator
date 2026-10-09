@@ -135,7 +135,10 @@ def render():
 <main>
 <div class="topbar">
   <span class="brand"%(ru_brand)s>Fan tool · free · works offline · updated %(updated)s</span>
+  <div class="ctl">
+  <div class="langer" role="group" aria-label="Language" data-ru-label="Язык"><button type="button" data-lang="en" lang="en" title="English" aria-pressed="false">EN</button><button type="button" data-lang="ru" lang="ru" title="Русский" aria-pressed="false">RU</button></div>
   <div class="themer" role="group" aria-label="Theme" data-ru-label="Оформление"><button type="button" data-th="light"%(ru_day)s>Day</button><button type="button" data-th="dark"%(ru_night)s>Night</button><button type="button" data-th="cyber-night"%(ru_cyber)s>Cyber</button><button type="button" data-th="auto"%(ru_auto)s>Auto</button></div>
+  </div>
 </div>
 %(body)s
 %(legal)s

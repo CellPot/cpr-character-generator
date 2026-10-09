@@ -216,6 +216,9 @@ function setLang(l, fresh){
     try{ document.dispatchEvent(new CustomEvent("cpr-lang", {detail: l})); }catch(e2){}
   }
 }
+/* The host page may draw its own language switch (the standalone page puts one in its top
+   bar); it calls this and listens for "cpr-lang". */
+window.CPR_SETLANG = function(l){ setLang(l); };
 function pickLang(){
   var saved = null;
   try{ saved = localStorage.getItem(LANG_KEY); }catch(e){}

@@ -5,7 +5,13 @@ main{max-width:1060px;margin:0 auto;padding:22px 28px 60px}
 .topbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;
   margin:0 0 6px;padding:0 0 10px;border-bottom:1px solid var(--line)}
 .topbar .brand{font-size:.75rem;letter-spacing:.03em;color:var(--steel);font-weight:600}
-.topbar .themer{margin:0;min-width:260px}
+.topbar .ctl{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:10px}
+.topbar .themer,.topbar .langer{margin:0}
+.topbar .themer{min-width:260px}
+.topbar .langer{min-width:96px}
+/* the top bar has the language switch; the copy at the end of the wizard's method row
+   is for hosts that have no bar of their own */
+.cglang{display:none}
 .masthead{margin:22px 0 10px}
 .masthead h1{font-family:var(--font-disp);font-size:2rem;line-height:1.1;margin:0;
   text-transform:uppercase;letter-spacing:.05em}
@@ -27,7 +33,8 @@ main{max-width:1060px;margin:0 auto;padding:22px 28px 60px}
 .legal p{margin:0 0 7px}
 @media (max-width:700px){
   main{padding:16px 16px 50px}
-  .topbar .themer{min-width:0;width:100%}
+  .topbar .ctl{width:100%;justify-content:space-between}
+  .topbar .themer{min-width:0;flex:1}
 }
 @media print{
   .topbar,.legal{display:none}

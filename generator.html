@@ -386,16 +386,16 @@ td.d>div+div,td.n>div+div{margin-top:5px}#gloss{
 #gloss .g-f{font-weight:700;margin-bottom:2px}
 #gloss .g-d{color:var(--ink-2)}
 
-/* ---------- theme toggle ---------- */
-.themer{display:flex;gap:0;margin:0 0 14px;border:1px solid var(--line);background:var(--surface)}
-.themer button{
+/* ---------- theme toggle (and the language switch, which looks the same) ---------- */
+.themer,.langer{display:flex;gap:0;margin:0 0 14px;border:1px solid var(--line);background:var(--surface)}
+.themer button,.langer button{
   flex:1;padding:5px 4px;font:inherit;font-size:.72rem;font-weight:700;letter-spacing:.03em;
   background:none;border:0;color:var(--steel);cursor:pointer;border-right:1px solid var(--line);
 }
-.themer button:last-child{border-right:0}
-.themer button:hover{background:var(--red-soft);color:var(--ink)}
-.themer button[aria-pressed="true"]{background:var(--red);color:var(--on-accent)}
-.themer button:focus-visible{outline:2px solid var(--red);outline-offset:-2px}
+.themer button:last-child,.langer button:last-child{border-right:0}
+.themer button:hover,.langer button:hover{background:var(--red-soft);color:var(--ink)}
+.themer button[aria-pressed="true"],.langer button[aria-pressed="true"]{background:var(--red);color:var(--on-accent)}
+.themer button:focus-visible,.langer button:focus-visible{outline:2px solid var(--red);outline-offset:-2px}
 
 /* ---------- dice ---------- */
 .die{
@@ -920,7 +920,13 @@ main{max-width:1060px;margin:0 auto;padding:22px 28px 60px}
 .topbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;
   margin:0 0 6px;padding:0 0 10px;border-bottom:1px solid var(--line)}
 .topbar .brand{font-size:.75rem;letter-spacing:.03em;color:var(--steel);font-weight:600}
-.topbar .themer{margin:0;min-width:260px}
+.topbar .ctl{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:10px}
+.topbar .themer,.topbar .langer{margin:0}
+.topbar .themer{min-width:260px}
+.topbar .langer{min-width:96px}
+/* the top bar has the language switch; the copy at the end of the wizard's method row
+   is for hosts that have no bar of their own */
+.cglang{display:none}
 .masthead{margin:22px 0 10px}
 .masthead h1{font-family:var(--font-disp);font-size:2rem;line-height:1.1;margin:0;
   text-transform:uppercase;letter-spacing:.05em}
@@ -942,7 +948,8 @@ main{max-width:1060px;margin:0 auto;padding:22px 28px 60px}
 .legal p{margin:0 0 7px}
 @media (max-width:700px){
   main{padding:16px 16px 50px}
-  .topbar .themer{min-width:0;width:100%}
+  .topbar .ctl{width:100%;justify-content:space-between}
+  .topbar .themer{min-width:0;flex:1}
 }
 @media print{
   .topbar,.legal{display:none}
@@ -955,7 +962,10 @@ main{max-width:1060px;margin:0 auto;padding:22px 28px 60px}
 <main>
 <div class="topbar">
   <span class="brand" data-ru="Фанатский инструмент · бесплатно · работает офлайн · обновлено 10.10.2026">Fan tool · free · works offline · updated 10.10.2026</span>
+  <div class="ctl">
+  <div class="langer" role="group" aria-label="Language" data-ru-label="Язык"><button type="button" data-lang="en" lang="en" title="English" aria-pressed="false">EN</button><button type="button" data-lang="ru" lang="ru" title="Русский" aria-pressed="false">RU</button></div>
   <div class="themer" role="group" aria-label="Theme" data-ru-label="Оформление"><button type="button" data-th="light" data-ru="День">Day</button><button type="button" data-th="dark" data-ru="Ночь">Night</button><button type="button" data-th="cyber-night" data-ru="Кибер">Cyber</button><button type="button" data-th="auto" data-ru="Авто">Auto</button></div>
+  </div>
 </div>
 <header class="masthead">
 <h1>Character Generator</h1>
@@ -1256,6 +1266,22 @@ belong to R. Talsorian Games. The full text of the rules is in the books; a chip
   window.addEventListener("resize", close);
 })();
 
+/* ---------- language switch ----------
+   The wizard owns the language: the buttons ask it (CPR_SETLANG) and follow its "cpr-lang". */
+(function(){
+  var btns = Array.prototype.slice.call(document.querySelectorAll(".langer button"));
+  function paint(l){
+    btns.forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.lang === l)); });
+  }
+  btns.forEach(function(b){
+    b.addEventListener("click", function(){
+      if(window.CPR_SETLANG) window.CPR_SETLANG(b.dataset.lang);
+    });
+  });
+  document.addEventListener("cpr-lang", function(e){ paint(e.detail); });
+})();
+
+
 /* ---------- language of the frame ----------
    The wizard owns the language (it dispatches "cpr-lang"); the page around it — the
    top bar, the theme buttons, the footer, the tab title — is written in English (the
@@ -1497,6 +1523,9 @@ function setLang(l, fresh){
     try{ document.dispatchEvent(new CustomEvent("cpr-lang", {detail: l})); }catch(e2){}
   }
 }
+/* The host page may draw its own language switch (the standalone page puts one in its top
+   bar); it calls this and listens for "cpr-lang". */
+window.CPR_SETLANG = function(l){ setLang(l); };
 function pickLang(){
   var saved = null;
   try{ saved = localStorage.getItem(LANG_KEY); }catch(e){}
