@@ -162,6 +162,7 @@
    — the whole table visibly jumps sideways for an edit to one row. Fixed layout
    sizes columns once, from the colgroup, and never again. */
 .cggeartbl{table-layout:fixed}
+.cgskilltbl{table-layout:fixed;min-width:640px}
 .cggeartbl input[type="text"],.cggeartbl input[type="number"]{width:100%;box-sizing:border-box}
 /* ---- the Role's rank-4 payload -------------------------------------------------
    `.cgfacts` is a label/value table, so its first column is sized to the label and

@@ -1216,6 +1216,15 @@ root.addEventListener("change", function(ev){
 });
 
 /* -------------------------------------------------------------- step 3: skills */
+/* One column grid for every skill table (the Role's list, the 66, the player's own),
+   so the three line up when stacked. Fixed layout: with the default auto layout each
+   table sized its columns to its own contents and none matched. */
+function skillCols(withCost){
+  return '<colgroup>' + (withCost
+    ? '<col style="width:38%"><col style="width:12%"><col style="width:9%"><col style="width:13%"><col style="width:10%"><col style="width:18%">'
+    : '<col style="width:42%"><col style="width:12%"><col style="width:14%"><col style="width:10%"><col style="width:22%">')
+    + '</colgroup>';
+}
 function paintSkills(){
   var box = q("skillbox"), r = role();
   if(!box) return;
@@ -1231,7 +1240,7 @@ function paintSkills(){
         + 'добирает кубик, поэтому там и написано, сколько нужно выбросить. '
         + 'Лестница сложностей целиком — ' + link("checks", "в Проверках и Навыках") + ".</p>";
   var edge = isEdge(), cols = edge ? 6 : 5;
-  h += '<div class="tw"><table class="rf"><thead><tr><th>Навык</th>'
+  h += '<div class="tw"><table class="rf cgskilltbl">' + skillCols(edge) + '<thead><tr><th>Навык</th>'
         + '<th class="n">' + (edge ? "Уровень" : "Ур") + "</th>"
         + (edge ? '<th class="n">Очки</th>' : "")
         + '<th class="n">СТАТ</th><th class="n">Всего</th><th>Обычно берёт</th></tr></thead><tbody>';
@@ -1352,7 +1361,7 @@ function paintHomebrew(){
         + '(хомбрю, настройка кампании)? Впиши название, выбери СТАТ и добавь — он тратит те же очки '
         + 'и попадёт на лист.</p>';
   if(S.homebrew.length){
-    h += '<div class="tw"><table class="rf"><thead><tr><th>Свой навык</th><th class="n">Уровень</th>'
+    h += '<div class="tw"><table class="rf cgskilltbl">' + skillCols(true) + '<thead><tr><th>Свой навык</th><th class="n">Уровень</th>'
        + '<th class="n">Очки</th><th class="n">СТАТ</th><th class="n">Всего</th><th>Обычно берёт</th></tr></thead><tbody>';
     for(var i=0;i<S.homebrew.length;i++){
       var e = S.homebrew[i], step = e.x2 ? 2 : 1, sv = eff(e.stat), tot = (sv===null) ? null : sv + e.level;
@@ -1547,7 +1556,7 @@ function paintSkills3(){
   if(!role()){ box.innerHTML = ""; return; }
   ensureSkills3();
   var names = Object.keys(D.skills), q3 = skillFilter3.trim().toLowerCase();
-  var h = '<div class="tw"><table class="rf"><thead><tr><th>Навык</th>'
+  var h = '<div class="tw"><table class="rf cgskilltbl">' + skillCols(true) + '<thead><tr><th>Навык</th>'
         + '<th class="n">Уровень</th><th class="n">Очки</th>'
         + '<th class="n">СТАТ</th><th class="n">Всего</th><th>Обычно берёт</th></tr></thead><tbody>';
   var group = null, shown = 0;
