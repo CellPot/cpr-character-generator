@@ -57,6 +57,7 @@ function blank(){ return {method:"streetrat",role:null,stats:null,roll:null,srol
                           buyBudget:null,styleBudget:null,
                           sponsor:{active:false,kind:"",hook:""},
                           start:[],startBudget:null,
+                          homebrew:[],
                           lang:"",harm:"",dice:{},notes:{},name:""}; }
 /* A saved character is data written by an OLDER version of this wizard, and it
    used to be trusted whole — whatever came out of JSON.parse became S. Anything
@@ -77,8 +78,12 @@ var TYPE = {method:"string", role:"string", stats:"object", roll:"number",
             statBudget:"string", statAlloc:"object", skills3:"object",
             buy:"array", style:"array", buyBudget:"number", styleBudget:"number",
             sponsor:"object", start:"array", startBudget:"number",
-            lang:"string", harm:"string",
+            lang:"string", harm:"string", homebrew:"array",
             dice:"object", notes:"object", name:"string"};
+var HB_MAX = 20;
+/* Quotes and angle brackets are stripped because the name is written into
+   attributes (the roll button's data-key). */
+function hbName(s){ return String(s).replace(/["<>]/g, "").replace(/\s+/g, " ").trim().slice(0, 40); }
 function load(){
   var got = null;
   try{ var raw = localStorage.getItem(KEY); if(raw) got = JSON.parse(raw); }catch(e){}
@@ -147,6 +152,20 @@ function normalise(got){
     }
     return out2;
   }
+  /* Homebrew skills are typed by the player, so every field is checked: a name that
+     is not a short string, a STAT this build does not have, or a level outside the
+     book's range drops the row rather than reaching the sheet. */
+  var hb = [];
+  for(var h0=0;h0<out.homebrew.length && hb.length<HB_MAX;h0++){
+    var e0 = out.homebrew[h0];
+    if(!e0 || typeof e0 !== "object" || typeof e0.name !== "string") continue;
+    var n0 = hbName(e0.name);
+    if(!n0 || D.stats.indexOf(e0.stat) < 0) continue;
+    hb.push({name:n0, stat:e0.stat, x2:!!e0.x2,
+             level: (typeof e0.level === "number" && e0.level >= 0 && e0.level <= D.skillMax)
+                    ? Math.round(e0.level) : 0});
+  }
+  out.homebrew = hb;
   out.buy = cleanRows(out.buy);
   out.style = cleanRows(out.style);
   out.start = cleanRows(out.start);
@@ -195,7 +214,24 @@ function costOf(sk){ return lv(sk) * (sk.x2 ? 2 : 1); }
 function spent(){
   var r = role(), t = 0; if(!r) return 0;
   for(var i=0;i<r.skills.length;i++) t += costOf(r.skills[i]);
+  return t + hbSpent();
+}
+/* The player's own skills (homebrew) draw on the same 86 points, but only under the
+   two methods that spend points: #1 is a fixed package with nothing to pay with. */
+function hbOn(){ return isEdge() || isCalc(); }
+function hbCost(h){ return h.level * (h.x2 ? 2 : 1); }
+function hbSpent(){
+  var t = 0; if(!hbOn()) return 0;
+  for(var i=0;i<S.homebrew.length;i++) t += hbCost(S.homebrew[i]);
   return t;
+}
+function hbLeft(){ return isCalc() ? skillsLeft3() : unspent(); }
+/* Those with a level, in the shape the sheet and the exports read. */
+function hbBought(){
+  var out = [];
+  if(!hbOn()) return out;
+  for(var i=0;i<S.homebrew.length;i++) if(S.homebrew[i].level > 0) out.push(S.homebrew[i]);
+  return out;
 }
 function unspent(){ return D.budget - spent(); }
 /* "Role's set" is not a preset like the other two — it is the ABSENCE of an
@@ -1304,6 +1340,67 @@ function bump(skill, delta){
     return;
   }
 }
+/* Own skills: a name, a STAT and ×2 or not, bought from the same points. */
+function paintHomebrew(){
+  var box = q("hbbox"); if(!box) return;
+  if(!hbOn() || !role()){ box.innerHTML = ""; return; }
+  var h = '<p class="cglegend"><b>Свои навыки.</b> Нужен навык, которого нет в списке выше '
+        + '(хомбрю, настройка кампании)? Впиши название, выбери СТАТ и добавь — он тратит те же очки '
+        + 'и попадёт на лист.</p>';
+  if(S.homebrew.length){
+    h += '<div class="tw"><table class="rf"><thead><tr><th>Навык</th><th class="n">Уровень</th>'
+       + '<th class="n">Очки</th><th class="n">СТАТ</th><th class="n">Всего</th></tr></thead><tbody>';
+    for(var i=0;i<S.homebrew.length;i++){
+      var e = S.homebrew[i], step = e.x2 ? 2 : 1, sv = eff(e.stat), tot = (sv===null) ? null : sv + e.level;
+      h += "<tr><th>"+esc(e.name)+(e.x2 ? ' <span class="x2">×2</span>' : "")
+         + ' <button type="button" class="cgbtn cgmini" data-cg="hbrm" data-i="'+i+'" title="Убрать навык">✕</button></th>'
+         + '<td class="n"><span class="cgstep">'
+         + '<button type="button" class="cgpm" data-cg="hbdown" data-i="'+i+'"'
+         + (e.level <= 0 ? " disabled" : "") + ' title="−1 уровень">−</button><b>'+e.level+"</b>"
+         + '<button type="button" class="cgpm" data-cg="hbup" data-i="'+i+'"'
+         + (e.level >= D.skillMax || hbLeft() < step ? " disabled" : "") + ' title="+1 уровень">+</button>'
+         + '</span></td><td class="n">'+hbCost(e)+'</td><td class="n">'+esc(e.stat)
+         + (sv===null ? "" : ' <span class="cgsv">'+sv+"</span>")+'</td><td class="n">'
+         + (tot===null ? "—"
+            : '<button type="button" class="cgsum" data-cg="roll" data-key="'+esc(e.name)
+              + '" data-stat="'+esc(e.stat)+'" data-level="'+e.level+'" data-total="'+tot
+              + '" title="Бросить проверку">'+tot+"</button>")
+         + "</td></tr>";
+    }
+    h += "</tbody></table></div>";
+  }
+  if(S.homebrew.length < HB_MAX){
+    h += '<p class="cgrow"><input type="text" class="cgpick" data-cg="hbname" maxlength="40" placeholder="Название навыка"> '
+       + '<select data-cg="hbstat">';
+    for(var s=0;s<D.stats.length;s++) h += '<option>'+esc(D.stats[s])+"</option>";
+    h += '</select> <label><input type="checkbox" data-cg="hbx2"> ×2</label> '
+       + '<button type="button" class="cgbtn" data-cg="hbadd">Добавить навык</button></p>';
+  }
+  box.innerHTML = h;
+}
+function hbBump(i, delta){
+  var e = S.homebrew[i]; if(!e) return;
+  var next = e.level + delta, step = e.x2 ? 2 : 1;
+  if(next < 0 || next > D.skillMax) return;
+  if(delta > 0 && hbLeft() < step) return;
+  e.level = next;
+  save(); paintAll();
+  var again = root.querySelector('[data-cg="'+(delta > 0 ? "hbup" : "hbdown")+'"][data-i="'+i+'"]');
+  if(again && !again.disabled) again.focus();
+}
+root.addEventListener("click", function(ev){
+  var t = ev.target, a = t.getAttribute && t.getAttribute("data-cg");
+  if(a === "hbup") hbBump(+t.getAttribute("data-i"), 1);
+  if(a === "hbdown") hbBump(+t.getAttribute("data-i"), -1);
+  if(a === "hbrm"){ S.homebrew.splice(+t.getAttribute("data-i"), 1); save(); paintAll(); }
+  if(a === "hbadd"){
+    var nameIn = q("hbname"), name = hbName(nameIn ? nameIn.value : "");
+    if(!name || S.homebrew.length >= HB_MAX) return;
+    S.homebrew.push({name:name, stat:q("hbstat").value, x2:q("hbx2").checked, level:0});
+    save(); paintAll();
+    var again = q("hbname"); if(again) again.focus();
+  }
+});
 /* The Role's point pool, same stepper and the same focus rule as the skill
    point-buy above: the table is repainted, so the button under the cursor is a new
    element and the keyboard would otherwise be dropped back to the top of the page. */
@@ -1389,7 +1486,7 @@ function skillCost3(name){
 function skillsSpent3(){
   var t = 0;
   for(var name in (S.skills3 || {})) if(S.skills3.hasOwnProperty(name)) t += skillCost3(name);
-  return t;
+  return t + hbSpent();
 }
 function skillsLeft3(){ return D.budget - skillsSpent3(); }
 /* The 13 mandatory skills start at their floor the first time this step is
@@ -2435,6 +2532,10 @@ function sheetText(){
                +(S.stats?("  [ИНТ+навык = "+(eff("ИНТ")+4)+"]"):""));
     /* The skills the Role ability grants — the Medtech's Surgery and Medical Tech, the Fixer's second language. They are skills, so they print
        with the skills. */
+    var hb2 = hbBought();
+    for(var hj=0;hj<hb2.length;hj++)
+      out.push("  "+hb2[hj].name+" "+hb2[hj].level
+               +(S.stats?("  ["+hb2[hj].stat+"+навык = "+(eff(hb2[hj].stat)+hb2[hj].level)+"]"):""));
     var ex2 = abilSkills();
     for(var e2=0;e2<ex2.length;e2++){
       var xs = ex2[e2];
@@ -2598,6 +2699,8 @@ function mdSkillRows(r){
     }
   }
   if(langRow()) add("Язык ("+(S.lang||"не выбран")+")", "ИНТ", 4);
+  var hbm = hbBought();
+  for(i=0;i<hbm.length;i++) add(hbm[i].name, hbm[i].stat, hbm[i].level);
   var ex = abilSkills();
   for(i=0;i<ex.length;i++) add(ex[i].skill+(ex[i].spec ? " ("+ex[i].spec+")" : ""), ex[i].stat, ex[i].level);
   rows.sort(function(a, b){ return (b.roll == null ? b.lvl : b.roll) - (a.roll == null ? a.lvl : a.roll); });
@@ -2933,6 +3036,14 @@ function paintSheet(){
      or Medical Tech among the 66, so no package can contain them and
      nothing in the book defines them: the book reserves both for the Medtech, through
      those two specialties alone. A Medtech sheet without them is missing the Role. */
+  var hbs = hbBought();
+  for(var hi=0;hi<hbs.length;hi++){
+    var hv = eff(hbs[hi].stat), ht = (hv===null) ? null : hv + hbs[hi].level;
+    h += "<tr><th>"+esc(hbs[hi].name)+(hbs[hi].x2 ? ' <span class="x2">×2</span>' : "")
+       + '<span class="itsub">Свой навык.</span></th><td class="n">'+hbs[hi].level+'</td><td class="n">'
+       + (ht===null ? esc(hbs[hi].stat) : esc(hbs[hi].stat)+" "+hv+" + "+hbs[hi].level+" = <b>"+ht+"</b>")
+       + "</td><td>"+(ht===null ? "" : tierChip(ht))+"</td></tr>";
+  }
   var extra = abilSkills();
   for(var e=0;e<extra.length;e++){
     var ex = extra[e];
@@ -3486,7 +3597,7 @@ root.addEventListener("click", function(ev){
   var wasCalc = (S.method === "calc"), willBeCalc = (key === "calc");
   S.method = key;
   S.stats = null; S.roll = null; S.srolls = []; S.levels = {};
-  S.statBudget = ""; S.statAlloc = {}; S.skills3 = {}; S.buy = []; S.style = [];
+  S.statBudget = ""; S.statAlloc = {}; S.skills3 = {}; S.homebrew = []; S.buy = []; S.style = [];
   S.buyBudget = null; S.styleBudget = null; S.sponsor = {active:false,kind:"",hook:""};
   if(wasCalc || willBeCalc){ S.start = []; S.startBudget = null; }
   save(); paintAll();
@@ -3716,7 +3827,7 @@ function fallbackCopy(text, btn){
 
 function paintAll(){
   paintMethods(); paintMode();
-  paintRoles(); paintStats(); paintSkills(); paintLife(); paintNotes();
+  paintRoles(); paintStats(); paintSkills(); paintHomebrew(); paintLife(); paintNotes();
   paintGearPane(); paintSub(); paintSheet(); paintTabs(); paintFeet();
   var nameField = q("name");
   if(nameField && nameField.value !== S.name) nameField.value = S.name || "";
