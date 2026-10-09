@@ -3,9 +3,12 @@
 *Русская версия: [README.ru.md](README.ru.md)*
 
 A step-by-step character creation wizard for Cyberpunk RED, built on the rules of the
-Core Rulebook. One HTML page, no sign-up, no internet needed. Open `generator.html` in a
-browser. The interface and the data come in English and Russian; the page follows your
-browser's language the first time and has a language switch.
+Core Rulebook. One HTML page, no sign-up.
+
+**[Open online](https://cellpot.github.io/cpr-character-generator/)**, or download
+`generator.html` and open it in a browser — it works offline. The interface and the data come in
+English and Russian; the page follows your browser's language the first time and has a
+language switch.
 
 - All three methods of the book: **#1 Street Rat**, **#2 Edgerunner**, **#3 Complete Package**.
 - Role → STATs → skills → Lifepath (cultural and Role) → gear → finished sheet:

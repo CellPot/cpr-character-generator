@@ -21,6 +21,8 @@ OUT = os.path.join(HERE, "generator.html")
 TITLE = "Character Generator"      # the page is English; the Russian rides in data-ru
 SUBTITLE = "for Cyberpunk RED"
 TITLE_RU = "Генератор персонажа — для Cyberpunk RED"
+REPO_URL = "https://github.com/CellPot/cpr-character-generator"
+REPO_LINK = '<a href="%s" target="_blank" rel="noopener">github.com/CellPot/cpr-character-generator</a>' % REPO_URL
 
 
 def read(rel):
@@ -57,7 +59,9 @@ belong to R. Talsorian Games. The full text of the rules is in the books; a chip
 <b>Cyberpunk RED на русском языке</b>, <b>@kr45n1y</b> (<b>t.me/redcyberpunk</b>) and
 <b>LieSnPeace</b> (<b>t.me/cyberpunk_red_rus</b>).</p>
 <p%(ru3)s>Sources: %(keys)s.</p>
-</footer>""" % {"title": TITLE, "keys": keys,
+<p%(ru4)s>Made by <b>CellPot</b> · source, updates and issues: %(repo)s</p>
+</footer>""" % {"title": TITLE, "keys": keys, "repo": REPO_LINK,
+                "ru4": ru("Автор — <b>CellPot</b> · исходники, обновления и сообщения об ошибках: %s" % REPO_LINK),
                 "ru2": ru("Cyberpunk — товарный знак CD PROJEKT S.A.; Cyberpunk RED и его правила — "
                           "R. Talsorian Games. Полный текст правил — в книгах; чип вроде "
                           "<b>КБ 146</b> — страница. Термины — в основном по фанатским переводам, спасибо их авторам: "
