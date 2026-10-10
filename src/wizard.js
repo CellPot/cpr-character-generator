@@ -2534,6 +2534,27 @@ root.addEventListener("click", function(ev){
     if(window.CPR_POP) window.CPR_POP(t, body);
     lifeChanged();
   }
+  /* The dice tray above the wizard: a plain roller, nothing is stored (no S.dice,
+     no save()) and no repaint, so it can never touch the character. */
+  if(t.getAttribute && t.getAttribute("data-cg")==="tdice"){
+    ev.preventDefault(); ev.stopPropagation();
+    var tc = +t.getAttribute("data-c"), tf = +t.getAttribute("data-f"), tv = [], ts = 0, tsix = 0, ti;
+    for(ti=0;ti<tc;ti++){
+      var tr = tf === 100 ? (Math.floor(Math.random()*10)*10 + Math.floor(Math.random()*10) || 100)
+                          : Math.floor(Math.random()*tf)+1;
+      tv.push(tr); ts += tr; if(tf === 6 && tr === 6) tsix++;
+    }
+    var tbody = '<div class="g-t">'+tc+"d"+tf+"</div>"
+              + '<div class="g-dice">'+tv.map(function(v){
+                  return "<span"+(tf === 6 && v === 6 ? ' class="six"' : "")+">"+v+"</span>";
+                }).join("")+"</div>"
+              + '<div class="g-sum">'+ts+T("tdice.sum")
+              + (tsix >= 2 ? T("tdice.crit", tsix) : "") + (tf === 10 && tc === 1 && ts === 10 ? T("tdice.ten") : "")
+              + (tf === 100 ? T("tdice.d100") : "")
+              + T("tdice.note");
+    if(window.CPR_POP) window.CPR_POP(t, tbody);
+    return;
+  }
   if(t.getAttribute && t.getAttribute("data-cg")==="rollone"){
     setDie(tableOf(t.getAttribute("data-key")), +t.getAttribute("data-col"), d10());
     lifeChanged();

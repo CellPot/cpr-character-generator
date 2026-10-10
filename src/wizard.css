@@ -437,6 +437,14 @@ ul.cggear .itsub{line-height:1.45;margin-top:1px}
 .cgdice{font:inherit;font-size:.86rem;cursor:pointer;padding:0 5px;color:var(--red-text);
   background:var(--red-soft);border:1px solid transparent;border-bottom:1px dashed var(--red)}
 .cgdice:hover{background:var(--red);color:var(--on-accent);border-bottom-color:var(--red)}
+/* the dice tray above the wizard */
+.cgtray{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 14px;padding:8px 10px;
+  border:1px dashed var(--line);background:var(--sunken)}
+.cgtray .cgdice{padding:0 6px;font-weight:700;font-family:Consolas,"SF Mono",ui-monospace,monospace;line-height:1.5;
+  border:1px solid color-mix(in srgb,var(--red) 45%,transparent);border-radius:2px}
+.cgtray .cgdice:hover{border-color:var(--red)}
+.cgtray .cgdice:active{transform:translateY(1px)}
+.cgtray span{font-size:.8rem;color:var(--steel)}
 .cgrollme{font-size:.76rem;color:var(--red-text);font-style:italic}
 
 /* every row in step 4 is label | value | controls, on one grid, so the controls
