@@ -2534,27 +2534,6 @@ root.addEventListener("click", function(ev){
     if(window.CPR_POP) window.CPR_POP(t, body);
     lifeChanged();
   }
-  /* The dice tray above the wizard: a plain roller, nothing is stored (no S.dice,
-     no save()) and no repaint, so it can never touch the character. */
-  if(t.getAttribute && t.getAttribute("data-cg")==="tdice"){
-    ev.preventDefault(); ev.stopPropagation();
-    var tc = +t.getAttribute("data-c"), tf = +t.getAttribute("data-f"), tv = [], ts = 0, tsix = 0, ti;
-    for(ti=0;ti<tc;ti++){
-      var tr = tf === 100 ? (Math.floor(Math.random()*10)*10 + Math.floor(Math.random()*10) || 100)
-                          : Math.floor(Math.random()*tf)+1;
-      tv.push(tr); ts += tr; if(tf === 6 && tr === 6) tsix++;
-    }
-    var tbody = '<div class="g-t">'+tc+"d"+tf+"</div>"
-              + '<div class="g-dice">'+tv.map(function(v){
-                  return "<span"+(tf === 6 && v === 6 ? ' class="six"' : "")+">"+v+"</span>";
-                }).join("")+"</div>"
-              + '<div class="g-sum">'+ts+T("tdice.sum")
-              + (tsix >= 2 ? T("tdice.crit", tsix) : "") + (tf === 10 && tc === 1 && ts === 10 ? T("tdice.ten") : "")
-              + (tf === 100 ? T("tdice.d100") : "")
-              + T("tdice.note");
-    if(window.CPR_POP) window.CPR_POP(t, tbody);
-    return;
-  }
   if(t.getAttribute && t.getAttribute("data-cg")==="rollone"){
     setDie(tableOf(t.getAttribute("data-key")), +t.getAttribute("data-col"), d10());
     lifeChanged();
@@ -3533,6 +3512,36 @@ function paintMode(){
   for(var i=0;i<blocks.length;i++)
     blocks[i].hidden = (blocks[i].getAttribute("data-mth") !== S.method);
 }
+/* The dice tray above the wizard heading: outside `root`, so it has its own listener.
+   A plain roller — nothing is stored (no S.dice, no save()) and nothing repaints. */
+var TRAY = [[1,6],[2,6],[3,6],[4,6],[1,10],[1,100]];
+function paintTray(){
+  var box = document.querySelector('[data-cg="tray"]'); if(!box) return;
+  var h = "<b>"+T("tdice.title")+"</b>";
+  for(var i=0;i<TRAY.length;i++)
+    h += ' <button type="button" class="cgdice" data-cg="tdice" data-c="'+TRAY[i][0]+'" data-f="'+TRAY[i][1]+'">'
+       + TRAY[i][0]+"d"+TRAY[i][1]+"</button>";
+  box.innerHTML = h + " <span>"+T("tdice.hint")+"</span>";
+}
+document.addEventListener("click", function(ev){
+  var t = ev.target.closest ? ev.target.closest('[data-cg="tdice"]') : null;
+  if(!t) return;
+  ev.preventDefault(); ev.stopPropagation();
+  var tc = +t.getAttribute("data-c"), tf = +t.getAttribute("data-f"), tv = [], ts = 0, tsix = 0, ti;
+  for(ti=0;ti<tc;ti++){
+    var tr = tf === 100 ? (Math.floor(Math.random()*10)*10 + Math.floor(Math.random()*10) || 100)
+                        : Math.floor(Math.random()*tf)+1;
+    tv.push(tr); ts += tr; if(tf === 6 && tr === 6) tsix++;
+  }
+  var tbody = '<div class="g-t">'+tc+"d"+tf+"</div>"
+            + '<div class="g-dice">'+tv.map(function(v){
+                return "<span"+(tf === 6 && v === 6 ? ' class="six"' : "")+">"+v+"</span>";
+              }).join("")+"</div>"
+            + '<div class="g-sum">'+ts+T("tdice.sum")
+            + (tsix >= 2 ? T("tdice.crit", tsix) : "") + (tf === 10 && tc === 1 && ts === 10 ? T("tdice.ten") : "")
+            + (tf === 100 ? T("tdice.d100") : "");
+  if(window.CPR_POP) window.CPR_POP(t, tbody);
+});
 function paintMethods(){
   var box = q("methods"); if(!box) return;
   var h = T("methods.method");
@@ -3813,7 +3822,7 @@ function fallbackCopy(text, btn){
 }
 
 function paintAll(){
-  paintMethods(); paintMode();
+  paintTray(); paintMethods(); paintMode();
   paintRoles(); paintStats(); paintSkills(); paintHomebrew(); paintLife(); paintNotes();
   paintGearPane(); paintSub(); paintSheet(); paintTabs(); paintFeet();
   var nameField = q("name");
