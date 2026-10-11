@@ -940,6 +940,28 @@ function abilSkills(){
   return out;
 }
 
+/* A pool option that is a flat bonus to named skills (the Tech's Field Expertise).
+   Unlike the Solo's ladder the Tech spends these points once and keeps them, so the
+   bonus is a fact of the sheet and goes into the skill's total. The skill list and the
+   size per point are the data's (`bonus`), not named here. */
+function skillBonus(skillId){
+  var p = pool(), b = {n: 0, from: ""};
+  if(!p) return b;
+  for(var i=0;i<p.opts.length;i++){
+    var o = p.opts[i];
+    if(!o.bonus || o.bonus.skills.indexOf(skillId) < 0) continue;
+    var n = ptsOf(o.id) * (o.bonus.per || 1);
+    if(n){ b.n += n; b.from = b.from ? b.from + ", " + o.name : o.name; }
+  }
+  return b;
+}
+/* The skill's name cell gets the bonus as a quiet second line, and the total gets the
+   extra term — `tot` is the total WITHOUT the bonus (null while the STATs are unrolled). */
+function bonusNote(b){
+  return b.n ? '<span class="itsub">+' + b.n + " — " + esc(b.from) + "</span>" : "";
+}
+function bonusTerm(b){ return b.n ? " + " + b.n : ""; }
+
 /* Nomad: four decisions, each "vehicle OR upgrade", and then which of the
    vehicles he actually has with him — the book lets him hold one at a time. */
 function slots(){ return (S.abil && S.abil.slots) || {}; }
@@ -2812,22 +2834,24 @@ function mdTable(head, rows){
 }
 function mdSkillRows(r){
   var rows = [], i;
-  function add(name, stat, level){
-    rows.push({name:name, lvl:level, stat:stat, roll: S.stats ? eff(stat)+level : null});
+  function add(name, stat, level, id){
+    var b = id ? skillBonus(id) : {n: 0, from: ""};
+    rows.push({name:name + (b.n ? " [+" + b.n + " " + b.from + "]" : ""), lvl:level, stat:stat,
+               roll: S.stats ? eff(stat)+level+b.n : null});
   }
   if(isCalc()){
     var keys = boughtKeys3();
     for(i=0;i<keys.length;i++){
       var nm = skillName(keys[i]);
       if(multi3(skillBase(keys[i]))) nm += " ("+(pickOf(keys[i])||T("add.pick"))+")";
-      add(nm, D.skills[skillBase(keys[i])].stat, skillLevel3(keys[i]));
+      add(nm, D.skills[skillBase(keys[i])].stat, skillLevel3(keys[i]), skillBase(keys[i]));
     }
   } else {
     for(i=0;i<r.skills.length;i++){
       var sk = r.skills[i], n2 = sk.name;
       if(sk.pick === "") n2 += " ("+(S.picks[sk.id]||T("add.pick_one"))+")";
       else if(sk.pick) n2 += " ("+sk.pick+")";
-      add(n2, sk.stat, lv(sk));
+      add(n2, sk.stat, lv(sk), sk.id);
     }
   }
   if(langRow()) add(T("add.language")+(langName()||T("add.not_chosen"))+")", "INT", 4);
@@ -3162,10 +3186,11 @@ function paintSheet(){
         label3 += pickOf(key3)
           ? ' <span class="cgspec">('+esc(pickOf(key3))+")</span>"
           : T("sheet.not_chosen");
-      var lvl3 = skillLevel3(key3), sv3 = eff(info3.stat), tot3 = (sv3===null) ? null : sv3 + lvl3;
-      h += "<tr><th>"+label3+'</th><td class="n">'+lvl3+'</td><td class="n">'
+      var lvl3 = skillLevel3(key3), sv3 = eff(info3.stat), bb3 = skillBonus(skillBase(key3));
+      var tot3 = (sv3===null) ? null : sv3 + lvl3 + bb3.n;
+      h += "<tr><th>"+label3+bonusNote(bb3)+'</th><td class="n">'+lvl3+'</td><td class="n">'
          + (tot3===null ? esc(sName(info3.stat))
-                        : esc(sName(info3.stat))+" "+sv3+" + "+lvl3+" = <b>"+tot3+"</b>")
+                        : esc(sName(info3.stat))+" "+sv3+" + "+lvl3+bonusTerm(bb3)+" = <b>"+tot3+"</b>")
          + "</td><td>"+(tot3===null ? "" : tierChip(tot3))+"</td></tr>";
     }
   } else {
@@ -3176,10 +3201,11 @@ function paintSheet(){
             ? ' <span class="cgspec">('+esc(S.picks[sk.id])+")</span>"
             : T("sheet.not_chosen");
       else if(sk.pick) nm += ' <span class="cgspec">('+esc(sk.pick)+")</span>";
-      var shl = lv(sk), sv = eff(sk.stat), tot = (sv===null) ? null : sv + shl;
-      h += "<tr><th>"+nm+'</th><td class="n">'+shl+'</td><td class="n">'
+      var shl = lv(sk), sv = eff(sk.stat), bb = skillBonus(sk.id);
+      var tot = (sv===null) ? null : sv + shl + bb.n;
+      h += "<tr><th>"+nm+bonusNote(bb)+'</th><td class="n">'+shl+'</td><td class="n">'
          + (tot===null ? esc(sName(sk.stat))
-                       : esc(sName(sk.stat))+" "+sv+" + "+shl+" = <b>"+tot+"</b>")
+                       : esc(sName(sk.stat))+" "+sv+" + "+shl+bonusTerm(bb)+" = <b>"+tot+"</b>")
          + "</td><td>"+(tot===null ? "" : tierChip(tot))+"</td></tr>";
     }
   }

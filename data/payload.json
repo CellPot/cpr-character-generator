@@ -15482,6 +15482,18 @@
        "what": "Per level: +1 to technical repair skills (tech, cybertech, electronics, weapons, vehicles) and a temporary repair “for 10 minutes per level”.",
        "tiers": [],
        "per": 1,
+       "bonus": {
+        "skills": [
+         "basic-tech",
+         "cybertech",
+         "electronics-security-tech",
+         "weaponstech",
+         "land-vehicle-tech",
+         "sea-vehicle-tech",
+         "air-vehicle-tech"
+        ],
+        "per": 1
+       },
        "id": "field-expertise"
       },
       {
