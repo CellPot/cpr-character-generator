@@ -506,6 +506,12 @@ ul.cggear .itsub{line-height:1.45;margin-top:1px}
   .cgskilltbl,.cggeartbl{min-width:0}
   .cgfacts tbody th,.cgpool tbody th{width:auto}
   .cg .cgtext{min-width:0;max-width:100%}
+  /* the skill table's last column is ~78px here: the tier's DV line was nowrap and
+     "Professional" one long word, so both ran out of the fixed-width cell and were cut */
+  .cgtier{hyphens:auto;overflow-wrap:anywhere}
+  .cgtier .cgdv{white-space:normal}
+  .cgskilltbl td.n{white-space:normal}
+  .cgskilltbl .cgsum{padding:2px 5px}
 }
 /* six purchase columns at 390px: a long header word may break anywhere rather than
    be cut off by its fixed-width column */
