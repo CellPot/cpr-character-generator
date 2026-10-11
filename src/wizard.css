@@ -469,3 +469,44 @@ ul.cggear .itsub{line-height:1.45;margin-top:1px}
 .lpk{display:inline-block;min-width:8.5em;padding-right:10px;color:var(--steel);font-size:.78rem;vertical-align:top}
 .cgqual{color:var(--steel)}
 .cglang{margin-left:auto;display:inline-flex;gap:4px}
+
+/* ---- catalogue suggestions ---------------------------------------------------
+   Our own list under the "Find in the book" field, not a <datalist>: phones show
+   a datalist badly or not at all (Firefox for Android never; iOS only as a strip
+   above the keyboard), so the search looked dead there. In normal flow, not a
+   floating popup, so no table wrapper or sticky header can clip it. */
+.cgsug{margin:6px 0 0;padding:0;list-style:none;max-height:min(50vh,22rem);overflow-y:auto;
+  border:1px solid var(--line);background:var(--surface);overscroll-behavior:contain}
+.cgsug[hidden]{display:none}
+.cgsug li{margin:0}
+.cgsug button{display:block;width:100%;padding:8px 10px;border:0;border-bottom:1px solid var(--line);
+  background:none;color:var(--ink);font:inherit;font-size:.88rem;line-height:1.3;text-align:left;cursor:pointer}
+.cgsug li:last-child button{border-bottom:0}
+.cgsug button:hover,.cgsug button.on{background:var(--red-soft)}
+.cgsug button.on{outline:2px solid var(--red);outline-offset:-2px}
+.cgsug .cgsugp{color:var(--steel);font-size:.78rem;white-space:nowrap}
+.cgsug .cgsugmore{padding:7px 10px;font-size:.78rem;color:var(--steel)}
+
+/* ---- phone ----------------------------------------------------------------------
+   At 390px the six step tabs took three rows, the method cards sat ragged beside
+   their label, and every wide table (skills, the sheet, the purchases) kept a
+   desktop min-width, so its right-hand columns lived behind a sideways scroll
+   nobody finds. Here the tabs are a 3-up grid, the methods full width, and the
+   tables give up their floors: names wrap, headers wrap, padding shrinks. */
+@media (max-width:600px){
+  .cgmethods{gap:6px}
+  .cgmlab{flex-basis:100%}
+  .cgm{flex:1 1 100%;flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:2px 8px;padding:7px 10px}
+  .cgtabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+  .cgtab{padding:6px 5px;gap:5px;font-size:.74rem;min-width:0;text-align:left}
+  .cg table{font-size:.78rem}
+  .cg thead th{white-space:normal;padding:6px 5px;font-size:.64rem;letter-spacing:.02em}
+  .cg tbody td,.cg tbody th{padding:6px 5px}
+  .cg tbody th,.cg table.skills tbody th{white-space:normal;min-width:0}
+  .cgskilltbl,.cggeartbl{min-width:0}
+  .cgfacts tbody th,.cgpool tbody th{width:auto}
+  .cg .cgtext{min-width:0;max-width:100%}
+}
+/* six purchase columns at 390px: a long header word may break anywhere rather than
+   be cut off by its fixed-width column */
+@media (max-width:600px){ .cggeartbl thead th{overflow-wrap:anywhere;word-break:break-word} }

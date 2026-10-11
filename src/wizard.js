@@ -1862,44 +1862,26 @@ root.addEventListener("input", function(ev){
    reads only those — it never asks where a row came from. */
 function gearRows(which){ return S[which] || []; }
 /* The catalogue picker: `D.catalog` -> a Map from its composed label (what
-   the <option> shows — see catalogLabel()) back to the item, built once and
-   reused by every list's search input. A <datalist> is created here rather
-   than in the markup on purpose: the host book namespaces every
-   literal `id="..."` in its markup (`cNN-...`), and a
-   JS-created element is invisible to that rewrite — the same reason the
-   per-skill hint fields build their own <datalist> in JS (see paintSkills3).
-   TWO lists, split by `item.kind` (see the catalogue export): Style (printed
+   a suggestion shows — see catalogLabel()) back to the item, built once and
+   reused by every list's search input. The suggestions are our own list
+   (catalogSuggest()), not a <datalist>: phones show a datalist badly or not at
+   all, so on a phone the search looked like it found nothing.
+   Two kinds, split by `item.kind` (see the catalogue export): Style (printed
    104–105) is its own budget for clothing, not a second Gear — a Style
    search must never suggest a rifle, and a Gear search must never
-   suggest a pair of boots. `catalogListId()` routes the Style field to the
-   clothing list and every other purchase list (Gear, At start) to the
-   gear one. `CATALOG_BY_LABEL` itself stays a single merged map — labels are
+   suggest a pair of boots. `catalogFits()` routes the Style field to
+   clothing and every other purchase list (Gear, At start) to gear.
+   `CATALOG_BY_LABEL` itself stays a single merged map — labels are
    already asserted unique across the whole catalogue in
    the export — because an exact typed match still has to
-   resolve regardless of which list suggested it; the `kind` re-check that
+   resolve regardless of which field it was typed in; the `kind` re-check that
    guards against typing a cross-category label anyway lives in the
    `catalogpick` input handler below, not here. */
 var CATALOG_BY_LABEL = null;
-var CATALOG_DATALIST_GEAR = "cg18-catalog-datalist-gear";
-var CATALOG_DATALIST_CLOTHING = "cg18-catalog-datalist-clothing";
-function catalogListId(which){
-  return which === "style" ? CATALOG_DATALIST_CLOTHING : CATALOG_DATALIST_GEAR;
-}
-function ensureDatalist(id){
-  var dl = document.getElementById(id);
-  if(!dl){
-    dl = document.createElement("datalist");
-    dl.id = id;
-    document.body.appendChild(dl);
-  }
-  return dl;
-}
+function catalogFits(item, which){ return (item.kind === "clothing") === (which === "style"); }
 function catalogIndex(){
   if(CATALOG_BY_LABEL) return CATALOG_BY_LABEL;
   CATALOG_BY_LABEL = {}; CATALOG_BY_ID = {};
-  var gearDl = ensureDatalist(CATALOG_DATALIST_GEAR),
-      clothDl = ensureDatalist(CATALOG_DATALIST_CLOTHING);
-  var gearH = "", clothH = "";
   var items = D.catalog || [];
   for(var i=0;i<items.length;i++){
     var lab = items[i].label, dup = 2;
@@ -1907,12 +1889,65 @@ function catalogIndex(){
     items[i].label = lab;
     CATALOG_BY_LABEL[lab] = items[i];
     if(items[i].id) CATALOG_BY_ID[items[i].id] = items[i];
-    var opt = '<option value="'+esc(lab)+'">';
-    if(items[i].kind === "clothing") clothH += opt; else gearH += opt;
   }
-  gearDl.innerHTML = gearH;
-  clothDl.innerHTML = clothH;
   return CATALOG_BY_LABEL;
+}
+/* Every word typed must occur somewhere in the label or the English original, in
+   any order (Russian e/yo folded) — "pistol heavy" finds "Very Heavy Pistol". Labels that
+   start with the first word come first, and within each half the corebook's own items
+   before the supplements', so a plain "pistol" does not open on a 5000eb DLC oddity. */
+var CORE_CHIP = /^(CRB|\u0421\u0422\u0420)\s/;
+var CATALOG_SUG_MAX = 40;
+function catalogMatches(which, text){
+  var words = String(text || "").toLowerCase().replace(/\u0451/g, "\u0435").split(/\s+/).filter(Boolean);
+  if(!words.length) return [];
+  var items = D.catalog || [], first = [], rest = [];
+  catalogIndex();
+  for(var i=0;i<items.length;i++){
+    var it = items[i];
+    if(!catalogFits(it, which)) continue;
+    var hay = (it.label + " " + (it.alt || "")).toLowerCase().replace(/\u0451/g, "\u0435"), all = true;
+    for(var w=0;w<words.length && all;w++) if(hay.indexOf(words[w]) < 0) all = false;
+    if(all) (hay.indexOf(words[0]) === 0 ? first : rest).push(it);
+  }
+  function core(list){
+    var a = [], b = [];
+    for(var j=0;j<list.length;j++) (CORE_CHIP.test(list[j].chip || "") ? a : b).push(list[j]);
+    return a.concat(b);
+  }
+  return core(first).concat(core(rest));
+}
+/* Paints the suggestion list that sits under a catalogue field (see paintGearList).
+   Each row is a button carrying the item's label; a tap adds it like an exact match. */
+function catalogSuggest(input){
+  var box = input.closest ? input.closest(".cgcatbox") : null;
+  var ul = box && box.querySelector(".cgsug");
+  if(!ul) return;
+  var which = input.getAttribute("data-list"), found = catalogMatches(which, input.value);
+  if(!input.value.trim()){ ul.hidden = true; ul.innerHTML = ""; return; }
+  var h = "";
+  for(var i=0;i<found.length && i<CATALOG_SUG_MAX;i++){
+    var it = found[i];
+    h += '<li><button type="button" tabindex="-1" data-cg="catsug" data-label="'+esc(it.label)+'">'
+       + esc(it.label)
+       + (it.alt && it.label.indexOf(it.alt) < 0 ? ' <span class="cgsugp">'+esc(it.alt)+"</span>" : "")
+       + "</button></li>";
+  }
+  if(found.length > CATALOG_SUG_MAX)
+    h += '<li class="cgsugmore">'+T("gear_list.sug_more", found.length - CATALOG_SUG_MAX)+"</li>";
+  if(!found.length) h = '<li class="cgsugmore">'+T("gear_list.sug_none")+"</li>";
+  ul.innerHTML = h;
+  ul.hidden = false;
+  ul.scrollTop = 0;
+  /* On a phone the keyboard takes half the screen: if the list starts below what
+     is visible, bring the field up to the top so the first suggestions show. */
+  var vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+  var r = input.getBoundingClientRect();
+  if(r.bottom + 120 > vh) window.scrollBy(0, r.top - 12);
+}
+function catalogSugHide(box){
+  var ul = box && box.querySelector(".cgsug");
+  if(ul){ ul.hidden = true; ul.innerHTML = ""; }
 }
 /* Pushes a LOCKED row — name/price/cyber/hl all come from the catalogue item
    and the row renders as plain text, not inputs (see paintGearList): the
@@ -2032,20 +2067,18 @@ function paintGearList(which, boxId){
            ? '<button type="button" class="cgbtn cgmini" data-cg="cashreset" data-list="'+which
              + T("gear_list.default")+book+')</button>' : "")
         + "</p>";
-  /* The catalogue search box: type a real item's name and pick it off the
-     <datalist> (catalogIndex()) to add a LOCKED row below — same budget, same
-     total, just filled and fixed instead of typed. Free typing here that never
-     resolves to a real option is simply left in the field; only an exact match
-     on `input` (see the listener below) adds anything. Deliberately not `change`:
-     clicking a <datalist> option only guarantees an `input` event, and `change`
-     on a text field otherwise waits for blur — so a click added nothing until
-     focus left the field. */
+  /* The catalogue search box: type part of a real item's name and pick it off
+     the suggestion list (catalogSuggest()) to add a LOCKED row below — same
+     budget, same total, just filled and fixed instead of typed. Free typing that
+     never resolves to a real item is simply left in the field; a tap on a
+     suggestion, Enter on a highlighted one, or an exact label typed or pasted
+     (see the `input` listener below) adds it. */
   /* The search is THE way to add a row — it fills price, HL and the page — and it
      used to be a small grey field while "+ Add row" under the table was a
      real button: the eye went to the button, and rows got typed by hand off the
      book's price list. So the search is the big, framed control, and manual entry
      is a quiet link under the table for what the catalogue does not have. */
-  h += T("gear_list.find_book_input_type")+which+'" list="'+catalogListId(which)+'" '
+  h += T("gear_list.find_book_input_type")+which+'" aria-autocomplete="list" '
      + 'placeholder="'+(which === "style" ? T("gear_list.jacket_boots_glasses")
                                             : T("gear_list.pistol_ammo_armor_implant"))+T("gear_list.autocomplete_off_start_typing")
      + (which === "style" ? "" : T("gear_list.hl"))
@@ -2120,6 +2153,14 @@ function paintGearList(which, boxId){
        + budget+"eb.</p>";
   }
   box.innerHTML = h;
+  /* the suggestion list goes right under the field, above the hint — made here so
+     the dictionaries' markup for the box stays as it is */
+  var cat = box.querySelector('[data-cg="catalogpick"]');
+  if(cat && cat.parentNode && cat.parentNode.parentNode){
+    var ul = document.createElement("ul");
+    ul.className = "cgsug"; ul.hidden = true;
+    cat.parentNode.parentNode.insertBefore(ul, cat.parentNode.nextSibling);
+  }
 }
 /* #1/#2 never had a step for their own 500eb (page 98) — it sat as a note on the
    sheet's Money row, unactionable. Same pane as Method #3's own purchases, same
@@ -2267,26 +2308,68 @@ root.addEventListener("input", function(ev){
   var t = ev.target, a = t.getAttribute && t.getAttribute("data-cg");
   if(a === "gearname")
     setGearField(t.getAttribute("data-list"), +t.getAttribute("data-i"), "name", t.value);
-  /* The catalogue search field: `input` fires both on every keystroke and the
-     instant a <datalist> option is clicked (that click is not guaranteed to
-     also fire `change`, and a text field's `change` otherwise waits for blur —
-     which is why this used to need a second click, or a tab-away, to register).
-     Resolve the typed text against the label index built by catalogIndex()
-     and, on an exact match, add a locked row. Free text that never matches a
-     real item is left as-is: mistyping isn't an error here, it just adds
-     nothing — so this fires on every keystroke harmlessly. */
+  /* The catalogue search field: every keystroke repaints the suggestions, and an
+     exact label (typed, pasted, or filled in by the browser) adds the row at once.
+     Free text that never matches a real item is left as-is: mistyping isn't an
+     error here, it just adds nothing. */
   if(a === "catalogpick"){
     // No value="" on this field in the template, so the next paintGearList()
     // repaint (inside pickFromCatalog's paintAll()) already renders it empty.
     var list = t.getAttribute("data-list");
     var picked = catalogIndex()[t.value];
-    /* The <datalist> attached to this field already only suggests the right
-       `kind` (see catalogListId()), but the field is still a plain text input
-       — typing another list's label verbatim would otherwise resolve too.
-       Re-check kind against which field this is before adding the row. */
-    if(picked && (picked.kind === "clothing") === (list === "style"))
-      pickFromCatalog(list, picked);
+    /* The suggestions only offer the right `kind` (see catalogFits()), but the
+       field is still a plain text input — typing another list's label verbatim
+       would otherwise resolve too. Re-check kind before adding the row. */
+    if(picked && catalogFits(picked, list)) pickFromCatalog(list, picked);
+    else catalogSuggest(t);
   }
+});
+/* A tap on a suggestion. `mousedown` is cancelled so the field keeps focus (and
+   the phone keeps its keyboard) until the row is in; the click then picks. */
+root.addEventListener("mousedown", function(ev){
+  if(ev.target.closest && ev.target.closest('[data-cg="catsug"]')) ev.preventDefault();
+});
+root.addEventListener("click", function(ev){
+  var b = ev.target.closest ? ev.target.closest('[data-cg="catsug"]') : null;
+  if(!b) return;
+  var box = b.closest(".cgcatbox"), input = box && box.querySelector('[data-cg="catalogpick"]');
+  var item = catalogIndex()[b.getAttribute("data-label")];
+  if(input && item && catalogFits(item, input.getAttribute("data-list")))
+    pickFromCatalog(input.getAttribute("data-list"), item);
+});
+/* Arrows walk the suggestions, Enter takes the highlighted one (or the only one),
+   Escape closes the list. */
+root.addEventListener("keydown", function(ev){
+  var t = ev.target;
+  if(!t.getAttribute || t.getAttribute("data-cg") !== "catalogpick") return;
+  var box = t.closest(".cgcatbox"), ul = box && box.querySelector(".cgsug");
+  if(!ul) return;
+  var btns = ul.hidden ? [] : ul.querySelectorAll('[data-cg="catsug"]'), cur = -1;
+  for(var i=0;i<btns.length;i++) if(btns[i].classList.contains("on")) cur = i;
+  if(ev.key === "ArrowDown" || ev.key === "ArrowUp"){
+    if(!btns.length) return;
+    ev.preventDefault();
+    var nx = ev.key === "ArrowDown" ? Math.min(btns.length - 1, cur + 1) : Math.max(0, cur - 1);
+    if(cur >= 0) btns[cur].classList.remove("on");
+    btns[nx].classList.add("on");
+    btns[nx].scrollIntoView({block: "nearest"});
+  } else if(ev.key === "Enter"){
+    var pick = cur >= 0 ? btns[cur] : btns.length === 1 ? btns[0] : null;
+    if(pick){ ev.preventDefault(); pick.click(); }
+  } else if(ev.key === "Escape"){
+    catalogSugHide(box);
+  }
+});
+root.addEventListener("focusin", function(ev){
+  var t = ev.target;
+  if(t.getAttribute && t.getAttribute("data-cg") === "catalogpick" && t.value.trim()) catalogSuggest(t);
+});
+root.addEventListener("focusout", function(ev){
+  var t = ev.target;
+  if(!t.getAttribute || t.getAttribute("data-cg") !== "catalogpick") return;
+  var box = t.closest(".cgcatbox");
+  // late enough for a click on a suggestion to land first
+  setTimeout(function(){ if(document.activeElement !== t) catalogSugHide(box); }, 200);
 });
 root.addEventListener("change", function(ev){
   var t = ev.target, a = t.getAttribute && t.getAttribute("data-cg");
