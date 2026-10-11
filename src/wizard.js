@@ -843,6 +843,35 @@ function ptsSpent(){
   return t;
 }
 function ptsLeft(){ var p = pool(); return p ? p.budget - ptsSpent() : 0; }
+/* The Medtech's Pharmaceuticals: every point is a drug, and WHICH drug is the player's
+   choice (S.abil.drugs, a list of ids). The list is trimmed to the points on every
+   read, so taking a point back also takes the last drug back — and a stale save can
+   never show more drugs than points. */
+function drugOpt(){
+  var p = pool(); if(!p) return null;
+  for(var i=0;i<p.opts.length;i++) if(p.opts[i].drugs && p.opts[i].drugs.length) return p.opts[i];
+  return null;
+}
+function drugsTaken(){
+  var o = drugOpt(), have = (S.abil && S.abil.drugs) || [], out = [];
+  if(!o) return out;
+  for(var i=0;i<have.length && out.length<ptsOf(o.id);i++)
+    if(nameOf(o.drugs, have[i]) && out.indexOf(have[i]) < 0) out.push(have[i]);
+  return out;
+}
+function drugsLeft(){ var o = drugOpt(); return o ? ptsOf(o.id) - drugsTaken().length : 0; }
+function toggleDrug(id){
+  var o = drugOpt(); if(!o || !nameOf(o.drugs, id)) return;
+  var have = drugsTaken(), at = have.indexOf(id);
+  if(at >= 0) have.splice(at, 1);
+  else if(have.length < ptsOf(o.id)) have.push(id);
+  else return;
+  if(!S.abil) S.abil = {};
+  S.abil.drugs = have;
+  save(); paintAll();
+  var again = root.querySelector('[data-cg="drug"][data-drug="' + id + '"]');
+  if(again) again.focus();
+}
 function ptsCap(opt){
   var p = pool();
   var cap = p && p.caps ? p.caps[opt.id] : undefined;
@@ -867,6 +896,13 @@ function ptsPreview(opt){
 function ptsEffect(opt, n){
   if(!n) return "";
   if(opt.tiers && opt.tiers.length){
+    /* `cum`: each row ADDS to the ones above it (the Medtech's cryosystems — «one more
+       cryo-pod»), so what N points buy is every row up to N, not just the last. */
+    if(opt.cum){
+      var all = [];
+      for(var c=0;c<opt.tiers.length;c++) if(opt.tiers[c].cost <= n) all.push(opt.tiers[c].what);
+      return all.join(" ");
+    }
     var best = null;
     for(var i=0;i<opt.tiers.length;i++) if(opt.tiers[i].cost <= n) best = opt.tiers[i];
     return best ? best.what
@@ -979,7 +1015,25 @@ function poolBlock(){
        + "</td></tr>";
   }
   h += "</tbody></table></div>";
-  return h;
+  return h + drugBlock();
+}
+
+/* One drug per Pharmaceuticals point, picked from the book's list. Shown only once
+   there is a point to put somewhere, and every drug carries its own effect — the
+   choice is the point of the row, so the reader must see what they are choosing. */
+function drugBlock(){
+  var o = drugOpt(); if(!o || !ptsOf(o.id)) return "";
+  var taken = drugsTaken(), left = drugsLeft();
+  var h = '<p class="cglegend">' + T("drugs.head") + "<b>" + taken.length + "</b>" + T("drugs.of") + "<b>" + ptsOf(o.id) + "</b>"
+        + (left ? ' <span class="cgbleft cgbon">' + T("drugs.left") + "<b>" + left + "</b></span>" : "") + "</p>"
+        + '<ul class="cggear cgdrugs">';
+  for(var i=0;i<o.drugs.length;i++){
+    var d = o.drugs[i], on = taken.indexOf(d.id) >= 0;
+    h += '<li><label><input type="checkbox" data-cg="drug" data-drug="' + esc(d.id) + '"'
+       + (on ? " checked" : "") + (!on && left <= 0 ? " disabled" : "") + "> <b>" + esc(d.name) + "</b> — "
+       + d.what + "</label></li>";
+  }
+  return h + "</ul>";
 }
 
 function picksBlock(){
@@ -1099,6 +1153,7 @@ function pendingPath(){
 function pendingAbil(){
   var out = [], p = pool(), pk = picks();
   if(p && ptsLeft() > 0) out.push(ptsLeft() + T("pending_skills.unspent_points"));
+  if(drugsLeft() > 0) out.push(T("pending_abil.drugs") + drugsLeft());
   if(pk && pk.kind === "nomad"){
     for(var i=0;i<pk.slots;i++) if(!slotOf(i)) out.push(T("pending_abil.motor_pool_decision") + (i+1));
     if(slotTaken().length && !((S.abil && S.abil.drive) || ""))
@@ -1647,6 +1702,7 @@ root.addEventListener("click", function(ev){
   if(a === "lvdown") bump(t.getAttribute("data-skill"), -1);
   if(a === "ptup") bumpPoint(t.getAttribute("data-opt"), 1);
   if(a === "ptdown") bumpPoint(t.getAttribute("data-opt"), -1);
+  if(a === "drug") toggleDrug(t.getAttribute("data-drug"));
   if(a === "preset"){ preset(t.getAttribute("data-kind")); save(); paintAll(); }
 });
 
@@ -2829,6 +2885,9 @@ function sheetMarkdown(){
         out.push("");
         out = out.concat(mdTable([T("sheet_markdown.ability"),T("sheet_markdown.points_b")], pr));
       }
+      var dt = drugsTaken(), dn = [], dopt = drugOpt();
+      for(var di=0;di<dt.length;di++) dn.push(nameOf(dopt.drugs, dt[di]));
+      if(dn.length){ out.push(""); out.push(T("sheet_markdown.drugs") + dn.join(", ")); }
     }
   }
   out.push("");

@@ -16243,13 +16243,62 @@
        "what": "1 point = +1 to the Medical Tech skill and access to one drug. No more than 5 points.",
        "tiers": [],
        "per": 1,
+       "drugs": [
+        {
+         "name": "Antibiotics",
+         "what": "Speeds up healing: <b>+2 HP a day</b> for a week. One dose works at a time.",
+         "id": "antibiotics"
+        },
+        {
+         "name": "Rapid Detox",
+         "what": "Flushes a drug, poison or intoxicant out of the body at once.",
+         "id": "rapid-detox"
+        },
+        {
+         "name": "Speedheal",
+         "what": "If the target is not mortally wounded: <b>BODY + WILL</b> HP back at once. Once a day per person.",
+         "id": "speedheal"
+        },
+        {
+         "name": "Stim",
+         "what": "For an hour, removes the Seriously Wounded penalties. Once a day per person.",
+         "id": "stim"
+        },
+        {
+         "name": "Surge",
+         "what": "A day without sleep. Once a week per person.",
+         "id": "surge"
+        }
+       ],
        "id": "pharmaceuticals"
       },
       {
        "name": "Cryosystem Operation",
        "what": "1 point = +1 to the Medical Tech skill. No more than 5 points.",
-       "tiers": [],
+       "tiers": [
+        {
+         "cost": 1,
+         "what": "<b>1 Cryopump.</b>"
+        },
+        {
+         "cost": 2,
+         "what": "Technician clearance: <b>1 Cryotank</b> in any corporate or government facility."
+        },
+        {
+         "cost": 3,
+         "what": "<b>A Cryotank of your own</b>, set up wherever you like."
+        },
+        {
+         "cost": 4,
+         "what": "<b>+2 Cryotanks</b> there; the Cryopump gets <b>2 charges</b> and holds up to <b>2</b> people."
+        },
+        {
+         "cost": 5,
+         "what": "<b>+3 Cryotanks</b> there; the Cryopump gets <b>3 charges</b> and holds up to <b>3</b> people."
+        }
+       ],
        "per": 1,
+       "cum": 1,
        "id": "cryosystem-operation"
       }
      ]
@@ -22787,6 +22836,9 @@
     "pool_block.where_points_what_gives": "<div class=\"tw\"><table class=\"mx cgpool\"><thead><tr><th>Куда</th><th class=\"n\">Очки</th><th>Что это даёт</th></tr></thead><tbody>",
     "pool_block.title_1_point": " title=\"−1 очко\">−</button><b>",
     "pool_block.plus_point_title": " title=\"+1 очко\">+</button></span></td><td>",
+    "drugs.head": "Препараты — по одному за очко Фармацевтики. Выбрано ",
+    "drugs.of": " из ",
+    "drugs.left": "осталось выбрать ",
     "picks_block.decision": ">— решение ",
     "picks_block.vehicle_group": "<optgroup label=\"Транспорт в Автопарк\">",
     "picks_block.optgroup_label_upgrade": "<optgroup label=\"Улучшение — ",
@@ -22801,6 +22853,7 @@
     "pending_abil.which_vehicle": "Какой транспорт с собой",
     "pending_abil.second_culture": "Вторая культура",
     "pending_abil.its_language": "Её язык",
+    "pending_abil.drugs": "Препаратов выбрать: ",
     "role_cards.easy_beginner": "Проще для новичка",
     "role_cards.separate_chapter": "+ отдельная глава",
     "stat_budget3.left": "\">Осталось <b>",
@@ -22947,6 +23000,7 @@
     "sheet_markdown.left": ", осталось ",
     "sheet_markdown.ability": "Способность",
     "sheet_markdown.points_b": "Очки",
+    "sheet_markdown.drugs": "Препараты: ",
     "sheet_markdown.skills": "## Навыки",
     "sheet_markdown.roll_note": "Бросок = СТАТ + Уровень (+ 1d10). Отсортировано по броску.",
     "sheet_markdown.skill": "Навык",
@@ -23206,6 +23260,9 @@
     "pool_block.where_points_what_gives": "<div class=\"tw\"><table class=\"mx cgpool\"><thead><tr><th>Where</th><th class=\"n\">Points</th><th>What it gives</th></tr></thead><tbody>",
     "pool_block.title_1_point": " title=\"−1 point\">−</button><b>",
     "pool_block.plus_point_title": " title=\"+1 point\">+</button></span></td><td>",
+    "drugs.head": "Drugs — one per Pharmaceuticals point. Chosen: ",
+    "drugs.of": " of ",
+    "drugs.left": "left to choose: ",
     "picks_block.decision": ">— decision ",
     "picks_block.vehicle_group": "<optgroup label=\"Vehicle for the Motor Pool\">",
     "picks_block.optgroup_label_upgrade": "<optgroup label=\"Upgrade — ",
@@ -23220,6 +23277,7 @@
     "pending_abil.which_vehicle": "Which vehicle is with you",
     "pending_abil.second_culture": "Second culture",
     "pending_abil.its_language": "Its language",
+    "pending_abil.drugs": "Drugs to choose: ",
     "role_cards.easy_beginner": "Easy for a beginner",
     "role_cards.separate_chapter": "+ a separate chapter",
     "stat_budget3.left": "\">Left <b>",
@@ -23366,6 +23424,7 @@
     "sheet_markdown.left": ", left ",
     "sheet_markdown.ability": "Ability",
     "sheet_markdown.points_b": "Points",
+    "sheet_markdown.drugs": "Drugs: ",
     "sheet_markdown.skills": "## Skills",
     "sheet_markdown.roll_note": "Roll = STAT + Level (+ 1d10). Sorted by roll.",
     "sheet_markdown.skill": "Skill",
@@ -31116,11 +31175,50 @@
          },
          {
           "name": "Фармацевтика",
-          "what": "1 очко = +1 к навыку Медицинские технологии и доступ к одному препарату. Не больше 5 очков."
+          "what": "1 очко = +1 к навыку Медицинские технологии и доступ к одному препарату. Не больше 5 очков.",
+          "drugs": [
+           {
+            "name": "Антибиотики",
+            "what": "Ускоряют заживление: <b>+2 ПЗ в день</b> на неделю. Действует одно применение за раз."
+           },
+           {
+            "name": "Быстрый детокс",
+            "what": "Мгновенно выводит из организма наркотик, яд или интоксикант."
+           },
+           {
+            "name": "СпидХил",
+            "what": "Если цель не при смерти — сразу <b>ТЕЛ + ВОЛЯ</b> ПЗ. Раз в день на человека."
+           },
+           {
+            "name": "Стим",
+            "what": "На час снимает штрафы тяжёлого ранения. Раз в день на человека."
+           },
+           {
+            "name": "Всплеск",
+            "what": "Сутки без сна. Раз в неделю на человека."
+           }
+          ]
          },
          {
           "name": "Криосистемы",
-          "what": "1 очко = +1 к навыку Медицинские технологии. Не больше 5 очков."
+          "what": "1 очко = +1 к навыку Медицинские технологии. Не больше 5 очков.",
+          "tiers": [
+           {
+            "what": "<b>1 Крионасос.</b>"
+           },
+           {
+            "what": "Допуск техника: <b>1 Криокамера</b> в любом корпоративном или государственном хранилище."
+           },
+           {
+            "what": "<b>Своя Криокамера</b> — ставишь где пожелаешь."
+           },
+           {
+            "what": "<b>+2 Криокамеры</b> там же; Крионасос на <b>2 заряда</b>, в стазисе до <b>2</b> человек."
+           },
+           {
+            "what": "<b>+3 Криокамеры</b> там же; Крионасос на <b>3 заряда</b>, в стазисе до <b>3</b> человек."
+           }
+          ]
          }
         ]
        }
